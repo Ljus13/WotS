@@ -1,444 +1,286 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=New+Rocker&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=New+Rocker&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-/*
- * CSS Reset & Variables 
- * Prefix: ken-
- */
-:root {
-    --ken-color-bg: #0f0f12;
-    --ken-color-card: #1a1a1f;
-    --ken-color-text: #e0e0e0;
-    --ken-color-accent: #c9a56c;
-    --ken-color-accent-dim: #8a7040;
-    --ken-color-mystery: #4a3b5e;
-    --ken-color-warning: #ff6b6b;
-    --ken-color-warning-bg: rgba(255, 107, 107, 0.15);
-    --ken-font-main: 'Kanit', sans-serif;
-    --ken-spacing-unit: 1rem;
-    --ken-radius: 12px;
-    --ken-radius-sm: 8px;
-}
+/* =========================================
+           ken- Prefix Scoped CSS
+           ========================================= */
+        .ken-wrapper {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 16px;
+            background-color: #0b0b0f; /* Darker background */
+            color: #e0e0e0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.8;
+            box-sizing: border-box;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+            /* Add a subtle dark texture if supported by forum, else solid color */
+            background-image: radial-gradient(circle at top center, #15151c 0%, #0b0b0f 100%);
+        }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+        .ken-wrapper *, .ken-wrapper *::before, .ken-wrapper *::after {
+            box-sizing: inherit;
+        }
 
-html {
-    scroll-behavior: smooth;
-}
+        /* Typography & Highlights */
+        .ken-font-title {
+            font-family: 'Cinzel', serif;
+        }
+        .ken-highlight {
+            color: #d4af37;
+            font-weight: 600;
+        }
+        .ken-highlight-danger {
+            color: #ff4c4c;
+            font-weight: 600;
+        }
+        .ken-text-center { text-align: center; }
+        
+        /* Hero Video Section */
+        .ken-hero {
+            position: relative;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ken-hero-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .ken-hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(11,11,15,0.2) 0%, rgba(11,11,15,0.9) 100%);
+            z-index: 2;
+        }
+        .ken-hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+            margin-top: 150px; /* Push text down to let video show */
+        }
+        .ken-hero-logo {
+            max-width: 90%;
+            width: 480px;
+            height: auto;
+            margin: 0 auto 10px auto;
+            display: block;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.9)) drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+        }
+        .ken-hero-title {
+            margin: 0;
+            color: #d4af37;
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        .ken-hero-subtitle {
+            margin-top: 5px;
+            color: #a9a9a9;
+            font-size: 1.1em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
 
-body {
-    background-color: var(--ken-color-bg);
-    color: var(--ken-color-text);
-    font-family: var(--ken-font-main);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
+        /* Glassmorphism Cards */
+        .ken-card {
+            background: rgba(26, 26, 36, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+        .ken-card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+        }
+        .ken-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+        .ken-card-img-fade {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to bottom, rgba(26,26,36,0), rgba(26,26,36,0.85));
+        }
+        .ken-card-body {
+            padding: 0 35px 35px 35px;
+        }
+        .ken-card-body.ken-no-img {
+            padding-top: 35px;
+        }
+        
+        .ken-card-title {
+            color: #d4af37;
+            font-size: 2em;
+            text-align: center;
+            margin-top: -30px; /* Pull up into the fade */
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        .ken-card-subtitle {
+            display: block;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 0.55em;
+            color: #a9a9a9;
+            letter-spacing: 1px;
+            font-weight: 400;
+            margin-top: 5px;
+        }
 
-/* Typography Utilities */
-.ken-text-center { text-align: center; }
-.ken-text-accent { color: var(--ken-color-accent); }
-.ken-text-warning { color: var(--ken-color-warning); }
-.ken-font-light { font-weight: 300; }
-.ken-font-regular { font-weight: 400; }
-.ken-font-medium { font-weight: 500; }
-.ken-font-semibold { font-weight: 600; }
-.ken-font-bold { font-weight: 700; }
+        /* Text Elements */
+        .ken-text-quote {
+            font-style: italic;
+            color: #e0e0e0;
+            padding: 20px 25px;
+            background: rgba(212, 175, 55, 0.03);
+            border-left: 3px solid #d4af37;
+            margin: 25px 0;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .ken-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+        .ken-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+        }
+        .ken-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 0.9em;
+            top: 2px;
+        }
 
-h1, h2, h3, h4 {
-    font-family: var(--ken-font-main);
-    margin-bottom: 1rem;
-    line-height: 1.3;
-}
+        /* SVG Divider */
+        .ken-svg-divider {
+            width: 100%;
+            height: 20px;
+            margin: 30px 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 20' preserveAspectRatio='xMidYMid meet'%3E%3Cg fill='%23d4af37' stroke='%23d4af37'%3E%3Cpath d='M0,10 L150,10' stroke-width='1' opacity='0.3'/%3E%3Cpath d='M250,10 L400,10' stroke-width='1' opacity='0.3'/%3E%3Cpolygon points='200,2 210,10 200,18 190,10' opacity='0.8'/%3E%3Ccircle cx='175' cy='10' r='1.5' opacity='0.6'/%3E%3Ccircle cx='225' cy='10' r='1.5' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
 
-p {
-    margin-bottom: 1.5rem;
-    color: #b0b0b0;
-    font-weight: 300;
-}
+        /* Warnings */
+        .ken-alert-danger {
+            background: rgba(139, 0, 0, 0.15);
+            color: #ffb3b3;
+            border-left: 4px solid #ff4c4c;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95em;
+        }
+        .ken-alert-danger strong { color: #ff4c4c; }
 
-/* Layout Utilities */
-.ken-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+        /* Accordion Pathways (Preserved Style) */
+        .ken-pathway-container { margin-top: 30px; }
+        .ken-pathway-item {
+            background: rgba(15, 15, 19, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .ken-pathway-item:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            background: rgba(20, 20, 25, 0.8);
+        }
+        .ken-pathway-item[open] {
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            background: rgba(20, 20, 25, 0.9);
+        }
+        .ken-pathway-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.15em;
+            color: #e0e0e0;
+            list-style: none;
+            border-bottom: 1px solid transparent;
+        }
+        .ken-pathway-item[open] .ken-pathway-header {
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .ken-pathway-header::-webkit-details-marker { display: none; }
+        .ken-pathway-logo {
+            width: 45px; height: 45px;
+            object-fit: contain;
+            margin-right: 20px;
+            border-radius: 50%;
+            background: #000;
+            padding: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 8px rgba(0,0,0,0.8);
+        }
+        .ken-pathway-content {
+            padding: 20px 25px;
+            background: transparent;
+        }
+        .ken-pathway-desc { margin-bottom: 15px; }
+        .ken-pathway-label { color: #d4af37; font-weight: 600; display: block; margin-bottom: 5px; }
+        .ken-pathway-header::after {
+            content: '+'; margin-left: auto; font-size: 1.5em; color: #666; transition: transform 0.3s;
+        }
+        .ken-pathway-item[open] .ken-pathway-header::after {
+            content: '−'; color: #d4af37;
+        }
 
-.ken-section {
-    padding: 80px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
+        /* Flex Gallery inside Pathways */
+        .ken-flex-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .ken-flex-gallery img, .ken-flex-gallery video {
+            width: 100%; height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
 
-/* Hero Section (Video Background) */
-.ken-hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #000;
-}
-
-.ken-hero-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    opacity: 0.6;
-    filter: grayscale(80%) sepia(20%);
-}
-
-.ken-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(15,15,18,1) 90%);
-    z-index: 2;
-}
-
-.ken-hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    max-width: 800px;
-    padding: 20px;
-}
-
-.ken-logo {
-    max-width: 300px;
-    width: 100%;
-    margin-bottom: 2rem;
-    filter: drop-shadow(0 0 10px rgba(201, 165, 108, 0.3));
-}
-
-.ken-hero-title {
-    font-size: 2.5rem;
-    color: var(--ken-color-accent);
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.ken-hero-subtitle {
-    font-size: 1.2rem;
-    font-style: italic;
-    opacity: 0.9;
-    font-weight: 300;
-}
-
-/* Content Blocks (Story & Lore) */
-.ken-lore-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.ken-lore-card {
-    background: var(--ken-color-card);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: var(--ken-radius);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.ken-lore-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-color: var(--ken-color-accent-dim);
-}
-
-.ken-lore-img-wrapper {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    position: relative;
-}
-
-.ken-lore-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.ken-lore-card:hover .ken-lore-img {
-    transform: scale(1.05);
-}
-
-.ken-lore-content {
-    padding: 2rem;
-}
-
-.ken-lore-title {
-    font-size: 1.8rem;
-    color: var(--ken-color-accent);
-    border-bottom: 2px solid var(--ken-color-accent-dim);
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-/* Pathway Section (Cards) */
-.ken-pathway-intro {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 60px auto;
-}
-
-.ken-pathway-intro-title {
-    font-size: 2.5rem;
-    color: var(--ken-color-accent);
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.ken-pathway-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-}
-
-.ken-path-card {
-    background: linear-gradient(145deg, #1f1f25, #16161a);
-    border: 1px solid #333;
-    border-radius: var(--ken-radius);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.ken-path-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-}
-
-/* Path-specific color themes */
-.ken-path-fool { --ken-path-theme: #d4af37; }
-.ken-path-error { --ken-path-theme: #8b5cf6; }
-.ken-path-door { --ken-path-theme: #3b82f6; }
-.ken-path-visionary { --ken-path-theme: #10b981; }
-.ken-path-tyrant { --ken-path-theme: #06b6d4; }
-.ken-path-hunter { --ken-path-theme: #ef4444; }
-.ken-path-hermit { --ken-path-theme: #8b5cf6; }
-.ken-path-paragon { --ken-path-theme: #f59e0b; }
-.ken-path-giant { --ken-path-theme: #6366f1; }
-.ken-path-demoness { --ken-path-theme: #ec4899; }
-.ken-path-sun { --ken-path-theme: #fbbf24; }
-.ken-path-moon { --ken-path-theme: #a78bfa; }
-.ken-path-mother { --ken-path-theme: #22c55e; }
-.ken-path-death { --ken-path-theme: #4b5563; }
-.ken-path-darkness { --ken-path-theme: #1e3a5f; }
-.ken-path-emperor { --ken-path-theme: #7c3aed; }
-.ken-path-justiciar { --ken-path-theme: #3b82f6; }
-.ken-path-chained { --ken-path-theme: #dc2626; }
-.ken-path-abyss { --ken-path-theme: #991b1b; }
-.ken-path-hanged { --ken-path-theme: #6b7280; }
-.ken-path-tower { --ken-path-theme: #e5e7eb; }
-
-.ken-path-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--ken-path-theme, var(--ken-color-accent));
-    opacity: 0.8;
-}
-
-.ken-path-header {
-    padding: 1.5rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    background: rgba(0,0,0,0.2);
-}
-
-.ken-path-logo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.15));
-}
-
-.ken-path-name {
-    font-size: 1.4rem;
-    color: #fff;
-    margin: 0;
-    font-weight: 600;
-}
-
-.ken-path-name-en {
-    font-size: 0.9rem;
-    color: var(--ken-path-theme, var(--ken-color-accent));
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: block;
-    margin-top: 5px;
-    font-weight: 500;
-}
-
-.ken-path-body {
-    padding: 1.5rem;
-    flex-grow: 1;
-}
-
-.ken-path-desc {
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    color: #ccc;
-    min-height: 80px;
-    font-weight: 300;
-}
-
-/* Warning Box Styles */
-.ken-path-warning {
-    background: var(--ken-color-warning-bg);
-    border: 1px solid var(--ken-color-warning);
-    border-radius: var(--ken-radius-sm);
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.ken-path-warning-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
-
-.ken-path-warning-text {
-    font-size: 0.85rem;
-    color: var(--ken-color-warning);
-    margin: 0;
-    font-weight: 500;
-    line-height: 1.4;
-}
-
-.ken-path-skills-title {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    color: var(--ken-path-theme, var(--ken-color-accent-dim));
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.ken-path-skills {
-    font-size: 0.9rem;
-    color: #aaa;
-    list-style: none;
-    margin-bottom: 1.5rem;
-}
-
-.ken-path-skills li {
-    margin-bottom: 0.4rem;
-    padding-left: 1.2rem;
-    position: relative;
-    font-weight: 300;
-}
-
-.ken-path-skills li::before {
-    content: '◆';
-    color: var(--ken-path-theme, var(--ken-color-accent));
-    position: absolute;
-    left: 0;
-    font-size: 0.7rem;
-    top: 4px;
-}
-
-.ken-path-assets {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    padding: 6px;
-    background: #000;
-    border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.ken-path-thumb {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: var(--ken-radius-sm);
-    opacity: 0.7;
-    transition: opacity 0.2s, transform 0.2s;
-    cursor: pointer;
-}
-
-.ken-path-thumb:hover {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-/* Footer */
-.ken-footer {
-    background: #050505;
-    padding: 40px 0;
-    text-align: center;
-    border-top: 1px solid #222;
-    margin-top: 60px;
-}
-
-.ken-footer-text {
-    font-size: 0.9rem;
-    color: #666;
-    font-weight: 300;
-}
-
-/* Responsive Design */
-@media (min-width: 768px) {
-    .ken-lore-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .ken-lore-card.full-width {
-        grid-column: 1 / -1;
-    }
-
-    .ken-hero-title {
-        font-size: 4rem;
-    }
-
-    .ken-pathway-grid {
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    }
-}
-
-@media (max-width: 767px) {
-    .ken-section {
-        padding: 40px 0;
-    }
-    
-    .ken-lore-img-wrapper {
-        height: 200px;
-    }
-
-    .ken-hero-title {
-        font-size: 2rem;
-    }
-
-    .ken-pathway-intro-title {
-        font-size: 1.8rem;
-    }
-
-    .ken-path-card {
-        margin-bottom: 20px;
-    }
-}
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .ken-hero { height: 300px; }
+            .ken-hero-logo { width: 300px; }
+            .ken-hero-title { font-size: 2em; }
+            .ken-hero-content { margin-top: 100px; }
+            .ken-card-img-wrapper { height: 160px; }
+            .ken-card-body { padding: 0 20px 25px 20px; }
+            .ken-card-title { font-size: 1.6em; }
+            .ken-wrapper { padding: 10px; }
+        }

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lord of the Mysteries - World Setting</title>
+    <!-- whisper CSS -->
+    <link rel="stylesheet" href="css/whisper.css">
+    
+    <!-- inline styles removed -->
+    
+        /* 
+         * CSS Reset & Variables 
+         * Prefix: ken-
+         */
+        :root {
+            --ken-color-bg: #0f0f12;
+            --ken-color-card: #1a1a1f;
+            --ken-color-text: #e0e0e0;
+            --ken-color-accent: #c9a56c;
+            --ken-color-accent-dim: #8a7040;
+            --ken-color-mystery: #4a3b5e;
+            --ken-color-warning: #ff6b6b;
+            --ken-color-warning-bg: rgba(255, 107, 107, 0.15);
+            --ken-font-main: 'Kanit', sans-serif;
+            --ken-spacing-unit: 1rem;
+            --ken-radius: 12px;
+            --ken-radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--ken-color-bg);
+            color: var(--ken-color-text);
+            font-family: var(--ken-font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 
+         * Typography Utilities 
+         */
+        .ken-text-center { text-align: center; }
+        .ken-text-accent { color: var(--ken-color-accent); }
+        .ken-text-warning { color: var(--ken-color-warning); }
+        .ken-font-light { font-weight: 300; }
+        .ken-font-regular { font-weight: 400; }
+        .ken-font-medium { font-weight: 500; }
+        .ken-font-semibold { font-weight: 600; }
+        .ken-font-bold { font-weight: 700; }
+        
+        h1, h2, h3, h4 {
+            font-family: var(--ken-font-main);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #b0b0b0;
+            font-weight: 300;
+        }
+
+        /* 
+         * Layout Utilities 
+         */
+        .ken-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ken-section {
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* 
+         * Hero Section (Video Background)
+         */
+        .ken-hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .ken-hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.6;
+            filter: grayscale(80%) sepia(20%);
+        }
+
+        .ken-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(15,15,18,1) 90%);
+            z-index: 2;
+        }
+
+        .ken-hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .ken-logo {
+            max-width: 300px;
+            width: 100%;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 10px rgba(201, 165, 108, 0.3));
+        }
+
+        .ken-hero-title {
+            font-size: 2.5rem;
+            color: var(--ken-color-accent);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .ken-hero-subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 
+         * Content Blocks (Story & Lore)
+         */
+        .ken-lore-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .ken-lore-card {
+            background: var(--ken-color-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--ken-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .ken-lore-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-color: var(--ken-color-accent-dim);
+        }
+
+        .ken-lore-img-wrapper {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ken-lore-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .ken-lore-card:hover .ken-lore-img {
+            transform: scale(1.05);
+        }
+
+        .ken-lore-content {
+            padding: 2rem;
+        }
+
+        .ken-lore-title {
+            font-size: 1.8rem;
+            color: var(--ken-color-accent);
+            border-bottom: 2px solid var(--ken-color-accent-dim);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* 
+         * Pathway Section (Cards)
+         */
+        .ken-pathway-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+        }
+
+        .ken-pathway-intro-title {
+            font-size: 2.5rem;
+            color: var(--ken-color-accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .ken-pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .ken-path-card {
+            background: linear-gradient(145deg, #1f1f25, #16161a);
+            border: 1px solid #333;
+            border-radius: var(--ken-radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ken-path-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Path-specific color themes */
+        .ken-path-fool { --ken-path-theme: #d4af37; }
+        .ken-path-error { --ken-path-theme: #8b5cf6; }
+        .ken-path-door { --ken-path-theme: #3b82f6; }
+        .ken-path-visionary { --ken-path-theme: #10b981; }
+        .ken-path-tyrant { --ken-path-theme: #06b6d4; }
+        .ken-path-hunter { --ken-path-theme: #ef4444; }
+        .ken-path-hermit { --ken-path-theme: #8b5cf6; }
+        .ken-path-paragon { --ken-path-theme: #f59e0b; }
+        .ken-path-giant { --ken-path-theme: #6366f1; }
+        .ken-path-demoness { --ken-path-theme: #ec4899; }
+        .ken-path-sun { --ken-path-theme: #fbbf24; }
+        .ken-path-moon { --ken-path-theme: #a78bfa; }
+        .ken-path-mother { --ken-path-theme: #22c55e; }
+        .ken-path-death { --ken-path-theme: #4b5563; }
+        .ken-path-darkness { --ken-path-theme: #1e3a5f; }
+        .ken-path-emperor { --ken-path-theme: #7c3aed; }
+        .ken-path-justiciar { --ken-path-theme: #3b82f6; }
+        .ken-path-chained { --ken-path-theme: #dc2626; }
+        .ken-path-abyss { --ken-path-theme: #991b1b; }
+        .ken-path-hanged { --ken-path-theme: #6b7280; }
+        .ken-path-tower { --ken-path-theme: #e5e7eb; }
+
+        .ken-path-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--ken-path-theme, var(--ken-color-accent));
+            opacity: 0.8;
+        }
+
+        .ken-path-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .ken-path-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.15));
+        }
+
+        .ken-path-name {
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .ken-path-name-en {
+            font-size: 0.9rem;
+            color: var(--ken-path-theme, var(--ken-color-accent));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .ken-path-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .ken-path-desc {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            color: #ccc;
+            min-height: 80px;
+            font-weight: 300;
+        }
+
+        /* Warning Box Styles */
+        .ken-path-warning {
+            background: var(--ken-color-warning-bg);
+            border: 1px solid var(--ken-color-warning);
+            border-radius: var(--ken-radius-sm);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .ken-path-warning-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .ken-path-warning-text {
+            font-size: 0.85rem;
+            color: var(--ken-color-warning);
+            margin: 0;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .ken-path-skills-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--ken-path-theme, var(--ken-color-accent-dim));
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .ken-path-skills {
+            font-size: 0.9rem;
+            color: #aaa;
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .ken-path-skills li {
+            margin-bottom: 0.4rem;
+            padding-left: 1.2rem;
+            position: relative;
+            font-weight: 300;
+        }
+
+        .ken-path-skills li::before {
+            content: '◆';
+            color: var(--ken-path-theme, var(--ken-color-accent));
+            position: absolute;
+            left: 0;
+            font-size: 0.7rem;
+            top: 4px;
+        }
+
+        .ken-path-assets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            padding: 6px;
+            background: #000;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ken-path-thumb {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: var(--ken-radius-sm);
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .ken-path-thumb:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* 
+         * Footer
+         */
+        .ken-footer {
+            background: #050505;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #222;
+            margin-top: 60px;
+        }
+
+        .ken-footer-text {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* 
+         * Responsive Design
+         */
+        @media (min-width: 768px) {
+            .ken-lore-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .ken-lore-card.full-width {
+                grid-column: 1 / -1;
+            }
+
+            .ken-hero-title {
+                font-size: 4rem;
+            }
+
+            .ken-pathway-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 767px) {
+            .ken-section {
+                padding: 40px 0;
+            }
+            
+            .ken-lore-img-wrapper {
+                height: 200px;
+            }
+
+            .ken-hero-title {
+                font-size: 2rem;
+            }
+
+            .ken-pathway-intro-title {
+                font-size: 1.8rem;
+            }
+
+            .ken-path-card {
+                margin-bottom: 20px;
+            }
+        }
+
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="ken-hero">
+        <video class="ken-hero-video" autoplay muted loop playsinline>
+            <source src="https://res.cloudinary.com/dehp6efwc/video/upload/v1771648009/train_le8mda.mp4" type="video/mp4">
+        </video>
+        <div class="ken-hero-overlay"></div>
+        <div class="ken-hero-content">
+            <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771648474/width_550_cukew9.png" alt="Logo" class="ken-logo">
+            <h1 class="ken-hero-title">เมืองแห่งหมอกและเงา</h1>
+            <p class="ken-hero-subtitle">"อย่าไว้ใจเสียงในหัวของคุณ เพราะมันอาจไม่ใช่ความคิดของคุณอีกต่อไป"</p>
+        </div>
+    </header>
+
+    <!-- Intro Section -->
+    <section class="ken-section">
+        <div class="ken-container">
+            <div class="ken-lore-grid">
+                <!-- Background Info -->
+                <article class="ken-lore-card full-width">
+                    <div class="ken-lore-content">
+                        <h2 class="ken-lore-title">ภูมิหลัง (Background)</h2>
+                        <p>ในเงามืดของเมืองที่ไม่มีใครมองเห็น เสียงกระซิบกำลังคลืบคลานเข้ามา... และไม่มีใครรู้ว่ามันเริ่มต้นตั้งแต่เมื่อไร</p>
+                        <p>โลกนี้ขับเคลื่อนด้วยพลังไอน้ำและกลไกเวท ไม่มีน้ำมัน ไม่มีไฟฟ้าอย่างที่เรารู้จัก แต่เครื่องจักรยังคงทำงานได้ด้วยพลังลึกลับที่มีเพียงไม่กี่คนเข้าใจ</p>
+                        <p>ที่นี่คือยุคแห่งความเจริญและความบ้าคลั่ง เมืองเต็มไปด้วยควันไอและคำโกหก ผู้วิเศษเดินปะปนอยู่ในฝูงชน ศาสนาแย่งชิงอำนาจกันในเงามืด และคดีอาชญากรรมเหนือธรรมชาติเพิ่มขึ้นทุกวัน…</p>
+                        <p>คุณตื่นขึ้นมาในร่างของคนตาย ความทรงจำของโลกเก่ายังอยู่ แต่ที่นี่ไม่ใช่บ้านของคุณอีกต่อไป เสียงกระซิบกำลังเรียกชื่อคุณจากที่ไหนสักแห่งในความมืด</p>
+                        <p>เรื่องราวของคุณเริ่มต้นขึ้นที่นี่... ในเมืองแห่งหมอกและเงา ที่ซึ่งทุกคำสาบานมีราคา และทุกศรัทธามีเงื่อนไข</p>
+                    </div>
+                </article>
+
+                <!-- Whisper of the Shadow -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771648706/94b5ab3c-4a07-4935-a9de-46d20ad8a021_gm6lhb.png" alt="Whisper of the Shadow" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">Whisper of the Shadow</h3>
+                        <p>บทนำสู่โลกแห่งศาสตร์เร้นลับ ในเงามืดของเมืองที่ไม่มีใครมองเห็น เสียงกระซิบกำลังคลืบคลานเข้ามา… และไม่มีใครรู้ว่ามันเริ่มต้นตั้งแต่เมื่อไร</p>
+                    </div>
+                </article>
+
+                <!-- Steam & Magic -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771648859/width_550_1_rzdjmn.png" alt="Steam and Magic" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">พลังไอน้ำและกลไกเวท</h3>
+                        <p>โลกที่ควันไม่เคยจาง ตึกสูงจากอิฐและคอนกรีตปกคลุมด้วยหมอก โรงงานปล่อยควันสีเทาไม่หยุด รถไฟไอน้ำคำรามตลอดวัน และบนท้องฟ้า เรือเหาะยังคงลอยผ่านดวงจันทร์สีแดงชาด...</p>
+                        <p>มันคือยุคอุตสาหกรรมแห่ง ความเจริญและความบ้าคลั่งในเวลาเดียวกัน</p>
+                    </div>
+                </article>
+
+                <!-- Beyonder -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771648960/_1eb0f746-7c14-456d-94dd-22db543fae65_yir1vy.jpg" alt="Beyonder" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">ผู้วิเศษ (Beyonder)</h3>
+                        <p>ในโลกที่ "กฎธรรมชาติ" ไม่ได้เป็นของธรรมชาติอีกต่อไป มีบางคนที่ได้พลังอันไม่ควรมี พลังที่เปลี่ยนมนุษย์ให้ก้าวข้ามขีดจำกัดของตน</p>
+                        <p>พลังของแต่ละคนไม่เหมือนกัน ขึ้นอยู่กับ "เส้นทาง" ที่เลือกเดิน บางเส้นนำไปสู่ปาฏิหาริย์... แต่บางเส้นทางนำไปสู่ความบ้าคลั่งและการกลืนกินตัวเอง</p>
+                    </div>
+                </article>
+
+                <!-- Religion -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771649795/width_550_2_uhvsp8.png" alt="Religion" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">ศรัทธาและการเมือง</h3>
+                        <p>ศาสนาในโลกนี้ไม่ใช่เรื่องของความเชื่อเท่านั้น แต่มันคือ "อำนาจ" ที่สามารถเปลี่ยนโฉมโลกได้จริง ในราชอาณาจักรโลเอ็น (Loen Kingdom) ผู้คนส่วนใหญ่สวดภาวนาแก่ เทพีรัติกาล หรือ คนโง่เขลา</p>
+                        <p>แต่ในเงามืด ยังมีศาสนาอื่นที่ถูกลืม ถูกห้าม หรือแอบคงอยู่ในรูปแบบลัทธิใต้ดิน</p>
+                    </div>
+                </article>
+
+                <!-- Backlund -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771649793/width_366_dd6pf2.png" alt="Backlund" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">กรุงเบคลันด์ (Backlund)</h3>
+                        <p>เมืองหลวงของอาณาจักรโลเอ็น ศูนย์กลางแห่งอุตสาหกรรม ความมั่งคั่ง และความเสื่อมทราม ในยามกลางวัน มันคือเมืองแห่งความก้าวหน้า แต่ในยามค่ำคืน มันคือเขาวงกตแห่งอาชญากรรม</p>
+                    </div>
+                </article>
+
+                <!-- Races -->
+                <article class="ken-lore-card">
+                    <div class="ken-lore-img-wrapper">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771649855/width_366_1_c6ajln.png" alt="Legendary Races" class="ken-lore-img">
+                    </div>
+                    <div class="ken-lore-content">
+                        <h3 class="ken-lore-title">เผ่าพันธุ์ในตำนาน</h3>
+                        <p>ตำนานเก่ากล่าวว่า มนุษย์ไม่ได้เป็นเจ้าของโลกนี้แต่แรก ก่อนหน้ามนุษย์ ยังมีเผ่าพันธุ์ยักษ์ มังกร เอลฟ์ ผีดูดเลือด ปีศาจ และอีกมากมาย แต่พวกเขาหายไปจนเหลือเพียงร่องรอยในตำนาน</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pathways Section -->
+    <section class="ken-section" style="background-color: #141418;">
+        <div class="ken-container">
+            <div class="ken-pathway-intro">
+                <h2 class="ken-pathway-intro-title">เส้นทางแห่งเทพ (Pathways)</h2>
+                <p>ชุดของสูตรโอสถทั้งหมด 9 ลำดับ ซึ่งเป็นกุญแจไขสู่พลังเหนือธรรมชาติและศาสตร์เร้นลับ บนโลกนี้มีเส้นทางมาตรฐานทั้งสิ้น 22 เส้นทาง</p>
+            </div>
+
+            <div class="ken-pathway-grid">
+                
+                <!-- Path 1: Seer / Fool -->
+                <article class="ken-path-card ken-path-fool">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770612457/Fool_Symbol2_ydvwem.webp" alt="Fool Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักทำนาย</h3>
+                        <span class="ken-path-name-en">Seer / Fool</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">โดดเด่นไปด้วยสกิลที่เกี่ยวข้องกับความไม่แน่นอน การคาดเดาไม่ได้ ลำดับต่ำเน้นการทำนายและความคล่องตัว แต่เมื่อลำดับสูงขึ้นไปจะเต็มไปด้วยความพิสดารและการเปลี่ยนแปลงความเป็นจริง</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>เชี่ยวชาญการทำนายทุกรูปแบบ (ไพ่ทาโรต์, ลูกตุ้ม, ความฝัน)</li>
+                            <li>การอ่านออร่าด้วย Spirit Vision</li>
+                            <li>การใช้ตุ๊กตาเชิด (Marionette)</li>
+                            <li>การควบคุมเส้นด้ายจิตวิญญาณ</li>
+                            <li>การสร้างภาพลวงตาและการสลับตำแหน่ง</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770629962/seq_9_ssv3hd.jpg" class="ken-path-thumb" alt="Seq 9">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652273/fool_seq_8_v2_rwneog.jpg" class="ken-path-thumb" alt="Seq 8">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652274/fool_seq_3-_zw9xga.jpg" class="ken-path-thumb" alt="Seq 3">
+                    </div>
+                </article>
+
+                <!-- Path 2: Marauder / Error -->
+                <article class="ken-path-card ken-path-error">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771316056/width_550_hgdcwm.webp" alt="Error Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางหัวขโมย</h3>
+                        <span class="ken-path-name-en">Marauder / Error</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">โดดเด่นในเรื่องการขโมยและเล่ห์เหลี่ยม ไม่ใช่เพียงแค่สิ่งของ แต่รวมถึงพลังวิเศษ ความคิด โชคชะตา และเวลา เปรียบเสมือน 'ข้อผิดพลาด' (Error) ของกฎเกณฑ์ธรรมชาติ</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การสิงสู่ (Parasitizing)</li>
+                            <li>การขโมยความคิดและความสามารถ</li>
+                            <li>การขโมยโชคและเวลา</li>
+                            <li>การหลอกลวงกฎเกณฑ์ธรรมชาติ</li>
+                            <li>การสร้างช่องโหว่ในพื้นที่-เวลา</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771316058/image_1_c1o0ip.png" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652274/fool_seq_3-_zw9xga.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652331/seq_4_error_dya3p9.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 3: Apprentice / Door -->
+                <article class="ken-path-card ken-path-door">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771227184/Door_Symbol2_la159u.webp" alt="Door Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางลูกศิษย์</h3>
+                        <span class="ken-path-name-en">Apprentice / Door</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">โดดเด่นในเรื่องการเดินทางผ่านมิติต่างๆ การข้ามผ่านสิ่งกีดขวาง และการเลียนแบบหรือบันทึกพลังของผู้อื่น ยากที่จะถูกกักขังหรือสกัดกั้น</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การทะลุผ่านกำแพง (Door Opening)</li>
+                            <li>การบันทึกและใช้พลังของผู้อื่น (Record/Scribe)</li>
+                            <li>การเดินทางข้ามมิติ (Traveling/Blink)</li>
+                            <li>การซ่อนพื้นที่</li>
+                            <li>การใช้เวทมนตร์พื้นฐาน (แก๊ส, แสง, ไฟฟ้า)</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771227220/image_j7bayx.png" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652378/the_door_svailh.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652466/image_uzu2ii.png" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 4: Spectator / Visionary -->
+                <article class="ken-path-card ken-path-visionary">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770780495/Visionary_Symbol2_mmcflu.webp" alt="Visionary Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้ชม</h3>
+                        <span class="ken-path-name-en">Spectator / Visionary</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เน้นการสังเกตการณ์ การเข้าใจจิตวิทยา และการบงการความคิดผู้อื่นอย่างแนบเนียน ลำดับสูงสามารถเปลี่ยนจินตนาการหรือความคิดให้กลายเป็นความจริงได้</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การสะกดจิต (Hypnosis)</li>
+                            <li>การปลอบประโลมทางจิต (Placate)</li>
+                            <li>การอ่านใจและตรวจจับอารมณ์</li>
+                            <li>การสร้างพายุทางจิต (Mind Storm)</li>
+                            <li>การเดินในความฝันและการสร้างตัวตนจำลอง</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770780604/unnamed_t9cprq.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652543/image_vivtan.png" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652545/image_1_mtceiw.png" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 5: Sailor / Tyrant -->
+                <article class="ken-path-card ken-path-tyrant">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770619961/Tyrant_Symbol2_osgium.webp" alt="Tyrant Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางกะลาสี</h3>
+                        <span class="ken-path-name-en">Sailor / Tyrant</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เน้นพลังที่เกี่ยวข้องกับน้ำ ทะเล และพายุ มีความสามารถในการต่อสู้และพละกำลังสูงมาก โดยเฉพาะในสภาพแวดล้อมทางน้ำ</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>ความคล่องตัวในน้ำและการหายใจใต้น้ำ</li>
+                            <li>พละกำลังมหาศาล</li>
+                            <li>การทำนายสภาพอากาศ</li>
+                            <li>การใช้เวทมนตร์สายฟ้าและน้ำ</li>
+                            <li>การร้องเพลงเพื่อข่มขวัญศัตรู</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652597/image_2_drla01.png" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652600/image_3_pjdkau.png" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771320235/sailor_itbfvm.mp4" class="ken-path-thumb" style="object-fit: cover; background: #000;" alt="Video">
+                    </div>
+                </article>
+
+                <!-- Path 6: Hunter / Red Priest -->
+                <article class="ken-path-card ken-path-hunter">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771388609/Red_Priest_Symbol2_bt4qaf.webp" alt="Red Priest Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักล่า</h3>
+                        <span class="ken-path-name-en">Hunter / Red Priest</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <div class="ken-path-warning">
+                            <span class="ken-path-warning-icon">⚠️</span>
+                            <p class="ken-path-warning-text">เมื่อถึงลำดับ 4 เพศหญิงจะกลายเป็นเพศชายอย่างถาวร โปรดพิจารณาก่อนจะเลือกเส้นทางนี้</p>
+                        </div>
+                        <p class="ken-path-desc">เน้นความสามารถที่เกี่ยวข้องกับการทำสงคราม กลยุทธ์ และการควบคุมสนามรบ เชี่ยวชาญการใช้ไฟ กับดัก และการวิเคราะห์จุดอ่อน</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>เชี่ยวชาญการใช้ไฟ</li>
+                            <li>การวางกับดักและแผนสมคบคิด</li>
+                            <li>พละกำลังและความคล่องตัวสูง</li>
+                            <li>ประสาทสัมผัสแหลมคมในการติดตามร่องรอย</li>
+                            <li>การยั่วยุอารมณ์ศัตรู</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771388629/red_priest_seq_7_v2_irm2jw.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652650/image_4_qespgu.png" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652653/image_5_ocwggf.png" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 7: Mystery Pryer / Hermit -->
+                <article class="ken-path-card ken-path-hermit">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771390011/Hermit_Symbol2_wqzrnl.webp" alt="Hermit Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้ส่องความลับ</h3>
+                        <span class="ken-path-name-en">Mystery Pryer / Hermit</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เน้นการเจาะลึกความลับของโลกและจักรวาล เข้าถึงความจริงที่ซ่อนเร้นผ่านเนตรพิเศษ ลำดับสูงสามารถดึงพลังจากตำนานและนิทานมาใช้ได้</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>เนตรส่องความลับ (มองเห็นความจริงและพลังวิญญาณ)</li>
+                            <li>การทำพิธีกรรมเวทมนตร์ดวงดาว</li>
+                            <li>การจำลองเวทมนตร์จากตำนาน</li>
+                            <li>ความเชี่ยวชาญการต่อสู้ระยะประชิด</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771390054/hermit_seq_1_mxb7ih.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652700/hermit_seq_6_%E0%B8%AD2_qq0u9b.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652699/hermit_seq_4_v3_im0n9t.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 8: Savant / Paragon -->
+                <article class="ken-path-card ken-path-paragon">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771389559/Paragon_Symbol2_y8cucj.webp" alt="Paragon Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักปราชญ์</h3>
+                        <span class="ken-path-name-en">Savant / Paragon</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">โดดเด่นในด้านความรู้ทางวิทยาศาสตร์ กลไก และการประดิษฐ์ เชี่ยวชาญการสร้างและปรับแต่งอุปกรณ์วิเศษเพื่อชดเชยพลังการต่อสู้</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>ความจำและการเรียนรู้ที่เป็นเลิศ</li>
+                            <li>การสร้างสิ่งประดิษฐ์และเครื่องจักรไอน้ำ</li>
+                            <li>การสำรวจโบราณสถาน</li>
+                            <li>สัญชาตญาณในการใช้งานวัตถุต้องสาป</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771389588/paragon_seq_5_whzdy8.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652738/paragon_seq_2_cuwn3d.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652740/paragon_seq_5_v4_baebip.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 9: Warrior / Twilight Giant -->
+                <article class="ken-path-card ken-path-giant">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386373/Twilight_Giant_Symbol2_hfmybg.webp" alt="Twilight Giant Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักรบ</h3>
+                        <span class="ken-path-name-en">Warrior / Twilight Giant</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เน้นการเสริมพลังกายภาพ พละกำลัง และการป้องกันที่แข็งแกร่งที่สุด เชี่ยวชาญการใช้อาวุธและการต่อสู้ทุกรูปแบบ</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>พละกำลังและความทนทานเหนือมนุษย์</li>
+                            <li>ชำนาญอาวุธทุกชนิด</li>
+                            <li>การสร้างเกราะและอาวุธด้วยพลังวิญญาณ</li>
+                            <li>การทำลายวิญญาณชั่วร้าย</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386423/twilight_giant_seq_8_v2_ogsrfl.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652805/twilight_giant_seq_1_v2_cdkv5b.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652806/twilight_giant_seq_4_drvgjo.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 10: Assassin / Demoness -->
+                <article class="ken-path-card ken-path-demoness">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771388195/Demoness_Symbol2_z02wxy.webp" alt="Demoness Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักฆ่า</h3>
+                        <span class="ken-path-name-en">Assassin / Demoness</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <div class="ken-path-warning">
+                            <span class="ken-path-warning-icon">⚠️</span>
+                            <p class="ken-path-warning-text">เมื่อถึงลำดับ 7 เพศชายจะกลายเป็นเพศหญิงอย่างถาวร โปรดพิจารณาก่อนจะเลือกเส้นทางนี้</p>
+                        </div>
+                        <p class="ken-path-desc">เน้นความว่องไว การลอบสังหาร และการสร้างภัยพิบัติหรือความโกลาหล พลิกผันโลกด้วยความยุ่งเหยิงและคำสาป</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การลอบสังหารและการอำพรางตัวในเงา</li>
+                            <li>การทำให้ร่างกายเบา</li>
+                            <li>การควบคุมเส้นใยล่องหน</li>
+                            <li>การยุยงปลุกปั่นความชั่วร้าย</li>
+                            <li>การแพร่กระจายโรคร้าย</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771388221/demoness_seq_9_v2_iu31yn.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652846/demoness_seq_7_v3_nsim0l.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652849/demoness_seq_8_frwxk3.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 11: Bard / Sun -->
+                <article class="ken-path-card ken-path-sun">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770783110/Sun_Symbol2_smeglb.webp" alt="Sun Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักขับขาน</h3>
+                        <span class="ken-path-name-en">Bard / Sun</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เน้นการชำระล้างความชั่วร้าย มอบแสงสว่างและบัฟ มีพลังรุนแรงต่อสิ่งมีชีวิตประเภทยมโลก วิญญาณร้าย และความมืด</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การเรียกแสงศักดิ์สิทธิ์และไฟ</li>
+                            <li>การชำระล้าง (Purification)</li>
+                            <li>การขับขานมอบบัฟเพิ่มพลังกายและความกล้า</li>
+                            <li>การสร้างเขตแดนไร้เงา</li>
+                            <li>การสร้างตราพยาน</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1770783143/sun_seq_9_v2_jwpz1h.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652873/sun_seq_8_cfoesz.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652875/sun_seq_6_v2_acdwfn.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 12: Apothecary / Moon -->
+                <article class="ken-path-card ken-path-moon">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407581/Moon_Symbol2_xxfkrq.webp" alt="Moon Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางเภสัชกร</h3>
+                        <span class="ken-path-name-en">Apothecary / Moon</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <div class="ken-path-warning">
+                            <span class="ken-path-warning-icon">⚠️</span>
+                            <p class="ken-path-warning-text">เมื่อถึงลำดับ 1 เพศชายจะกลายเป็นเพศหญิงอย่างถาวร โปรดพิจารณาก่อนจะเลือกเส้นทางนี้</p>
+                        </div>
+                        <p class="ken-path-desc">โดดเด่นด้านพลังการรักษา การปรุงยา และมีอำนาจเหนือความอุดมสมบูรณ์ พลังผูกพันกับวัฏจักรของดวงจันทร์และธรรมชาติ</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การปรุงยาบำบัดโรคและยาเพิ่มพลัง (Buff)</li>
+                            <li>การทำให้สัตว์เชื่องและใช้งานสัตว์</li>
+                            <li>การฟื้นฟูร่างกายอย่างรวดเร็ว</li>
+                            <li>การใช้เวทมนตร์แห่งความมืด</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407595/moon_seq_9_q2damr.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652922/moon_seq_5_ilf5n9.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652924/moon_seq_8_v2_rebw12.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 13: Planter / Mother -->
+                <article class="ken-path-card ken-path-mother">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407637/Mother_Symbol2_afdigd.webp" alt="Mother Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักเพาะปลูก</h3>
+                        <span class="ken-path-name-en">Planter / Mother</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <div class="ken-path-warning">
+                            <span class="ken-path-warning-icon">⚠️</span>
+                            <p class="ken-path-warning-text">เมื่อถึงลำดับ 1 เพศชายจะกลายเป็นเพศหญิงอย่างถาวร โปรดพิจารณาก่อนจะเลือกเส้นทางนี้</p>
+                        </div>
+                        <p class="ken-path-desc">เกี่ยวพันกับชีวิต พืชพรรณ และผืนดิน เชี่ยวชาญการเยียวยารักษาร่างกายและจิตวิญญาณ รวมถึงการเพาะปลูก</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>ความรู้เรื่องพืชและสมุนไพร</li>
+                            <li>การผ่าตัดรักษาบาดแผลและวิญญาณ</li>
+                            <li>การพยากรณ์อากาศ</li>
+                            <li>พละกำลังทางกายภาพที่สูง</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407622/mother_seq_9_jwhzco.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652963/mother_seq_4_v2_w2owab.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771652966/mother_seq_2_bxs2z1.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 14: Corpse Collector / Death -->
+                <article class="ken-path-card ken-path-death">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386274/Death_Symbol2_bazus4.webp" alt="Death Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้เก็บซากศพ</h3>
+                        <span class="ken-path-name-en">Corpse Collector / Death</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">มีอำนาจเหนือคนตายและวิญญาณ สามารถต้านทานพลังงานความเย็นและการเน่าเปื่อยได้ มีออร่าที่เยือกเย็น</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การควบคุมซอมบี้และวิญญาณ</li>
+                            <li>สื่อสารกับคนตาย</li>
+                            <li>การมองเห็นจุดอ่อนของสิ่งมีชีวิต (ดวงตาแห่งความตาย)</li>
+                            <li>การเดินทางผ่านโลกวิญญาณ</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386305/death_seq_2_-_v3_jedcw1.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771649690/seq_5_death_cyvqap.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771649690/seq_7_death_tuylzk.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 15: Sleepless / Darkness -->
+                <article class="ken-path-card ken-path-darkness">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386173/Darkness_Symbol2_qzs7t2.webp" alt="Darkness Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้ไม่นิทรา</h3>
+                        <span class="ken-path-name-en">Sleepless / Darkness</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">มีพลังเกี่ยวข้องกับรัตติกาลและความเงียบสงัด แข็งแกร่งที่สุดในยามค่ำคืน เชี่ยวชาญการควบคุมความฝันและการซ่อนตัว</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การมองเห็นในความมืด</li>
+                            <li>ต้องการการนอนน้อยมาก</li>
+                            <li>การกล่อมจิตให้หลับใหลหรือสงบด้วยบทกวี</li>
+                            <li>การเข้าสู่ความฝัน</li>
+                            <li>เชี่ยวชาญการใช้ปืน</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771386207/darkness_seq_5_v2_phuxww.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653017/darkness_seq_2_%E0%B8%AD2_lsyvz9.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653019/darkness_seq_8_v2_qp4pu6.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 16: Lawyer / Black Emperor -->
+                <article class="ken-path-card ken-path-emperor">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407814/Black_Emperor_Symbol2_gm4upv.webp" alt="Black Emperor Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักกฎหมาย</h3>
+                        <span class="ken-path-name-en">Lawyer / Black Emperor</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เก่งกาจในการหาช่องโหว่ของกฎระเบียบและบิดเบือนกฎเกณฑ์เพื่อประโยชน์ของตนเอง สร้างความวุ่นวายในระเบียบที่มีอยู่</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>วาทศิลป์โน้มน้าวใจ</li>
+                            <li>การติดสินบน (Bribe)</li>
+                            <li>การบิดเบือนกฎ (Distortion)</li>
+                            <li>การใช้ประโยชน์จากกฎเกณฑ์ (Exploit)</li>
+                            <li>ร่างกายที่ทนทาน</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407864/black_emperor_seq_8_htajmr.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653055/black_emperor_seq_4_v2_jsosds.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653057/black_emperor_seq_5_dgonqv.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 17: Arbiter / Justiciar -->
+                <article class="ken-path-card ken-path-justiciar">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407811/Justiciar_Symbol2_tt9fi9.webp" alt="Justiciar Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้ตัดสิน</h3>
+                        <span class="ken-path-name-en">Arbiter / Justiciar</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">ยึดมั่นในการปกป้องระเบียบและการลงทัณฑ์ กำหนดกฎเกณฑ์ที่บังคับใช้กับผู้อื่นอย่างเด็ดขาด</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>ออร่าแห่งอำนาจที่ทำให้คนเชื่อฟัง</li>
+                            <li>การตั้งกฎและลงโทษผู้ฝ่าฝืน</li>
+                            <li>การตรวจจับความผิดปกติ</li>
+                            <li>การจดจำเป้าหมายที่เหนือธรรมชาติ</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771407841/justiciar_seq_6_v2_ao8fxu.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653073/justiciar_seq_3_utjpue.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653076/justiciar_seq_5_oy1yrl.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 18: Prisoner / Chained -->
+                <article class="ken-path-card ken-path-chained">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771408024/Chained_Symbol2_jynmlm.webp" alt="Chained Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักโทษ</h3>
+                        <span class="ken-path-name-en">Prisoner / Chained</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">สะท้อนพันธนาการและการปลดปล่อย เกี่ยวพันกับความบิดเบี้ยว คำสาป และสัญชาตญาณดิบท่ามกลางความบ้าคลั่ง</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การเป็นเจ้าแห่งการหลบหนี</li>
+                            <li>การกลายร่าง (เช่น มนุษย์หมาป่า)</li>
+                            <li>การควบคุมวิญญาณและคำสาป</li>
+                            <li>สภาวะคลุ้มคลั่งเพื่อเพิ่มพลัง</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771408076/chained_seq_5_v2_a9ipcn.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653141/chained_seq_7_v2_ljogbr.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653143/chained_seq_2_smzieq.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 19: Criminal / Abyss -->
+                <article class="ken-path-card ken-path-abyss">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771408025/Abyss_Symbol2_m8zazv.webp" alt="Abyss Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางอาชญากร</h3>
+                        <span class="ken-path-name-en">Criminal / Abyss</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">สะท้อนความปรารถนาและละโมบ เป็นเงาของปีศาจที่ทำลายล้าง มีสัญชาตญาณเฉียบคมในการทำชั่ว</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>เชี่ยวชาญอาวุธทุกชนิด</li>
+                            <li>สัญชาตญาณรับภัยแหลมคม</li>
+                            <li>ร่างกายกึ่งปีศาจ</li>
+                            <li>เวทมนตร์ปีศาจเบื้องต้น (ไฟพิษ, คำสาป)</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771408035/abyss_seq_8_phicpl.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653170/abyss_seq_3_c4waam.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653175/abyss_seq_4_dnvia3.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 20: Secrets Supplicant / Hanged Man -->
+                <article class="ken-path-card ken-path-hanged">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771321380/hangman-logo_ikwqca.webp" alt="Hanged Man Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางผู้วิงวอนความลับ</h3>
+                        <span class="ken-path-name-en">Secrets Supplicant / Hanged Man</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เกี่ยวพันกับความลึกลับ การเสื่อมสลาย และการรับรู้ทางวิญญาณที่บิดเบี้ยว สามารถกลืนกินวิญญาณและควบคุมเงา</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>การรับรู้เสียงกระซิบจากสิ่งลึกลับ</li>
+                            <li>ความรู้ด้านพิธีสังเวย</li>
+                            <li>การจัดการกับเงาและเนื้อหนัง</li>
+                            <li>การกลืนกินวิญญาณผู้อื่นเพื่อใช้ความสามารถ</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771321294/unnamed_2_a0gbab.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653430/rose_bishop_hdi9im.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653435/shepperd_e9mkl5.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+                <!-- Path 21: Reader / White Tower -->
+                <article class="ken-path-card ken-path-tower">
+                    <div class="ken-path-header">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771321966/reader-logo_f9hqqv.webp" alt="Reader Symbol" class="ken-path-logo">
+                        <h3 class="ken-path-name">เส้นทางนักอ่าน</h3>
+                        <span class="ken-path-name-en">Reader / White Tower</span>
+                    </div>
+                    <div class="ken-path-body">
+                        <p class="ken-path-desc">เป็นตัวแทนแห่งการแสวงหาความรู้ทั้งทางวิทยาศาสตร์และเวทมนตร์ เน้นการวิเคราะห์และเลียนแบบ</p>
+                        <div class="ken-path-skills-title">ทักษะและความสามารถ</div>
+                        <ul class="ken-path-skills">
+                            <li>เสริมความสามารถทางจิตใจ (วิเคราะห์, ความจำ)</li>
+                            <li>การใช้เหตุผลเชิงตรรกะ</li>
+                            <li>การเลียนแบบพลังของผู้อื่นผ่านการวิเคราะห์</li>
+                        </ul>
+                    </div>
+                    <div class="ken-path-assets">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771321926/white_tower_seq_8_kx9f68.jpg" class="ken-path-thumb" alt="Asset 1">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653234/white_tower_seq_3_rifxqy.jpg" class="ken-path-thumb" alt="Asset 2">
+                        <img src="https://res.cloudinary.com/dehp6efwc/image/upload/v1771653237/white_tower_seq_6_v4_dxr5hh.jpg" class="ken-path-thumb" alt="Asset 3">
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="ken-footer">
+        <div class="ken-container">
+            <p class="ken-footer-text">Lord of the Mysteries World Setting Fan Page</p>
+            <p class="ken-footer-text" style="font-size: 0.8rem; margin-top: 10px;">All assets and lore belong to their respective owners.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
