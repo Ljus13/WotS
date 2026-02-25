@@ -1,11 +1,2 @@
-# dependencies
-node_modules/
-
-# build output
-/dist/
-
-# local env files
-.env
-
-# misc
+# temporary files
 .DS_Store
