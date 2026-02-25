@@ -285,3 +285,18 @@
             .ken-card-title { font-size: 1.6em; }
             .ken-wrapper { padding: 10px; }
         }
+
+/* button link style */
+.ken-button {
+    display: inline-block;
+    background: var(--ken-color-accent);
+    color: var(--ken-color-bg);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--ken-radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.ken-button:hover {
+    background: var(--ken-color-accent-dim);
+}
