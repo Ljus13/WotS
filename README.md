@@ -11,7 +11,7 @@ npm run build          # bundle for production
 npm run serve          # preview production build
 ```
 
-Configuration lives in `vite.config.js` if needed, but the default settings are sufficient for plain HTML/CSS.
+Configuration lives in `vite.config.js` if needed, but the default settings are sufficient for plain HTML/CSS.  We disable the `publicDir` so that Vite doesn’t try to copy the entire project root (including `.git`) into the build output.
 
 ## Tailwind CSS
 
