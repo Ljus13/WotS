@@ -1,5 +1,247 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Niramit:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;600&family=Mitr:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
+
+.ken-code-test-wrapper {
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 1rem;
+            font-family: 'Kanit', sans-serif;
+            box-sizing: border-box;
+            /* เพิ่ม Container Type เพื่อให้ปรับตัวตามกรอบของเว็บบอร์ด */
+            container-type: inline-size; 
+            container-name: kencode; /* ตั้งชื่อให้ container เพื่อความแม่นยำ */
+        }
+
+        .ken-code-test-glass-box {
+            position: relative;
+            background-color: #020b1e;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(0, 229, 255, 0.05);
+            border-radius: clamp(1rem, 3vw, 2rem);
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap; /* สำคัญมาก: ถ้าเว็บบอร์ดแคบ ให้ปัดของลงมาเรียงกัน */
+            align-items: center;
+            justify-content: space-between;
+            /* ใช้ clamp จัดการ Padding ให้ยืดหยุ่น ห้ามใช้ค่า px ตายตัวใหญ่ๆ */
+            padding: clamp(20px, 5%, 60px) clamp(20px, 8%, 80px); 
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        .ken-code-test-glass-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://res.cloudinary.com/dehp6efwc/image/upload/v1772069875/coding_bg_zwbbqv.webp');
+            background-size: cover;
+            background-position: center; /* ตำแหน่งปกติสำหรับ Desktop */
+            opacity: 0.2;
+            z-index: 0;
+            pointer-events: none;
+            transition: background-position 0.3s ease;
+        }
+
+        .ken-code-test-glass-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(0, 229, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ken-code-test-left-content {
+            flex: 1 1 350px; /* เพิ่มพื้นที่ตั้งต้น หากกล่องแคบกว่านี้จะบังคับตัดบรรทัดทันที */
+            z-index: 10;
+            position: relative;
+        }
+
+        .ken-code-test-title-text {
+            color: #00e5ff;
+            text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+            letter-spacing: -0.02em;
+            font-size: clamp(3rem, 8cqw, 6rem); 
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            line-height: 1.1;
+            /* เพิ่ม !important บังคับไม่ให้เว็บบอร์ดตัดคำ */
+            white-space: nowrap !important; 
+            word-break: keep-all !important;
+        }
+
+        .ken-code-test-subtitle {
+            color: #00e5ff;
+            opacity: 0.7;
+            font-size: clamp(0.7rem, 2cqw, 1rem);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+        }
+
+        .ken-code-test-right-content {
+            flex: 1 1 250px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .ken-code-test-graphic-container {
+            position: relative;
+            width: clamp(150px, 25cqw, 256px); 
+            aspect-ratio: 1 / 1; /* บังคับให้เป็นสี่เหลี่ยมจัตุรัสเสมอ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0; /* ป้องกันไม่ให้โดนบีบจนเสียทรง */
+        }
+
+        .ken-code-test-neon-code {
+            font-family: 'Fira Code', monospace;
+            color: #00e5ff;
+            font-weight: 700;
+            font-size: clamp(3rem, 15cqw, 7rem);
+            line-height: 1;
+            user-select: none;
+            
+            /* คำสั่งสำคัญมาก! ล็อกกุญแจไม่ให้ตัวหนังสือเพี้ยนหรือโดนตัดคำตกบรรทัด */
+            white-space: nowrap !important;
+            word-break: keep-all !important; 
+            min-width: max-content; /* บังคับให้พื้นที่พอกับตัวอักษรเสมอ */
+            
+            text-shadow:
+                0 0 10px rgba(0, 229, 255, 0.4),
+                0 0 20px rgba(0, 229, 255, 0.6),
+                0 0 40px rgba(0, 229, 255, 0.8),
+                0 0 80px rgba(0, 229, 255, 1);
+            animation: ken-code-test-pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes ken-code-test-pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.6); }
+            100% { text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.8), 0 0 50px rgba(0, 229, 255, 1), 0 0 90px rgba(0, 229, 255, 0.8); }
+        }
+
+        .ken-code-test-tech-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 229, 255, 0.2);
+            background: repeating-radial-gradient(
+                circle,
+                transparent,
+                transparent 15px,
+                rgba(0, 229, 255, 0.03) 15px,
+                rgba(0, 229, 255, 0.03) 20px
+            );
+            z-index: -1;
+            animation: ken-code-test-spinSlow 40s linear infinite;
+        }
+
+        .ken-code-test-tech-rings::after {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            right: -10%;
+            bottom: -10%;
+            border-radius: 50%;
+            border: 1px dotted rgba(0, 229, 255, 0.4);
+            animation: ken-code-test-spinSlowReverse 30s linear infinite;
+        }
+
+        @keyframes ken-code-test-spinSlow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes ken-code-test-spinSlowReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        /* --------------------------------------
+           ระบบ Responsive จัดการการเรียงซ้อน (Stacking) เมื่อพื้นที่แคบ
+        --------------------------------------- */
+        
+        /* ใช้ @container ตรวจจับขนาดกล่องโดยตรง (แม่นยำมากเมื่อฝังในเว็บบอร์ด) */
+        @container kencode (max-width: 700px) {
+            .ken-code-test-glass-box {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 20px;
+                gap: 20px; /* ลดช่องว่างไม่ให้ห่างเกินไป */
+            }
+            .ken-code-test-glass-box::before {
+                /* เลื่อนภาพพื้นหลังไปทางซ้าย เพื่อซ่อนลาย </ > ในรูปภาพ ไม่ให้มาโผล่ตรงกลาง */
+                background-position: 20% center !important; 
+            }
+            .ken-code-test-left-content,
+            .ken-code-test-right-content {
+                /* คำสั่งนี้แก้ปัญหาความสูงทะลุโลก! รีเซ็ต flex ไม่ให้มันเอา 350px ไปทำเป็นความสูง */
+                flex: 0 0 auto !important; 
+                width: 100%;
+            }
+            .ken-code-test-graphic-container {
+                width: clamp(140px, 40cqw, 200px);
+                margin-top: 10px;
+            }
+            .ken-code-test-title-text {
+                font-size: clamp(3rem, 15cqw, 4.5rem);
+            }
+            .ken-code-test-neon-code {
+                font-size: clamp(3.5rem, 20cqw, 5.5rem);
+            }
+        }
+
+        /* Fallback Media Query เผื่อบราวเซอร์เก่าไม่รองรับ Container Query */
+        @media (max-width: 700px) {
+            .ken-code-test-glass-box {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 20px;
+                gap: 20px;
+            }
+            .ken-code-test-glass-box::before {
+                background-position: 20% center !important; 
+            }
+            .ken-code-test-left-content,
+            .ken-code-test-right-content {
+                flex: 0 0 auto !important; 
+                width: 100%;
+            }
+            .ken-code-test-graphic-container {
+                width: 180px;
+                margin-top: 10px;
+            }
+            .ken-code-test-title-text {
+                font-size: 3.5rem;
+            }
+            .ken-code-test-neon-code {
+                font-size: 4.5rem; 
+            }
+        }
 
 /* ==================================================
    Core: Red Hood box — layout, dimensions, visuals
