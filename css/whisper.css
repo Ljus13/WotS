@@ -351,10 +351,10 @@
 .ken-button {
     display: inline-block;
     background: var(--ken-color-accent);
-    color: #0b0b0f;
+    color: #3f1d0b !important;
     padding: 0.75rem 1.5rem;
     border-radius: var(--ken-radius-sm);
-    text-decoration: none;
+    text-decoration: none !important;
     font-weight: 600;
     transition: background 0.2s;
 }
