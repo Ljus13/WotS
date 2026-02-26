@@ -2,12 +2,13 @@
         
         .ken-code-test-wrapper {
             width: 100%;
-            max-width: 960px;
+            max-width: 1024px;
             margin: 0 auto;
             padding: 1rem;
             font-family: 'Kanit', sans-serif;
             box-sizing: border-box;
             container-type: inline-size; 
+            container-name: kencode;
         }
 
         .ken-code-test-glass-box {
@@ -20,7 +21,7 @@
             border-radius: clamp(1rem, 3vw, 2rem);
             overflow: hidden;
             display: flex;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             padding: clamp(20px, 5%, 60px) clamp(20px, 8%, 80px); 
@@ -41,6 +42,7 @@
             opacity: 0.2;
             z-index: 0;
             pointer-events: none;
+            transition: background-position 0.3s ease;
         }
 
         .ken-code-test-glass-box::after {
@@ -56,7 +58,7 @@
         }
 
         .ken-code-test-left-content {
-            flex: 1 1 250px;
+            flex: 1 1 350px;
             z-index: 10;
             position: relative;
         }
@@ -69,7 +71,8 @@
             font-weight: 700;
             margin: 0 0 8px 0;
             line-height: 1.1;
-            white-space: nowrap;
+            white-space: nowrap !important; 
+            word-break: keep-all !important;
         }
 
         .ken-code-test-subtitle {
@@ -80,11 +83,12 @@
             text-transform: uppercase;
             font-weight: 600;
             margin: 0;
-            white-space: nowrap;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
         }
 
         .ken-code-test-right-content {
-            flex: 0 1 auto;
+            flex: 1 1 250px; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -94,20 +98,25 @@
 
         .ken-code-test-graphic-container {
             position: relative;
-            width: clamp(120px, 20cqw, 256px); 
+            width: clamp(150px, 25cqw, 256px); 
             aspect-ratio: 1 / 1; 
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-shrink: 0; 
         }
 
         .ken-code-test-neon-code {
             font-family: 'Fira Code', monospace;
             color: #00e5ff;
             font-weight: 700;
-            font-size: clamp(3.5rem, 25cqw, 8rem);
+            font-size: clamp(3rem, 15cqw, 7rem);
             line-height: 1;
             user-select: none;
+            white-space: nowrap !important;
+            word-break: keep-all !important; 
+            min-width: max-content; 
+            
             text-shadow:
                 0 0 10px rgba(0, 229, 255, 0.4),
                 0 0 20px rgba(0, 229, 255, 0.6),
@@ -162,26 +171,59 @@
             from { transform: rotate(360deg); }
             to { transform: rotate(0deg); }
         }
-
-        /* Fallback Media Query */
-        @media (max-width: 600px) {
+        
+        @container kencode (max-width: 700px) {
             .ken-code-test-glass-box {
                 flex-direction: column;
                 justify-content: center;
                 text-align: center;
-                padding: 30px 20px;
+                padding: 40px 20px;
+                gap: 20px;
             }
-            .ken-code-test-left-content {
-                flex: 0 1 auto;
-                margin-bottom: 20px;
+            .ken-code-test-glass-box::before {
+                background-position: 20% center !important; 
+            }
+            .ken-code-test-left-content,
+            .ken-code-test-right-content {
+                flex: 0 0 auto !important; 
+                width: 100%;
             }
             .ken-code-test-graphic-container {
-                width: 160px;
+                width: clamp(140px, 40cqw, 200px);
+                margin-top: 10px;
+            }
+            .ken-code-test-title-text {
+                font-size: clamp(3rem, 15cqw, 4.5rem);
+            }
+            .ken-code-test-neon-code {
+                font-size: clamp(3.5rem, 20cqw, 5.5rem);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .ken-code-test-glass-box {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 20px;
+                gap: 20px;
+            }
+            .ken-code-test-glass-box::before {
+                background-position: 20% center !important; 
+            }
+            .ken-code-test-left-content,
+            .ken-code-test-right-content {
+                flex: 0 0 auto !important; 
+                width: 100%;
+            }
+            .ken-code-test-graphic-container {
+                width: 180px;
+                margin-top: 10px;
             }
             .ken-code-test-title-text {
                 font-size: 3.5rem;
             }
             .ken-code-test-neon-code {
-                font-size: 4.5rem;
+                font-size: 4.5rem; 
             }
         }
