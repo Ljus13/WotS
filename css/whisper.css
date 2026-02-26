@@ -4,6 +4,12 @@
 /* =========================================
            ken- Prefix Scoped CSS
            ========================================= */
+:root {
+    --ken-color-accent: #d4af37;
+    --ken-color-accent-dim: #b58f2a;
+    --ken-color-bg: #0b0b0f;
+    --ken-radius-sm: 8px;
+}
         .ken-wrapper {
             font-family: 'Sarabun', sans-serif;
             font-size: 16px;
@@ -73,6 +79,10 @@
             width: 100%;
             padding: 20px;
             margin-top: 150px; /* Push text down to let video show */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
         }
         .ken-hero-logo {
             max-width: 90%;
@@ -107,6 +117,40 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             overflow: hidden;
         }
+
+        /* Center card video background (character-creator) */
+        .ken-card--center {
+            position: relative;
+            overflow: hidden;
+        }
+        .ken-card--center .ken-card-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transform: scale(1.05);
+            filter: brightness(0.35) contrast(0.9);
+        }
+        .ken-card--center .ken-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(11,11,15,0.25) 0%, rgba(11,11,15,0.6) 100%);
+            z-index: 2;
+        }
+        .ken-card--center .ken-card-body {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 220px;
+            padding: 40px;
+            color: #f5f5f5;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
         .ken-card-img-wrapper {
             position: relative;
             width: 100%;
@@ -129,6 +173,20 @@
         .ken-card-body.ken-no-img {
             padding-top: 35px;
         }
+
+            /* Apply negative title pull-up only when there's an image above the body */
+            .ken-card-img-wrapper + .ken-card-body .ken-card-title {
+                margin-top: -30px; /* Pull up into the fade */
+            }
+            /* Centered card variant for plain content (no image) */
+            .ken-card.ken-card--center .ken-card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 200px;
+                padding: 40px;
+            }
         
         .ken-card-title {
             color: #d4af37;
@@ -290,7 +348,7 @@
 .ken-button {
     display: inline-block;
     background: var(--ken-color-accent);
-    color: var(--ken-color-bg);
+    color: #0b0b0f;
     padding: 0.75rem 1.5rem;
     border-radius: var(--ken-radius-sm);
     text-decoration: none;
