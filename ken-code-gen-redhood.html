@@ -110,14 +110,6 @@
                                 <input type="range" v-model.number="form.maxWidth" min="1024" max="1250" step="1" class="w-full">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-gray-500 mb-2 uppercase">ความสูงขอบบน/ล่าง (edge height): <span class="font-bold">{{ form.edgeHeight }}px</span></label>
-                                <input type="range" v-model.number="form.edgeHeight" min="40" max="240" step="1" class="w-full">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] text-gray-500 mb-2 uppercase">ความกว้างขอบซ้าย/ขวา (edge width): <span class="font-bold">{{ form.edgeWidth }}px</span></label>
-                                <input type="range" v-model.number="form.edgeWidth" min="40" max="240" step="1" class="w-full">
-                            </div>
-                            <div>
                                 <label class="block text-[10px] text-gray-500 mb-2 uppercase">เลือกฟอนต์</label>
                                 <select v-model="form.fontFamily" class="w-full bg-[#0c0807] border border-[#3b2a25] rounded-lg p-2 text-[#eaddcf]">
                                     <option value="'Niramit', sans-serif">Niramit</option>
@@ -247,8 +239,6 @@
                 maxWidth: 1250,
                 fontFamily: "'Niramit', sans-serif",
                 fontSize: 18,
-                edgeWidth: 120,
-                edgeHeight: 120,
                 note: 'โรลเพลย์ได้เลยครับ',
                 msgHTML: '<p>เสียงย่ำเท้าลงบนใบไม้แห้งดังก้องไปทั่วอาณาบริเวณที่เงียบสงัด ฮู้ดสีแดงสดตัดกับความมืดมิดของป่าสนทึบสะบัดพลิ้วไปตามแรงลมที่พัดผ่าน...</p><p><br></p><p><em>*เธอหยุดชะงักฝีเท้า ค่อยๆ ลดตะกร้าลง สัญชาตญาณบางอย่างร้องเตือนให้ระวังภัยที่ซ่อนเร้นอยู่ในเงามืด*</em></p>'
             };
@@ -264,7 +254,9 @@
                 const targetWidth = Math.max(1024, Number(form.maxWidth) || 1024);
                 const margin = 40;
                 const available = containerWidth.value - margin;
-                const s = available < targetWidth ? available / targetWidth : 1;
+                // don't let preview scale get too small on narrow screens — keep readable
+                const raw = available < targetWidth ? available / targetWidth : 1;
+                const s = Math.max(0.65, Math.min(1, raw));
                 return {
                     transform: `scale(${s})`,
                     height: contentHeight.value > 0 ? (contentHeight.value * s) + 'px' : 'auto',
@@ -272,12 +264,7 @@
                     maxWidth: targetWidth + 'px',
                     width: '100%',
                     ['--redhood-font-family']: form.fontFamily || "'Niramit', sans-serif",
-                    ['--redhood-font-size']: (form.fontSize ? form.fontSize + 'px' : '18px'),
-                    ['--redhood-edge-width']: (form.edgeWidth ? form.edgeWidth + 'px' : '120px'),
-                    ['--redhood-edge-height']: (form.edgeHeight ? form.edgeHeight + 'px' : '120px'),
-                    /* narrow variants are computed as 80% of main value for preview responsiveness */
-                    ['--redhood-edge-width-narrow']: Math.round((form.edgeWidth || 120) * 0.8) + 'px',
-                    ['--redhood-edge-height-narrow']: Math.round((form.edgeHeight || 120) * 0.8) + 'px'
+                    ['--redhood-font-size']: (form.fontSize ? form.fontSize + 'px' : '18px')
                 };
             });
 
@@ -308,11 +295,7 @@
                 const exportMax = Number(form.maxWidth) || 1250;
                 const fontFamilyExport = form.fontFamily || "'Niramit', sans-serif";
                 const fontSizeExport = (form.fontSize ? form.fontSize + 'px' : '18px');
-                const edgeW = (form.edgeWidth ? form.edgeWidth + 'px' : '120px');
-                const edgeH = (form.edgeHeight ? form.edgeHeight + 'px' : '120px');
-                const edgeWn = Math.round((form.edgeWidth || 120) * 0.8) + 'px';
-                const edgeHn = Math.round((form.edgeHeight || 120) * 0.8) + 'px';
-                const scalingStyle = `<style>.ken-redhood26-box{width:100% !important;min-width:1024px !important;max-width:${exportMax}px !important;min-height:1024px !important;box-sizing:border-box;--redhood-font-family:${fontFamilyExport};--redhood-font-size:${fontSizeExport};--redhood-edge-width:${edgeW};--redhood-edge-height:${edgeH};--redhood-edge-width-narrow:${edgeWn};--redhood-edge-height-narrow:${edgeHn}}@media(max-width:1024px){.ken-redhood26-box{min-width:0 !important;width:100% !important}}</style>`;
+                const scalingStyle = `<style>.ken-redhood26-box{width:100% !important;min-width:1024px !important;max-width:${exportMax}px !important;min-height:1024px !important;box-sizing:border-box;--redhood-font-family:${fontFamilyExport};--redhood-font-size:${fontSizeExport}}@media(max-width:1024px){.ken-redhood26-box{min-width:0 !important;width:100% !important}}</style>`;
 
                 const notes = form.note.trim() !== '' ? `<div class="ken-redhood26-notes"><div class="ken-redhood26-notes-bg-icon">&ldquo;</div><div class="ken-redhood26-notes-inner"><svg class="ken-redhood26-notes-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg><div><span class="ken-redhood26-notes-title">หมายเหตุ:</span><span class="ken-redhood26-notes-desc">${form.note}</span></div></div></div>` : '';
 

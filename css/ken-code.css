@@ -257,12 +257,6 @@
             /* เงาของกล่อง */
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.2);
             
-            /* ตัวแปรขอบมุม/ขอบกลาง — สามารถถูกเขียนทับจากตัวสร้าง (generator) ได้ */
-            --redhood-edge-width: 120px; /* ความกว้างแนวตั้งของขอบซ้าย/ขวา */
-            --redhood-edge-height: 120px; /* ความสูงแนวนอนของขอบบน/ล่าง */
-            --redhood-edge-width-narrow: 96px; /* ค่าเมื่อกล่องแคบ */
-            --redhood-edge-height-narrow: 96px; /* ค่าเมื่อกล่องแคบ */
-
             /* รภาพทั้ง 8 มุม */
             background-image: 
                 url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_01.png"), /* ซ้ายบน */
@@ -535,3 +529,22 @@
             @media (max-width: 390px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.35); transform-origin: top center; } }
             @media (max-width: 340px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.30); transform-origin: top center; } }
         }
+
+/* Small screens: move name below avatar and reduce sizes so layout reads better on narrow viewports */
+@media (max-width: 480px) {
+    .ken-redhood26-profile-section {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+    }
+    .ken-redhood26-name {
+        font-size: 1.3rem;
+        text-align: center;
+        max-width: none;
+    }
+    .ken-redhood26-avatar {
+        width: 160px;
+        height: 160px;
+    }
+}
