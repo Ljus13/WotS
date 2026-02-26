@@ -1,0 +1,123 @@
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
+
+        /* กล่องหลัก */
+        .ken-code-test-glass-box {
+            position: relative;
+            background-color: #020b1e;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(0, 229, 255, 0.05);
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+
+        /* ภาพพื้นหลัง */
+        .ken-code-test-glass-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://res.cloudinary.com/dehp6efwc/image/upload/v1772069875/coding_bg_zwbbqv.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2; /* ความจางของภาพพื้นหลัง */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* แสงสะท้อนมุมซ้ายบนของกล่อง */
+        .ken-code-test-glass-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(0, 229, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ตัวหนังสือ Coding */
+        .ken-code-test-title-text {
+            color: #00e5ff;
+            text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+            letter-spacing: -0.02em;
+        }
+
+        /* สัญลักษณ์ </ > เรืองแสง*/
+        .ken-code-test-neon-code {
+            font-family: 'Fira Code', monospace;
+            color: #00e5ff;
+            font-weight: 700;
+            text-shadow:
+                0 0 10px rgba(0, 229, 255, 0.4),
+                0 0 20px rgba(0, 229, 255, 0.6),
+                0 0 40px rgba(0, 229, 255, 0.8),
+                0 0 80px rgba(0, 229, 255, 1);
+            animation: ken-code-test-pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        /* แอนิเมชัน */
+        @keyframes ken-code-test-pulseGlow {
+            0% {
+                text-shadow:
+                    0 0 10px rgba(0, 229, 255, 0.4),
+                    0 0 20px rgba(0, 229, 255, 0.5),
+                    0 0 30px rgba(0, 229, 255, 0.6);
+            }
+            100% {
+                text-shadow:
+                    0 0 15px rgba(0, 229, 255, 0.6),
+                    0 0 30px rgba(0, 229, 255, 0.8),
+                    0 0 50px rgba(0, 229, 255, 1),
+                    0 0 90px rgba(0, 229, 255, 0.8);
+            }
+        }
+
+        /* วงแหวนด้านหลัง </ > */
+        .ken-code-test-tech-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 229, 255, 0.2);
+            background: repeating-radial-gradient(
+                circle,
+                transparent,
+                transparent 15px,
+                rgba(0, 229, 255, 0.03) 15px,
+                rgba(0, 229, 255, 0.03) 20px
+            );
+            z-index: -1;
+            animation: ken-code-test-spinSlow 40s linear infinite;
+        }
+
+        /* วงแหวนชั้นที่ 2 */
+        .ken-code-test-tech-rings::after {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            right: -10%;
+            bottom: -10%;
+            border-radius: 50%;
+            border: 1px dotted rgba(0, 229, 255, 0.4);
+            animation: ken-code-test-spinSlowReverse 30s linear infinite;
+        }
+
+        @keyframes ken-code-test-spinSlow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes ken-code-test-spinSlowReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
