@@ -274,7 +274,18 @@
             background-repeat: 
                 no-repeat, no-repeat, no-repeat, no-repeat,
                 repeat-x, repeat-x, repeat-y, repeat-y;
-            background-size: auto;
+            /* Make decorative corner/edge art scale with the box width/height
+               - corners use percentage width so they shrink/grow with box
+               - top/bottom center strips use full width with a fixed height
+               - left/right center strips use a fixed width and full height
+            */
+            /* default: scale every decorative asset as a percentage of the box width
+               so all 8 images change size together. Height stays auto to preserve aspect.
+               Use --redhood-deco-scale to tweak globally. */
+            --redhood-deco-scale: 20%;
+            background-size:
+                var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto,
+                var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto;
             border-radius: 4px; 
             margin: 0 auto;
         }
@@ -489,6 +500,17 @@
         width: 100% !important;
     }
     .ken-redhood26-credit { max-width: 100% !important; }
+}
+
+/* Reduce decorative artwork sizes on narrower boxes to avoid overlap */
+@media (max-width: 1250px) {
+    .ken-redhood26-box {
+        /* scale down the global decoration size a bit on narrower boxes */
+        --redhood-deco-scale: 16%;
+        background-size:
+            var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto,
+            var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto;
+    }
 }
 
         /* * ==========================================
