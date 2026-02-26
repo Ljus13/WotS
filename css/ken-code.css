@@ -1,6 +1,6 @@
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
-
-        .ken-code-test-wrapper {
+         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
+        
+         .ken-code-test-wrapper {
             width: 100%;
             max-width: 1024px;
             margin: 0 auto;
@@ -9,7 +9,7 @@
             box-sizing: border-box;
         }
 
-        /* กล่องเนื้อหาหลัก */
+        /* กล่องเนื้อหาหลัก*/
         .ken-code-test-glass-box {
             position: relative;
             background-color: #020b1e;
@@ -23,7 +23,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            padding: 80px;
+            padding: 80px; /* ขนาดใหญ่แบบดั้งเดิม */
             gap: 32px;
             box-sizing: border-box;
         }
@@ -169,12 +169,13 @@
             to { transform: rotate(0deg); }
         }
 
-        /* Responsive */
+        /* รองรับหน้าจอแท็บเล็ตและมือถือแนวตั้ง (Responsive) */
         @media (max-width: 768px) {
             .ken-code-test-glass-box {
                 flex-direction: column;
                 padding: 40px;
                 text-align: center;
+                gap: 0;
             }
             .ken-code-test-title-text {
                 font-size: 4rem;
@@ -186,5 +187,29 @@
             }
             .ken-code-test-neon-code {
                 font-size: 6rem;
+            }
+        }
+
+        /* รองรับหน้าจอมือถือขนาดเล็กมาก (Mobile Small) */
+        @media (max-width: 480px) {
+            .ken-code-test-glass-box {
+                padding: 32px 20px;
+                border-radius: 1.5rem;
+            }
+            .ken-code-test-title-text {
+                font-size: 3rem;
+                margin-bottom: 8px;
+            }
+            .ken-code-test-subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 0.1em;
+            }
+            .ken-code-test-graphic-container {
+                width: 140px;
+                height: 140px;
+                margin-top: 24px;
+            }
+            .ken-code-test-neon-code {
+                font-size: 4.5rem;
             }
         }
