@@ -1,15 +1,15 @@
          @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
         
-         .ken-code-test-wrapper {
+        .ken-code-test-wrapper {
             width: 100%;
-            max-width: 1024px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 1rem;
             font-family: 'Kanit', sans-serif;
             box-sizing: border-box;
+            container-type: inline-size; 
         }
 
-        /* กล่องเนื้อหาหลัก*/
         .ken-code-test-glass-box {
             position: relative;
             background-color: #020b1e;
@@ -17,18 +17,17 @@
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.5),
                 inset 0 0 20px rgba(0, 229, 255, 0.05);
-            border-radius: 2rem;
+            border-radius: clamp(1rem, 3vw, 2rem);
             overflow: hidden;
             display: flex;
-            flex-direction: row;
+            flex-wrap: wrap; 
             align-items: center;
             justify-content: space-between;
-            padding: 80px; /* ขนาดใหญ่แบบดั้งเดิม */
-            gap: 32px;
+            padding: clamp(20px, 5%, 60px) clamp(20px, 8%, 80px); 
+            gap: 20px;
             box-sizing: border-box;
         }
 
-        /* ภาพพื้นหลังแบบโปร่งใส */
         .ken-code-test-glass-box::before {
             content: '';
             position: absolute;
@@ -44,7 +43,6 @@
             pointer-events: none;
         }
 
-        /* แสงสะท้อนมุมบนซ้าย */
         .ken-code-test-glass-box::after {
             content: '';
             position: absolute;
@@ -57,9 +55,8 @@
             z-index: 1;
         }
 
-        /* ส่วนข้อความด้านซ้าย */
         .ken-code-test-left-content {
-            flex: 1;
+            flex: 1 1 250px;
             z-index: 10;
             position: relative;
         }
@@ -68,25 +65,26 @@
             color: #00e5ff;
             text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
             letter-spacing: -0.02em;
-            font-size: 6rem; /* ตัวอักษรใหญ่ */
+            font-size: clamp(3rem, 8cqw, 6rem); 
             font-weight: 700;
-            margin: 0 0 16px 0;
-            line-height: 1;
+            margin: 0 0 8px 0;
+            line-height: 1.1;
+            white-space: nowrap;
         }
 
         .ken-code-test-subtitle {
             color: #00e5ff;
             opacity: 0.7;
-            font-size: 1rem;
+            font-size: clamp(0.7rem, 2cqw, 1rem);
             letter-spacing: 0.15em;
             text-transform: uppercase;
             font-weight: 600;
             margin: 0;
+            white-space: nowrap;
         }
 
-        /* ส่วนกราฟิกด้านขวา */
         .ken-code-test-right-content {
-            flex: 1;
+            flex: 0 1 auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -96,8 +94,8 @@
 
         .ken-code-test-graphic-container {
             position: relative;
-            width: 256px;
-            height: 256px;
+            width: clamp(120px, 20cqw, 256px); 
+            aspect-ratio: 1 / 1; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -107,7 +105,7 @@
             font-family: 'Fira Code', monospace;
             color: #00e5ff;
             font-weight: 700;
-            font-size: 8rem; 
+            font-size: clamp(3.5rem, 25cqw, 8rem);
             line-height: 1;
             user-select: none;
             text-shadow:
@@ -119,12 +117,8 @@
         }
 
         @keyframes ken-code-test-pulseGlow {
-            0% {
-                text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.6);
-            }
-            100% {
-                text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.8), 0 0 50px rgba(0, 229, 255, 1), 0 0 90px rgba(0, 229, 255, 0.8);
-            }
+            0% { text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.6); }
+            100% { text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.8), 0 0 50px rgba(0, 229, 255, 1), 0 0 90px rgba(0, 229, 255, 0.8); }
         }
 
         .ken-code-test-tech-rings {
@@ -169,45 +163,23 @@
             to { transform: rotate(0deg); }
         }
 
-        /* รองรับหน้าจอแท็บเล็ตและมือถือแนวตั้ง (Responsive) */
-        @media (max-width: 768px) {
+        /* Fallback Media Query */
+        @media (max-width: 600px) {
             .ken-code-test-glass-box {
                 flex-direction: column;
-                padding: 40px;
+                justify-content: center;
                 text-align: center;
-                gap: 0;
+                padding: 30px 20px;
             }
-            .ken-code-test-title-text {
-                font-size: 4rem;
-            }
-            .ken-code-test-graphic-container {
-                width: 192px;
-                height: 192px;
-                margin-top: 32px;
-            }
-            .ken-code-test-neon-code {
-                font-size: 6rem;
-            }
-        }
-
-        /* รองรับหน้าจอมือถือขนาดเล็กมาก (Mobile Small) */
-        @media (max-width: 480px) {
-            .ken-code-test-glass-box {
-                padding: 32px 20px;
-                border-radius: 1.5rem;
-            }
-            .ken-code-test-title-text {
-                font-size: 3rem;
-                margin-bottom: 8px;
-            }
-            .ken-code-test-subtitle {
-                font-size: 0.8rem;
-                letter-spacing: 0.1em;
+            .ken-code-test-left-content {
+                flex: 0 1 auto;
+                margin-bottom: 20px;
             }
             .ken-code-test-graphic-container {
-                width: 140px;
-                height: 140px;
-                margin-top: 24px;
+                width: 160px;
+            }
+            .ken-code-test-title-text {
+                font-size: 3.5rem;
             }
             .ken-code-test-neon-code {
                 font-size: 4.5rem;
