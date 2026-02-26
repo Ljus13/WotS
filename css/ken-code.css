@@ -282,7 +282,7 @@
             /* default: scale every decorative asset as a percentage of the box width
                so all 8 images change size together. Height stays auto to preserve aspect.
                Use --redhood-deco-scale to tweak globally. */
-            --redhood-deco-scale: 20%;
+            --redhood-deco-scale: 40%;
             background-size:
                 var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto,
                 var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto;
@@ -506,7 +506,7 @@
 @media (max-width: 1250px) {
     .ken-redhood26-box {
         /* scale down the global decoration size a bit on narrower boxes */
-        --redhood-deco-scale: 16%;
+        --redhood-deco-scale: 35%;
         background-size:
             var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto,
             var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto, var(--redhood-deco-scale) auto;
