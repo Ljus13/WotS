@@ -1,6 +1,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
 
-        /* กล่องหลัก */
+        .ken-code-test-wrapper {
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 1rem;
+            font-family: 'Kanit', sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* กล่องเนื้อหาหลัก */
         .ken-code-test-glass-box {
             position: relative;
             background-color: #020b1e;
@@ -10,9 +19,16 @@
                 inset 0 0 20px rgba(0, 229, 255, 0.05);
             border-radius: 2rem;
             overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px;
+            gap: 32px;
+            box-sizing: border-box;
         }
 
-        /* ภาพพื้นหลัง */
+        /* ภาพพื้นหลังแบบโปร่งใส */
         .ken-code-test-glass-box::before {
             content: '';
             position: absolute;
@@ -23,12 +39,12 @@
             background-image: url('https://res.cloudinary.com/dehp6efwc/image/upload/v1772069875/coding_bg_zwbbqv.webp');
             background-size: cover;
             background-position: center;
-            opacity: 0.2; /* ความจางของภาพพื้นหลัง */
+            opacity: 0.2;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* แสงสะท้อนมุมซ้ายบนของกล่อง */
+        /* แสงสะท้อนมุมบนซ้าย */
         .ken-code-test-glass-box::after {
             content: '';
             position: absolute;
@@ -41,18 +57,59 @@
             z-index: 1;
         }
 
-        /* ตัวหนังสือ Coding */
+        /* ส่วนข้อความด้านซ้าย */
+        .ken-code-test-left-content {
+            flex: 1;
+            z-index: 10;
+            position: relative;
+        }
+
         .ken-code-test-title-text {
             color: #00e5ff;
             text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
             letter-spacing: -0.02em;
+            font-size: 6rem; /* ตัวอักษรใหญ่ */
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            line-height: 1;
         }
 
-        /* สัญลักษณ์ </ > เรืองแสง*/
+        .ken-code-test-subtitle {
+            color: #00e5ff;
+            opacity: 0.7;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* ส่วนกราฟิกด้านขวา */
+        .ken-code-test-right-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .ken-code-test-graphic-container {
+            position: relative;
+            width: 256px;
+            height: 256px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .ken-code-test-neon-code {
             font-family: 'Fira Code', monospace;
             color: #00e5ff;
             font-weight: 700;
+            font-size: 8rem; 
+            line-height: 1;
+            user-select: none;
             text-shadow:
                 0 0 10px rgba(0, 229, 255, 0.4),
                 0 0 20px rgba(0, 229, 255, 0.6),
@@ -61,31 +118,22 @@
             animation: ken-code-test-pulseGlow 3s ease-in-out infinite alternate;
         }
 
-        /* แอนิเมชัน */
         @keyframes ken-code-test-pulseGlow {
             0% {
-                text-shadow:
-                    0 0 10px rgba(0, 229, 255, 0.4),
-                    0 0 20px rgba(0, 229, 255, 0.5),
-                    0 0 30px rgba(0, 229, 255, 0.6);
+                text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.6);
             }
             100% {
-                text-shadow:
-                    0 0 15px rgba(0, 229, 255, 0.6),
-                    0 0 30px rgba(0, 229, 255, 0.8),
-                    0 0 50px rgba(0, 229, 255, 1),
-                    0 0 90px rgba(0, 229, 255, 0.8);
+                text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.8), 0 0 50px rgba(0, 229, 255, 1), 0 0 90px rgba(0, 229, 255, 0.8);
             }
         }
 
-        /* วงแหวนด้านหลัง </ > */
         .ken-code-test-tech-rings {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 120%;
-            aspect-ratio: 1/1;
+            height: 120%;
             border-radius: 50%;
             border: 2px dashed rgba(0, 229, 255, 0.2);
             background: repeating-radial-gradient(
@@ -99,7 +147,6 @@
             animation: ken-code-test-spinSlow 40s linear infinite;
         }
 
-        /* วงแหวนชั้นที่ 2 */
         .ken-code-test-tech-rings::after {
             content: '';
             position: absolute;
@@ -120,4 +167,24 @@
         @keyframes ken-code-test-spinSlowReverse {
             from { transform: rotate(360deg); }
             to { transform: rotate(0deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ken-code-test-glass-box {
+                flex-direction: column;
+                padding: 40px;
+                text-align: center;
+            }
+            .ken-code-test-title-text {
+                font-size: 4rem;
+            }
+            .ken-code-test-graphic-container {
+                width: 192px;
+                height: 192px;
+                margin-top: 32px;
+            }
+            .ken-code-test-neon-code {
+                font-size: 6rem;
+            }
         }
