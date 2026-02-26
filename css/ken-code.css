@@ -1,536 +1,239 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Kanit:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Niramit:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@300;400;500;700&family=Maitree:wght@300;400;500;700&display=swap');
-        
-        .ken-code-test-wrapper {
-            width: 100%;
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 1rem;
-            font-family: 'Kanit', sans-serif;
-            box-sizing: border-box;
-            container-type: inline-size; 
-            container-name: kencode;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;600&family=Mitr:wght@300;400;500;700&display=swap');
 
-        .ken-code-test-glass-box {
-            position: relative;
-            background-color: #020b1e;
-            border: 1px solid rgba(0, 229, 255, 0.15);
-            box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(0, 229, 255, 0.05);
-            border-radius: clamp(1rem, 3vw, 2rem);
-            overflow: hidden;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding: clamp(20px, 5%, 60px) clamp(20px, 8%, 80px); 
-            gap: 20px;
-            box-sizing: border-box;
-        }
+/* ==================================================
+   Core: Red Hood box — layout, dimensions, visuals
+   ================================================== */
+.ken-redhood26-box {
+    /* Base layout */
+    width: 1024px !important;
+    min-width: 1024px !important;
+    max-width: 1024px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box;
+    margin: 0 auto;
 
-        .ken-code-test-glass-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://res.cloudinary.com/dehp6efwc/image/upload/v1772069875/coding_bg_zwbbqv.webp');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            z-index: 0;
-            pointer-events: none;
-            transition: background-position 0.3s ease;
-        }
+    /* Spacing & typography */
+    padding: 60px 80px 70px 80px;
+    font-family: 'Niramit', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6; /* ปรับลดจาก 1.8 เพื่อความกระชับ */
 
-        .ken-code-test-glass-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 0% 0%, rgba(0, 229, 255, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 1;
-        }
+    /* Colors & effects */
+    background-color: rgba(20, 7, 2, 1);
+    color: #f0e6d2;
+    border-radius: 4px;
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(139, 0, 0, 0.2);
 
-        .ken-code-test-left-content {
-            flex: 1 1 350px;
-            z-index: 10;
-            position: relative;
-        }
+    /* Decorative layered background images */
+    background-image:
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_01.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_03.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_07.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_09.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_02.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_08.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_04.png"),
+        url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_06.png");
+    background-position: top left, top right, bottom left, bottom right, top center, bottom center, center left, center right;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: auto;
+}
 
-        .ken-code-test-title-text {
-            color: #00e5ff;
-            text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
-            letter-spacing: -0.02em;
-            font-size: clamp(3rem, 8cqw, 6rem); 
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            line-height: 1.1;
-            white-space: nowrap !important; 
-            word-break: keep-all !important;
-        }
 
-        .ken-code-test-subtitle {
-            color: #00e5ff;
-            opacity: 0.7;
-            font-size: clamp(0.7rem, 2cqw, 1rem);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin: 0;
-            white-space: nowrap !important;
-            word-break: keep-all !important;
-        }
-
-        .ken-code-test-right-content {
-            flex: 1 1 250px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            position: relative;
-        }
-
-        .ken-code-test-graphic-container {
-            position: relative;
-            width: clamp(150px, 25cqw, 256px); 
-            aspect-ratio: 1 / 1; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0; 
-        }
-
-        .ken-code-test-neon-code {
-            font-family: 'Fira Code', monospace;
-            color: #00e5ff;
-            font-weight: 700;
-            font-size: clamp(3rem, 15cqw, 7rem);
-            line-height: 1;
-            user-select: none;
-            white-space: nowrap !important;
-            word-break: keep-all !important; 
-            min-width: max-content; 
-            
-            text-shadow:
-                0 0 10px rgba(0, 229, 255, 0.4),
-                0 0 20px rgba(0, 229, 255, 0.6),
-                0 0 40px rgba(0, 229, 255, 0.8),
-                0 0 80px rgba(0, 229, 255, 1);
-            animation: ken-code-test-pulseGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes ken-code-test-pulseGlow {
-            0% { text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.6); }
-            100% { text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.8), 0 0 50px rgba(0, 229, 255, 1), 0 0 90px rgba(0, 229, 255, 0.8); }
-        }
-
-        .ken-code-test-tech-rings {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            border-radius: 50%;
-            border: 2px dashed rgba(0, 229, 255, 0.2);
-            background: repeating-radial-gradient(
-                circle,
-                transparent,
-                transparent 15px,
-                rgba(0, 229, 255, 0.03) 15px,
-                rgba(0, 229, 255, 0.03) 20px
-            );
-            z-index: -1;
-            animation: ken-code-test-spinSlow 40s linear infinite;
-        }
-
-        .ken-code-test-tech-rings::after {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            right: -10%;
-            bottom: -10%;
-            border-radius: 50%;
-            border: 1px dotted rgba(0, 229, 255, 0.4);
-            animation: ken-code-test-spinSlowReverse 30s linear infinite;
-        }
-
-        @keyframes ken-code-test-spinSlow {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes ken-code-test-spinSlowReverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-        
-        @container kencode (max-width: 700px) {
-            .ken-code-test-glass-box {
-                flex-direction: column;
-                justify-content: center;
-                text-align: center;
-                padding: 40px 20px;
-                gap: 20px;
-            }
-            .ken-code-test-glass-box::before {
-                background-position: 20% center !important; 
-            }
-            .ken-code-test-left-content,
-            .ken-code-test-right-content {
-                flex: 0 0 auto !important; 
-                width: 100%;
-            }
-            .ken-code-test-graphic-container {
-                width: clamp(140px, 40cqw, 200px);
-                margin-top: 10px;
-            }
-            .ken-code-test-title-text {
-                font-size: clamp(3rem, 15cqw, 4.5rem);
-            }
-            .ken-code-test-neon-code {
-                font-size: clamp(3.5rem, 20cqw, 5.5rem);
-            }
-        }
-
-        @media (max-width: 700px) {
-            .ken-code-test-glass-box {
-                flex-direction: column;
-                justify-content: center;
-                text-align: center;
-                padding: 40px 20px;
-                gap: 20px;
-            }
-            .ken-code-test-glass-box::before {
-                background-position: 20% center !important; 
-            }
-            .ken-code-test-left-content,
-            .ken-code-test-right-content {
-                flex: 0 0 auto !important; 
-                width: 100%;
-            }
-            .ken-code-test-graphic-container {
-                width: 180px;
-                margin-top: 10px;
-            }
-            .ken-code-test-title-text {
-                font-size: 3.5rem;
-            }
-            .ken-code-test-neon-code {
-                font-size: 4.5rem; 
-            }
-        }
-
-        .ken-redhood26-box {
-            /* เปลี่ยนสีพื้นหลังตามที่กำหนด */
-            background-color: rgba(20, 7, 2, 1);
-            position: relative; /* เพิ่ม relative เพื่อให้อ้างอิงตำแหน่งเครดิตได้ */
-            
-            /* ปรับสีตัวอักษรให้คอนทราสกับพื้นหลัง (สีครีมอ่อน) */
-            color: #f0e6d2;
-            
-            /* กำหนดให้กล่องยืดตามพื้นที่ (มีขั้นต่ำ/สูงสุดที่ต้องการ) */
-            width: 100%;
-            min-width: 1024px !important;
-            min-height: 1024px !important;
-            max-width: 1250px !important;
-            flex-shrink: 0 !important;
-            box-sizing: border-box; /* ให้ Padding อยู่ในระยะ 1024px */
-            
-            /* ระยะห่างด้านในกล่อง */
-            padding: 60px 80px 70px 80px;
-            
-            /* ตั้งค่าฟอนต์สำหรับข้อความโรลเพลย์ (รองรับตัวแปรจาก generator) */
-            font-family: var(--redhood-font-family, 'Niramit'), sans-serif;
-            font-size: var(--redhood-font-size, 1.125rem); /* ปรับได้จาก generator */
-            line-height: 1.8;
-            
-            /* เงาของกล่อง */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.2);
-            
-            /* รภาพทั้ง 8 มุม */
-            background-image: 
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_01.png"), /* ซ้ายบน */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_03.png"), /* ขวาบน */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_07.png"), /* ซ้ายล่าง */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_09.png"), /* ขวาล่าง */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_02.png"), /* กลางบน */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_08.png"), /* กลางล่าง */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_04.png"), /* ซ้าย */
-                url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate_06.png"); /* ขวา */
-            
-            background-position: 
-                top left, top right, bottom left, bottom right,
-                top center, bottom center, center left, center right;
-            background-repeat: 
-                no-repeat, no-repeat, no-repeat, no-repeat,
-                repeat-x, repeat-x, repeat-y, repeat-y;
-            background-size: auto;
-            border-radius: 4px; 
-            margin: 0 auto;
-        }
-
-        .ken-redhood26-heading-font {
-            font-family: 'Cinzel', serif;
-        }
-        
-        /* สไตล์ลิงก์ */
-        .ken-redhood26-box a {
-            color: #c75b5b;
-            text-decoration: none;
-            border-bottom: 1px dotted #c75b5b;
-            transition: all 0.3s ease;
-        }
-        .ken-redhood26-box a:hover {
-            color: #ff8fa3;
-            border-bottom-style: solid;
-            text-shadow: 0 0 8px rgba(255, 143, 163, 0.5);
-        }
-        
-        /* ส่วนหัว (Header) ของกล่อง */
-        .ken-redhood26-inner-header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-            gap: 16px;
-        }
-
-        .ken-redhood26-profile-section {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-            flex: 1; 
-        }
-
-        /* ตัดบรรทัดเมื่อยาวเกินไป */
-        .ken-redhood26-name {
-            color: #eaddcf;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            font-size: 2rem; 
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-            line-height: 1.3;
-            text-align: right;
-        }
-
-        .ken-redhood26-avatar-wrapper {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .ken-redhood26-avatar-glow {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.6);
-        }
-
-        /* รูปภาพมุมขวาบน */
-        .ken-redhood26-avatar {
-            position: relative;
-            width: 200px; 
-            height: 200px; 
-            border-radius: 50%;
-            border: 3px solid #8b0000;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* พื้นสีดำโปร่งแสง */
-        .ken-redhood26-glass-panel {
-            background-color: rgba(5, 2, 1, 0.65); 
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            padding: 40px 50px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            margin-top: 30px;
-        }
-
-        /* เนื้อหา */
-        .ken-redhood26-content p {
-            margin-bottom: 20px;
-            margin-top: 0;
-        }
-        
-        .ken-redhood26-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .ken-redhood26-action-text {
-            font-style: italic;
-            color: #a89b8c;
-        }
-
-        /* หมายเหตุ (Notes) */
-        .ken-redhood26-notes {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: rgba(10, 3, 1, 0.6);
-            border-left: 4px solid #8b0000;
-            border-radius: 0 6px 6px 0;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ken-redhood26-notes-bg-icon {
-            position: absolute;
-            right: -16px;
-            top: -25px;
-            color: #8b0000;
-            opacity: 0.1;
-            font-size: 80px;
-            font-family: serif;
-            user-select: none;
-        }
-
-        .ken-redhood26-notes-inner {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .ken-redhood26-notes-svg {
-            width: 24px;
-            height: 24px;
-            color: #c75b5b;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .ken-redhood26-notes-title {
-            font-weight: bold;
-            color: #c75b5b;
-            letter-spacing: 0.05em;
-            font-size: 1rem;
-        }
-
-        .ken-redhood26-notes-desc {
-            color: #d4c5b9;
-            font-size: 0.875rem;
-            margin-left: 4px;
-            line-height: 1.6;
-            display: inline-block;
-        }
-
-        /* Credit Link */
-        .ken-redhood26-credit {
-            display: block;
-            width: 100%;
-            max-width: 1024px;
-            margin: 15px auto 0 auto; 
-            text-align: right;
-            opacity: 0.6; 
-            transition: all 0.3s ease;
-            text-decoration: none !important;
-            border: none !important;
-        }
-        
-        .ken-redhood26-credit:hover {
-            opacity: 1;
-            border: none !important;
-            text-shadow: 0 0 8px rgba(212, 197, 185, 0.5);
-        }
-
-        .ken-redhood26-credit::after {
-            content: "Ken-Code";
-            font-size: 0.9rem;
-            color: #d4c5b9;
-            letter-spacing: 0.1em;
-            font-family: 'Cinzel', serif;
-        }
-
-/* Preview container helpers (moved from inline HTML for cleanliness) */
-#preview-area-outer {
-    width: 100%;
-    height: 100%;
+/* ==================================================
+   Header / profile area
+   ================================================== */
+.ken-redhood26-inner-header {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
-    overflow: auto;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+}
+
+.ken-redhood26-profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+    flex: 1;
+}
+
+/* Glass-style character name */
+.ken-redhood26-name {
+    color: #eaddcf;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.3;
+    text-align: right;
+    font-family: 'Cinzel', serif;
+
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 24px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+
+/* Avatar */
+.ken-redhood26-avatar-wrapper { position: relative; flex-shrink: 0; }
+.ken-redhood26-avatar-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.6);
+}
+
+.ken-redhood26-avatar {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid #8b0000;
+    display: block;
+    overflow: hidden;
+}
+
+
+/* ==================================================
+   Glass panel and content area
+   ================================================== */
+.ken-redhood26-glass-panel {
+    background-color: rgba(5, 2, 1, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 40px 50px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.ken-redhood26-content p {
+    margin-top: 0;
+    margin-bottom: 8px !important;
+    line-height: 1.6;
+}
+.ken-redhood26-content p:last-child { margin-bottom: 0 !important; }
+
+.ken-redhood26-action-text { font-style: italic; color: #a89b8c; }
+
+
+/* Notes box */
+.ken-redhood26-notes {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: rgba(10, 3, 1, 0.6);
+    border-left: 4px solid #8b0000;
+    border-radius: 0 6px 6px 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+.ken-redhood26-notes-bg-icon {
+    position: absolute;
+    right: -16px; top: -25px;
+    color: #8b0000; opacity: 0.1; font-size: 80px; font-family: serif; user-select: none;
+}
+.ken-redhood26-notes-inner { position: relative; z-index: 10; display: flex; align-items: flex-start; gap: 12px; }
+.ken-redhood26-notes-svg { width: 24px; height: 24px; color: #c75b5b; flex-shrink: 0; margin-top: 2px; }
+.ken-redhood26-notes-title { font-weight: bold; color: #c75b5b; letter-spacing: 0.05em; font-size: 1rem; }
+.ken-redhood26-notes-desc { color: #d4c5b9; margin-left: 4px; line-height: 1.6; display: inline-block; }
+
+.ken-redhood26-credit {
+    display: block;
+    width: 1024px;
+    margin: 15px auto 0 auto;
+    text-align: right;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+    border: none !important;
+}
+.ken-redhood26-credit::after {
+    content: "Ken-Code";
+    font-size: 0.9rem;
+    color: #d4c5b9;
+    letter-spacing: 0.1em;
+    font-family: 'Cinzel', serif;
+}
+
+
+/* ==================================================
+   UI / Editor overrides, preview helpers
+   ================================================== */
+body { background-color: #0c0807; color: #f8fafc; }
+.custom-scrollbar::-webkit-scrollbar { width: 8px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #1a1210; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #5c3c35; border-radius: 4px; }
+input[type="range"] { accent-color: #c75b5b; }
+
+/* Quill (editor) dark theme tweaks */
+.ql-toolbar.ql-snow { border-color: #3b2a25; background-color: #1a1210; border-radius: 0.5rem 0.5rem 0 0; }
+.ql-container.ql-snow { border-color: #3b2a25; background-color: #0c0807; border-radius: 0 0 0.5rem 0.5rem; color: #e2e8f0; min-height: 250px; font-family: 'Niramit', sans-serif; }
+
+
+/* Preview scaling helpers */
+#preview-area-outer {
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 2rem; overflow: auto;
 }
 
 #preview-box-wrapper {
-    width: 100%;
-    min-width: 1024px;
-    max-width: none;
-    flex-shrink: 0;
-    transform-origin: top center;
-    position: relative;
-    box-sizing: border-box;
+    width: 1024px !important; flex-shrink: 0 !important; transform-origin: top center; position: relative;
 }
 
-/* Small-screen override to avoid horizontal overflow on mobile */
-@media (max-width: 1024px) {
-    #preview-box-wrapper, .ken-redhood26-box {
-        min-width: 0 !important;
-        width: 100% !important;
-    }
-    .ken-redhood26-credit { max-width: 100% !important; }
+.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
+.toast-enter-from, .toast-leave-to { transform: translateY(20px); opacity: 0; }
+
+
+/* ==================================================
+   Responsive: progressive zoom/scale down at narrower widths
+   (keeps visual proportions across many mobile sizes)
+   ================================================== */
+@media (max-width: 1060px) { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.95; } }
+@media (max-width: 980px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.90; } }
+@media (max-width: 900px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.85; } }
+@media (max-width: 820px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.75; } }
+@media (max-width: 740px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.65; } }
+@media (max-width: 640px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.58; } }
+@media (max-width: 580px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.50; } }
+@media (max-width: 500px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.45; } }
+@media (max-width: 440px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.40; } }
+@media (max-width: 390px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.35; } }
+@media (max-width: 340px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.30; } }
+
+/* Firefox mobile: use transform:scale fallback for consistent behavior */
+@-moz-document url-prefix() {
+    @media (max-width: 1060px) { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.95); transform-origin: top center; } }
+    @media (max-width: 980px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.90); transform-origin: top center; } }
+    @media (max-width: 900px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.85); transform-origin: top center; } }
+    @media (max-width: 820px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.75); transform-origin: top center; } }
+    @media (max-width: 740px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.65); transform-origin: top center; } }
+    @media (max-width: 640px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.58); transform-origin: top center; } }
+    @media (max-width: 580px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.50); transform-origin: top center; } }
+    @media (max-width: 500px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.45); transform-origin: top center; } }
+    @media (max-width: 440px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.40); transform-origin: top center; } }
+    @media (max-width: 390px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.35); transform-origin: top center; } }
+    @media (max-width: 340px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.30); transform-origin: top center; } }
 }
 
-/* Reduce decorative artwork sizes on narrower boxes to avoid overlap */
-@media (max-width: 1250px) {
-    .ken-redhood26-box {
-        /* keep corners native, reduce edge thickness slightly on narrower boxes */
-        background-size: auto;
-    }
-}
 
-        /* * ==========================================
-         * เมื่อหน้าจอเล็กกว่า 1060px ให้ไล่ระดับการซูมเอาท์
-         * ==========================================
-         */
-        @media (max-width: 1060px) { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.95; } }
-        @media (max-width: 980px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.90; } }
-        @media (max-width: 900px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.85; } }
-        @media (max-width: 820px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.75; } }
-        @media (max-width: 740px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.65; } }
-        @media (max-width: 640px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.58; } }
-        @media (max-width: 580px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.50; } }
-        @media (max-width: 500px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.45; } }
-        @media (max-width: 440px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.40; } }
-        @media (max-width: 390px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.35; } }
-        @media (max-width: 340px)  { .ken-redhood26-box, .ken-redhood26-credit { zoom: 0.30; } }
-
-        /* สำหรับ Firefox บนมือถือ */
-        @-moz-document url-prefix() {
-            @media (max-width: 1060px) { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.95); transform-origin: top center; } }
-            @media (max-width: 980px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.90); transform-origin: top center; } }
-            @media (max-width: 900px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.85); transform-origin: top center; } }
-            @media (max-width: 820px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.75); transform-origin: top center; } }
-            @media (max-width: 740px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.65); transform-origin: top center; } }
-            @media (max-width: 640px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.58); transform-origin: top center; } }
-            @media (max-width: 580px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.50); transform-origin: top center; } }
-            @media (max-width: 500px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.45); transform-origin: top center; } }
-            @media (max-width: 440px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.40); transform-origin: top center; } }
-            @media (max-width: 390px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.35); transform-origin: top center; } }
-            @media (max-width: 340px)  { .ken-redhood26-box, .ken-redhood26-credit { transform: scale(0.30); transform-origin: top center; } }
-        }
-
-/* Small screens: move name below avatar and reduce sizes so layout reads better on narrow viewports */
+/* Small screens: stack profile & reduce avatar size for narrow viewports */
 @media (max-width: 480px) {
     .ken-redhood26-profile-section {
         flex-direction: column-reverse;
