@@ -478,8 +478,9 @@ input[type="range"] { accent-color: #c75b5b; }
      [8] ขวา       = right edge          (repeat-y)
    ================================================================ */
 /* ดู width ของ .ken-redhood26 container จริง — ไม่ใช่ viewport
-   จะ trigger เมื่อ column ของฟอรั่มแคบ แม้ viewport จะกว้าง */
-@container redhood26 (max-width: 600px) {
+   forum column บน desktop ≈ 600-800px → ใช้ 900px เพื่อ trigger ทุกกรณีในฟอรั่ม
+   large images จะแสดงเฉพาะใน preview editor ที่ container = 1024px เท่านั้น */
+@container redhood26 (max-width: 900px) {
     .ken-redhood26-box {
         background-image:
             url("https://cdn.jsdelivr.net/gh/Ljus13/WotS@main/src/img/red-hood-template/Red-Hood-Tale-RTemplate-small_01.png"),     /* [1] ซ้ายบน    top-left corner     */
@@ -494,8 +495,8 @@ input[type="range"] { accent-color: #c75b5b; }
 }
 
 
-/* stack profile และลด avatar เมื่อ container แคบกว่า 480px */
-@container redhood26 (max-width: 480px) {
+/* stack profile และลด avatar เมื่อ container แคบกว่า 600px */
+@container redhood26 (max-width: 600px) {
     .ken-redhood26-profile-section {
         flex-direction: column-reverse;
         align-items: center;
