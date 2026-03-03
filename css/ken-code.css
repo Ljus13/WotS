@@ -357,8 +357,8 @@
 
 .ken-redhood26-avatar {
     position: relative;
-    width: clamp(80px, 22%, 200px);
-    height: clamp(80px, 22%, 200px);
+    width: clamp(80px, 22cqw, 200px); /* 22% ของ container width จริง */
+    aspect-ratio: 1;                  /* height ตาม width เสมอ — วงกลมสมบูรณ์ */
     border-radius: 50%;
     border: 3px solid #8b0000;
     display: block;
@@ -508,7 +508,7 @@ input[type="range"] { accent-color: #c75b5b; }
         max-width: none;
     }
     .ken-redhood26-avatar {
-        width: clamp(70px, 25%, 140px);
-        height: clamp(70px, 25%, 140px);
+        width: clamp(70px, 30cqw, 130px); /* จอแคบมาก — เล็กลงแต่ยังเป็นวงกลม */
+        /* aspect-ratio: 1 รับมาจาก base style — ไม่ต้องซ้ำ */
     }
 }
