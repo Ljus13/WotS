@@ -76,31 +76,52 @@
             <!-- Character Info -->
             <div class="space-y-4">
                 <h2 class="text-sm font-bold text-[#c75b5b] uppercase tracking-widest font-['Cinzel'] flex items-center gap-2">
-                    <i class="fa-solid fa-user-gear"></i> Character Setup
+                    <i class="fa-solid fa-user-gear"></i> ตั้งค่าตัวละคร
                 </h2>
                 <div class="space-y-4 bg-[#1a1210] p-4 rounded-xl border border-[#2e1d18]">
                     <div>
-                        <label class="block text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">Character Name</label>
+                        <label class="block text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">ชื่อตัวละคร</label>
                         <input type="text" v-model="form.name" class="w-full bg-[#0c0807] border border-[#3b2a25] rounded-lg p-2.5 text-[#eaddcf] focus:border-[#c75b5b] outline-none">
                     </div>
                     <div>
-                        <label class="block text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">IMAGE URL</label>
+                        <label class="block text-[10px] text-gray-500 mb-1 uppercase tracking-tighter">URL รูปอวตาร</label>
                         <input type="text" v-model="form.pic" class="w-full bg-[#0c0807] border border-[#3b2a25] rounded-lg p-2.5 text-[#eaddcf] focus:border-[#c75b5b] outline-none">
                     </div>
                     <div class="space-y-4 p-4 bg-[#0c0807] rounded-lg border border-[#3b2a25]">
                         <div>
-                            <label class="flex justify-between text-[10px] text-gray-500 mb-2 uppercase">Image Scale: {{ form.picSz }}%</label>
+                            <label class="flex justify-between text-[10px] text-gray-500 mb-2 uppercase">ขนาดรูป: {{ form.picSz }}%</label>
                             <input type="range" v-model="form.picSz" min="10" max="400" class="w-full">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[10px] text-gray-500 mb-2 uppercase text-center">Pos X ซ้ายขวา: {{ form.picPosX }}%</label>
+                                <label class="block text-[10px] text-gray-500 mb-2 uppercase text-center">ตำแหน่ง X (ซ้าย-ขวา): {{ form.picPosX }}%</label>
                                 <input type="range" v-model="form.picPosX" min="0" max="100" class="w-full">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-gray-500 mb-2 uppercase text-center">Pos Y บนล่าง: {{ form.picPosY }}%</label>
+                                <label class="block text-[10px] text-gray-500 mb-2 uppercase text-center">ตำแหน่ง Y (บน-ล่าง): {{ form.picPosY }}%</label>
                                 <input type="range" v-model="form.picPosY" min="0" max="100" class="w-full">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box Width -->
+            <div class="space-y-4">
+                <h2 class="text-sm font-bold text-[#d4c5b9] uppercase tracking-widest font-['Cinzel'] flex items-center gap-2">
+                    <i class="fa-solid fa-expand"></i> ขนาดกล่องโรเพลย์
+                </h2>
+                <div class="space-y-4 bg-[#1a1210] p-4 rounded-xl border border-[#2e1d18]">
+                    <div class="space-y-2 p-4 bg-[#0c0807] rounded-lg border border-[#3b2a25]">
+                        <label class="flex justify-between text-[10px] text-gray-500 uppercase">
+                            <span>ความกว้างกล่อง</span>
+                            <span class="text-[#c75b5b] font-bold">{{ form.boxWidth }}%</span>
+                        </label>
+                        <input type="range" v-model="form.boxWidth" min="70" max="100" step="1" class="w-full">
+                        <div class="flex justify-between text-[9px] text-gray-600 mt-1">
+                            <span>70% (แคบ)</span>
+                            <span>85%</span>
+                            <span>100% (เต็ม)</span>
                         </div>
                     </div>
                 </div>
@@ -164,6 +185,7 @@
                     <div id="preview-inner-container" ref="innerWrapperRef">
                         
                         <!-- THE ROLEPLAY BOX (PREVIEW) -->
+                        <div class="ken-redhood26" :style="{ maxWidth: form.boxWidth + '%', margin: '0 auto' }">
                         <div class="ken-redhood26-box" :style="{ fontFamily: form.fontFamily, fontSize: form.fontSize + 'px' }">
                             <div class="ken-redhood26-inner-header">
                                 <div class="ken-redhood26-profile-section">
@@ -189,6 +211,7 @@
                             </div>
                         </div>
                         <a href="https://discord.com/users/306461697470627840" target="_blank" class="ken-redhood26-credit"></a>
+                        </div><!-- end .ken-redhood26 -->
                     </div>
                 </div>
             </div>
@@ -227,6 +250,7 @@
                 name: 'เรด (Red)',
                 fontFamily: "'Niramit', sans-serif",
                 fontSize: 18,
+                boxWidth: 100,
                 note: 'โรลเพลย์นี้เป็นแบบ Action/Fantasy นะครับ อนุญาตให้ Join ได้เลยครับ',
                 msgHTML: '<p>เสียงย่ำเท้าลงบนใบไม้แห้งดังก้องไปทั่วอาณาบริเวณที่เงียบสงัด...</p><p><br></p><p><em>*เธอหยุดชะงักฝีเท้า ค่อยๆ ลดตะกร้าลง สัญชาตญาณบางอย่างร้องเตือนให้ระวังภัย*</em></p>'
             };
@@ -285,7 +309,7 @@
                 const notes = form.note.trim() !== '' ? `<div class="ken-redhood26-notes"><div class="ken-redhood26-notes-bg-icon">&ldquo;</div><div class="ken-redhood26-notes-inner"><svg class="ken-redhood26-notes-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg><div><span class="ken-redhood26-notes-title">หมายเหตุ:</span><span class="ken-redhood26-notes-desc" style="${noteInline}">${form.note}</span></div></div></div>` : '';
 
                 // wrapper มี overflow:hidden เป็น inline style ด้วย — ไม่ต้องรอ CSS file cache update
-                const rawHtml = `${cssLink}<div class="ken-redhood26" style="width:100%;overflow:hidden;margin:0 auto;display:block;"><div class="ken-redhood26-box" style="${boxInline}"><div class="ken-redhood26-inner-header"><div class="ken-redhood26-profile-section"><span class="ken-redhood26-name" style="${nameInline}">${form.name}</span><div class="ken-redhood26-avatar-wrapper"><div class=\"ken-redhood26-avatar-glow\"></div><div class=\"ken-redhood26-avatar\" style=\"${avatarInline}\"></div></div></div></div><div class=\"ken-redhood26-glass-panel\"><div class=\"ken-redhood26-content ql-editor\">${styledContent}</div>${notes}</div></div><a href=\"https://discord.com/users/306461697470627840\" target=\"_blank\" class=\"ken-redhood26-credit\" style=\"display:block;width:100%;margin:0 auto;\"></a></div>`;
+                const rawHtml = `${cssLink}<div class="ken-redhood26" style="width:100%;max-width:${form.boxWidth}%;overflow:hidden;margin:0 auto;display:block;"><div class="ken-redhood26-box" style="${boxInline}"><div class="ken-redhood26-inner-header"><div class="ken-redhood26-profile-section"><span class="ken-redhood26-name" style="${nameInline}">${form.name}</span><div class="ken-redhood26-avatar-wrapper"><div class=\"ken-redhood26-avatar-glow\"></div><div class=\"ken-redhood26-avatar\" style=\"${avatarInline}\"></div></div></div></div><div class=\"ken-redhood26-glass-panel\"><div class=\"ken-redhood26-content ql-editor\">${styledContent}</div>${notes}</div></div><a href=\"https://discord.com/users/306461697470627840\" target=\"_blank\" class=\"ken-redhood26-credit\" style=\"display:block;width:100%;margin:0 auto;\"></a></div>`;
                 
                 const finalCode = rawHtml.replace(/[\r\n]+/g, '').replace(/>\s+</g, '><').trim();
                 const el = document.createElement('textarea');
