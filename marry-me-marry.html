@@ -156,7 +156,7 @@
                 <h3 class="font-semibold text-slate-700">🖼️ ภาพพื้นหลัง (Background)</h3>
                 <div>
                     <label class="block text-xs text-slate-500 mb-1">ลิงก์ภาพ (URL)</label>
-                    <input type="text" v-model="form.bgImg.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="เว้นว่างไว้เพื่อใช้รูป Placeholder">
+                    <input type="text" v-model="form.bgImg.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="URL รูป">
                 </div>
                 
                 <!-- Sliders for BG Position & Size -->
@@ -191,7 +191,7 @@
                 
                 <div v-for="(vibe, index) in form.vibes" :key="index" class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-3">
                     <p class="font-medium text-xs text-[#5c86ad] uppercase tracking-wider">ภาพที่ {{ index + 1 }}</p>
-                    <input type="text" v-model="vibe.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="เว้นว่างไว้เพื่อใช้รูป Placeholder">
+                    <input type="text" v-model="vibe.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="URL รูป">
                     
                     <!-- Sliders for Vibe Position & Size -->
                     <div class="grid grid-cols-2 gap-4 pt-1">
