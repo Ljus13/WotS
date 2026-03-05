@@ -206,20 +206,12 @@
 
         createApp({
             setup() {
-                const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv'; 
+                const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv';
+                // แท็บ stamp_url: คอลั่ม stamp_no (1-5) และ stamp_url
+                const STAMP_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv&sheet=stamp_url';
 
-                // ============================================================
-                // แก้รูปแสตมป์แต่ละดวง: เปลี่ยน URL ในแต่ละบรรทัดด้านล่าง
-                // รองรับ: Cloudinary, imgbb, imgur หรือ direct image URL อื่น ๆ
-                // ขนาดที่แสดงในการ์ด: 140 x 140 px (ต่อดวง)
-                // ============================================================
-                const stampImages = [
-                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 1 (s1)
-                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 2 (s2)
-                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 3 (s3)
-                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 4 (s4)
-                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 5 (s5)
-                ];
+                // โหลด URL แสตมป์จากชีต stamp_url (เรียงตาม stamp_no)
+                const stampImages = ref([]);
                 
                 // ============================================================
                 // แก้ตำแหน่งแสตมป์ทั้ง 5 ดวง: (x, y) คือศูนย์กลางของแต่ละดวง
@@ -271,6 +263,21 @@
                         headers.forEach((h, i) => obj[h] = values[i] || '');
                         return obj;
                     });
+                };
+
+                const fetchStampData = async () => {
+                    try {
+                        const url = STAMP_URL + '&_cb=' + Date.now();
+                        const response = await fetch(url, { cache: 'no-store' });
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        const csvText = await response.text();
+                        const rows = parseCSV(csvText);
+                        stampImages.value = rows
+                            .sort((a, b) => Number(a.stamp_no) - Number(b.stamp_no))
+                            .map(r => r.stamp_url);
+                    } catch (error) {
+                        console.error('Stamp URL Fetch Error:', error);
+                    }
                 };
 
                 const fetchData = async (silent = false) => {
@@ -326,7 +333,7 @@
                     ctx.drawImage(bgImg, 0, 0, 1024, 572);
                     await Promise.all(stampPositions.map(async (pos, index) => {
                         if (shouldShowStamp(index)) {
-                            const stampImg = await loadImage(stampImages[index]);
+                            const stampImg = await loadImage(stampImages.value[index]);
                             ctx.drawImage(stampImg, pos.x - 70, pos.y - 70, 140, 140);
                         }
                     }));
@@ -345,7 +352,7 @@
                         const activeStamps = [];
                         for (let i = 0; i < stampPositions.length; i++) {
                             if (shouldShowStamp(i)) {
-                                const img = await loadImage(stampImages[i]);
+                                const img = await loadImage(stampImages.value[i]);
                                 activeStamps.push({ img, pos: stampPositions[i] });
                             }
                         }
@@ -431,6 +438,7 @@
 
                 onMounted(() => {
                     fetchData();
+                    fetchStampData();
                     // polling ทุก 30 วินาที เพื่อรับข้อมูลใหม่จาก Google Sheets
                     // (Google Sheets ใช้เวลา ~1-5 นาทีกว่าจะ publish อัปเดต ฝั่งนี้พร้อมรับทันที)
                     pollInterval = setInterval(() => fetchData(true), 30000);
