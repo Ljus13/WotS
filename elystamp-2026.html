@@ -30,29 +30,6 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* Animation for stamping effect */
-        .stamp-enter {
-            animation: stampBounce 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0;
-            transform-origin: center;
-        }
-
-        @keyframes stampBounce {
-            0% {
-                opacity: 0;
-                transform: scale(4) rotate(25deg);
-                filter: sepia(1) saturate(2);
-            }
-            70% {
-                opacity: 1;
-                transform: scale(0.9) rotate(-5deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-        }
-
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
         }
@@ -163,38 +140,18 @@
             <div v-if="selectedMember" class="space-y-10">
                 <div class="relative group">
                     <!-- Subtle Frame Decoration -->
-                    <div class="absolute -inset-4 border border-[#d4cfb0] rounded-[3rem] pointer-events-none opacity-40"></div>
+                    <div class="absolute -inset-4 border border-[#d4cfb0] rounded-[0.75rem] pointer-events-none opacity-40"></div>
                     
-                    <div class="bg-[#1b4d3e] p-2 md:p-4 rounded-[2.8rem] shadow-2xl overflow-hidden flex justify-center items-center">
-                        <div id="captureArea" class="relative overflow-hidden bg-white" style="width: 1024px; aspect-ratio: 1024 / 572;">
-                            <svg 
-                                id="stampCard" 
-                                viewBox="0 0 1024 572" 
-                                class="w-full h-full block"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <!-- Card Background from Sheet -->
-                                <image 
-                                    :href="selectedMember.card_url" 
-                                    x="0" y="0" width="1024" height="572" 
-                                    preserveAspectRatio="xMidYMid slice" 
-                                />
-                                
-                                <!-- Stamps Group -->
-                                <g v-for="(pos, index) in stampPositions" :key="index">
-                                    <image 
-                                        v-if="shouldShowStamp(index)"
-                                        :href="stampImages[index]"
-                                        :x="pos.x - 70" 
-                                        :y="pos.y - 70" 
-                                        width="140" 
-                                        height="140"
-                                        class="stamp-enter"
-                                        :style="{ animationDelay: getAnimationDelay(index) }"
-                                    />
-                                </g>
-                            </svg>
-                        </div>
+                    <div class="bg-[#1b4d3e] p-2 md:p-4 rounded-[0.5rem] shadow-2xl overflow-hidden flex justify-center items-center">
+                        <!-- Preview ใช้ canvas แทน SVG+image: browser เห็นแค่ pixel ไม่มี <img> ให้ right-click save -->
+                        <canvas
+                            ref="previewCanvas"
+                            width="1024"
+                            height="572"
+                            @contextmenu.prevent
+                            class="w-full h-auto block rounded-[0.5rem]"
+                            style="aspect-ratio: 1024 / 572;"
+                        ></canvas>
                     </div>
                 </div>
 
@@ -241,7 +198,7 @@
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+        const { createApp, ref, computed, watch, nextTick, onMounted, onUnmounted } = Vue;
 
         // URL แบบ CSV เท่านั้นจาก Google Sheets (ต้องตั้งเป็น "เผยแพร่ในเว็บ" และเลือก "CSV" ในตัวเลือกการเผยแพร่)
         // คอลั่ม ให้ตั้งชื่อเป็น: name, card_url, s1, s2, s3, s4, s5 (s1-s5 คือสถานะแสตมป์แต่ละดวง: "1" = ได้รับแสตมป์, "0" = ไม่ได้รับ)
@@ -360,13 +317,86 @@
                     return selectedMember.value[`s${index + 1}`] == "1";
                 };
 
-                const getAnimationDelay = (index) => {
-                    let activeBefore = 0;
-                    for (let i = 0; i < index; i++) {
-                        if (shouldShowStamp(i)) activeBefore++;
-                    }
-                    return `${activeBefore * 0.3}s`;
+                const previewCanvas = ref(null);
+
+                // ฟังก์ชันวาดการ์ด (static): ใช้สำหรับ export
+                const drawCard = async (ctx) => {
+                    ctx.clearRect(0, 0, 1024, 572);
+                    const bgImg = await loadImage(selectedMember.value.card_url);
+                    ctx.drawImage(bgImg, 0, 0, 1024, 572);
+                    await Promise.all(stampPositions.map(async (pos, index) => {
+                        if (shouldShowStamp(index)) {
+                            const stampImg = await loadImage(stampImages[index]);
+                            ctx.drawImage(stampImg, pos.x - 70, pos.y - 70, 140, 140);
+                        }
+                    }));
                 };
+
+                // วาด preview พร้อม animation ประทับแสตมป์ทีละดวง
+                // เอฟเฟกต์: fade + zoom-out (scale 1.8 → 1.0) เหมือนประทับจริง
+                const drawPreview = async () => {
+                    if (!selectedMember.value) return;
+                    await nextTick();
+                    if (!previewCanvas.value) return;
+                    const ctx = previewCanvas.value.getContext('2d');
+                    try {
+                        // โหลดรูปทั้งหมดก่อนเริ่ม animation
+                        const bgImg = await loadImage(selectedMember.value.card_url);
+                        const activeStamps = [];
+                        for (let i = 0; i < stampPositions.length; i++) {
+                            if (shouldShowStamp(i)) {
+                                const img = await loadImage(stampImages[i]);
+                                activeStamps.push({ img, pos: stampPositions[i] });
+                            }
+                        }
+
+                        // วาด background ก่อน
+                        ctx.clearRect(0, 0, 1024, 572);
+                        ctx.drawImage(bgImg, 0, 0, 1024, 572);
+
+                        // animate แสตมป์ทีละดวง พร้อม delay ระหว่างดวง
+                        const DURATION = 480;  // ms ต่อดวง
+                        const DELAY    = 320;  // ms รอก่อนดวงถัดไป
+                        const SCALE_START = 1.75;
+
+                        for (let si = 0; si < activeStamps.length; si++) {
+                            const stamp = activeStamps[si];
+                            const completed = activeStamps.slice(0, si);
+
+                            await new Promise(resolve => {
+                                const startTime = performance.now();
+                                const tick = (now) => {
+                                    const t = Math.min((now - startTime) / DURATION, 1);
+                                    // ease-out cubic
+                                    const eased = 1 - Math.pow(1 - t, 3);
+                                    const scale = SCALE_START - (SCALE_START - 1) * eased;
+                                    const alpha = eased;
+
+                                    // วาดใหม่ทุก frame: bg + ดวงที่เสร็จแล้ว + ดวงที่กำลัง animate
+                                    ctx.clearRect(0, 0, 1024, 572);
+                                    ctx.drawImage(bgImg, 0, 0, 1024, 572);
+                                    for (const prev of completed) {
+                                        ctx.drawImage(prev.img, prev.pos.x - 70, prev.pos.y - 70, 140, 140);
+                                    }
+                                    ctx.save();
+                                    ctx.globalAlpha = alpha;
+                                    ctx.translate(stamp.pos.x, stamp.pos.y);
+                                    ctx.scale(scale, scale);
+                                    ctx.drawImage(stamp.img, -70, -70, 140, 140);
+                                    ctx.restore();
+
+                                    if (t < 1) requestAnimationFrame(tick);
+                                    else resolve();
+                                };
+                                // delay ก่อนดวงถัดไป (ยกเว้นดวงแรก)
+                                if (si === 0) requestAnimationFrame(tick);
+                                else setTimeout(() => requestAnimationFrame(tick), DELAY);
+                            });
+                        }
+                    } catch (e) { console.error('Preview draw error:', e); }
+                };
+
+                watch(selectedMember, drawPreview);
 
                 const loadImage = (src) => new Promise((resolve, reject) => {
                     const img = new Image();
@@ -389,19 +419,7 @@
                         canvas.width = 1024;
                         canvas.height = 572;
                         const ctx = canvas.getContext('2d');
-
-                        // Draw card background
-                        const bgImg = await loadImage(selectedMember.value.card_url);
-                        ctx.drawImage(bgImg, 0, 0, 1024, 572);
-
-                        // Draw stamps (แต่ละดวงโหลดจาก URL ของตัวเอง)
-                        await Promise.all(stampPositions.map(async (pos, index) => {
-                            if (shouldShowStamp(index)) {
-                                const stampImg = await loadImage(stampImages[index]);
-                                ctx.drawImage(stampImg, pos.x - 70, pos.y - 70, 140, 140);
-                            }
-                        }));
-
+                        await drawCard(ctx);
                         const link = document.createElement('a');
                         link.download = `ElysianCard_${selectedMember.value.name}.png`;
                         link.href = canvas.toDataURL('image/png');
@@ -436,11 +454,11 @@
                     showDropdown,
                     isExporting,
                     lastUpdated,
+                    previewCanvas,
                     stampPositions,
                     stampImages,
                     selectMember,
                     shouldShowStamp,
-                    getAnimationDelay,
                     exportImage
                 };
             }
