@@ -126,8 +126,34 @@
                     </transition>
                 </div>
 
-                <div v-if="isLoading" class="mt-4 flex items-center justify-center space-x-2 text-[#1b4d3e]">
-                    <div class="animate-pulse text-xs tracking-tighter">กำลังดึงข้อมูลสมาชิก...</div>
+                <div class="mt-4 flex items-center justify-between text-xs text-slate-400">
+                    <div v-if="isLoading" class="flex items-center space-x-1">
+                        <svg class="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        <span class="tracking-tighter">กำลังดึงข้อมูลสมาชิก...</span>
+                    </div>
+                    <div v-else-if="lastUpdated" class="flex items-center space-x-1 opacity-60">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>sync ข้อมูลล่าสุด {{ lastUpdated.toLocaleTimeString('th-TH') }}</span>
+                    </div>
+                    <div v-else class="opacity-40">รอเชื่อมต่อ...</div>
+
+                    <!-- ปุ่มรีเฟรชด้วยตัวเอง -->
+                    <button
+                        @click="fetchData()"
+                        :disabled="isLoading"
+                        class="flex items-center space-x-1 px-3 py-1.5 rounded-lg border border-[#d4cfb0] hover:bg-[#f3f4e9] hover:border-[#1b4d3e] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                        title="รีเฟรชข้อมูลจาก Google Sheets ทันที"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" :class="['h-3 w-3 text-[#1b4d3e]', isLoading ? 'animate-spin' : '']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span class="text-[#1b4d3e] font-medium">รีเฟรช</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -215,7 +241,7 @@
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted } = Vue;
+        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
 
         // URL แบบ CSV เท่านั้นจาก Google Sheets (ต้องตั้งเป็น "เผยแพร่ในเว็บ" และเลือก "CSV" ในตัวเลือกการเผยแพร่)
         // คอลั่ม ให้ตั้งชื่อเป็น: name, card_url, s1, s2, s3, s4, s5 (s1-s5 คือสถานะแสตมป์แต่ละดวง: "1" = ได้รับแสตมป์, "0" = ไม่ได้รับ)
@@ -265,29 +291,53 @@
                 const isLoading = ref(false);
                 const showDropdown = ref(false);
                 const isExporting = ref(false);
+                const lastUpdated = ref(null);
+                let pollInterval = null;
 
-                const fetchData = async () => {
-                    isLoading.value = true;
+                // แยก CSV อย่างถูกต้อง: รองรับ CRLF, quoted fields ที่มีคอมมาหรือ newline
+                const parseCSV = (text) => {
+                    const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+                    const rows = [];
+                    let cur = '', inQuote = false, row = [];
+                    for (let i = 0; i < normalized.length; i++) {
+                        const ch = normalized[i];
+                        if (ch === '"') { inQuote = !inQuote; }
+                        else if (ch === ',' && !inQuote) { row.push(cur.trim()); cur = ''; }
+                        else if (ch === '\n' && !inQuote) { row.push(cur.trim()); rows.push(row); row = []; cur = ''; }
+                        else { cur += ch; }
+                    }
+                    if (cur || row.length) { row.push(cur.trim()); rows.push(row); }
+
+                    const headers = rows[0];
+                    return rows.slice(1).filter(r => r.some(v => v)).map(values => {
+                        const obj = {};
+                        headers.forEach((h, i) => obj[h] = values[i] || '');
+                        return obj;
+                    });
+                };
+
+                const fetchData = async (silent = false) => {
+                    if (!silent) isLoading.value = true;
                     try {
-                        const response = await fetch(CSV_URL);
+                        // cache-bust ทุกครั้งที่ fetch เพื่อไม่ให้ browser cache CSV เก่า
+                        const url = CSV_URL + '&_cb=' + Date.now();
+                        const response = await fetch(url, { cache: 'no-store' });
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
                         const csvText = await response.text();
-                        members.value = parseCSV(csvText);
+                        const newData = parseCSV(csvText);
+                        members.value = newData;
+                        lastUpdated.value = new Date();
+
+                        // ถ้ากำลังแสดงสมาชิกอยู่ ให้ sync ข้อมูลใหม่ทันที (ไม่ trigger animation ซ้ำ)
+                        if (selectedMember.value) {
+                            const refreshed = newData.find(m => m.name === selectedMember.value.name);
+                            if (refreshed) selectedMember.value = refreshed;
+                        }
                     } catch (error) {
                         console.error('Data Fetch Error:', error);
                     } finally {
                         isLoading.value = false;
                     }
-                };
-
-                const parseCSV = (text) => {
-                    const lines = text.split('\n');
-                    const headers = lines[0].split(',').map(h => h.trim());
-                    return lines.slice(1).filter(l => l.trim()).map(line => {
-                        const values = line.split(',');
-                        const obj = {};
-                        headers.forEach((h, i) => obj[h] = values[i]?.trim() || '');
-                        return obj;
-                    });
                 };
 
                 const filteredMembers = computed(() => {
@@ -364,7 +414,14 @@
                     }
                 };
 
-                onMounted(fetchData);
+                onMounted(() => {
+                    fetchData();
+                    // polling ทุก 30 วินาที เพื่อรับข้อมูลใหม่จาก Google Sheets
+                    // (Google Sheets ใช้เวลา ~1-5 นาทีกว่าจะ publish อัปเดต ฝั่งนี้พร้อมรับทันที)
+                    pollInterval = setInterval(() => fetchData(true), 30000);
+                });
+
+                onUnmounted(() => clearInterval(pollInterval));
 
                 // Close dropdown on click outside
                 window.addEventListener('click', (e) => {
@@ -378,6 +435,7 @@
                     isLoading,
                     showDropdown,
                     isExporting,
+                    lastUpdated,
                     stampPositions,
                     stampImages,
                     selectMember,
