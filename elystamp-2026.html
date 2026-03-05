@@ -8,8 +8,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- html2canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Kanit:wght@200;300;400;600&display=swap');
         
@@ -291,23 +289,47 @@
                     return `${activeBefore * 0.3}s`;
                 };
 
+                const loadImage = (src) => new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = () => resolve(img);
+                    img.onerror = () => {
+                        // Fallback: try without crossOrigin (for non-CORS sources)
+                        const img2 = new Image();
+                        img2.onload = () => resolve(img2);
+                        img2.onerror = reject;
+                        img2.src = src + (src.includes('?') ? '&' : '?') + '_t=' + Date.now();
+                    };
+                    img.src = src;
+                });
+
                 const exportImage = async () => {
                     isExporting.value = true;
-                    const element = document.getElementById('captureArea');
                     try {
-                        // Wait a bit for animations to finish or start
-                        const canvas = await html2canvas(element, {
-                            scale: 2,
-                            useCORS: true,
-                            backgroundColor: null,
-                            logging: false
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 1024;
+                        canvas.height = 572;
+                        const ctx = canvas.getContext('2d');
+
+                        // Draw card background
+                        const bgImg = await loadImage(selectedMember.value.card_url);
+                        ctx.drawImage(bgImg, 0, 0, 1024, 572);
+
+                        // Draw stamps
+                        const stampImg = await loadImage(stampImageUrl);
+                        stampPositions.forEach((pos, index) => {
+                            if (shouldShowStamp(index)) {
+                                ctx.drawImage(stampImg, pos.x - 70, pos.y - 70, 140, 140);
+                            }
                         });
+
                         const link = document.createElement('a');
                         link.download = `ElysianCard_${selectedMember.value.name}.png`;
                         link.href = canvas.toDataURL('image/png');
                         link.click();
                     } catch (err) {
                         console.error('Export Failed:', err);
+                        alert('เกิดข้อผิดพลาดในการบันทึกรูปภาพ กรุณาลองใหม่อีกครั้ง');
                     } finally {
                         isExporting.value = false;
                     }
