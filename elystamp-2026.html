@@ -354,13 +354,13 @@
                         ctx.clearRect(0, 0, 1024, 572);
                         ctx.drawImage(bgImg, 0, 0, 1024, 572);
 
-                        // animate แสตมป์ทีละดวง พร้อม delay ระหว่างดวง
-                        const DURATION    = 480;   // ms ต่อดวง
-                        const DELAY       = 300;   // ms รอก่อนดวงถัดไป
+                        // animate แสตมป์ทีละดวง แบบโดมิโน่: ดวงถัดไปเริ่มตอนดวงก่อนผ่านครึ่งทาง
+                        const DURATION    = 480;          // ms ต่อดวง
+                        const OVERLAP     = DURATION / 2; // ดวงถัดไปเริ่มตอนดวงก่อน = 50%
                         const SCALE_START = 1.75;
 
                         // คำนวณเวลาเริ่มของแต่ละดวงล่วงหน้า (relative ต่อ t0)
-                        const stampStartOffsets = activeStamps.map((_, i) => i * (DURATION + DELAY));
+                        const stampStartOffsets = activeStamps.map((_, i) => i * OVERLAP);
                         const totalDuration = stampStartOffsets[activeStamps.length - 1] + DURATION;
 
                         await new Promise(resolve => {
