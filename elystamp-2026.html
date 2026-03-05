@@ -158,7 +158,7 @@
                                 <g v-for="(pos, index) in stampPositions" :key="index">
                                     <image 
                                         v-if="shouldShowStamp(index)"
-                                        :href="stampImageUrl"
+                                        :href="stampImages[index]"
                                         :x="pos.x - 70" 
                                         :y="pos.y - 70" 
                                         width="140" 
@@ -220,14 +220,39 @@
         createApp({
             setup() {
                 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv';
-                const stampImageUrl = 'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png';
+
+                // ============================================================
+                // แก้รูปแสตมป์แต่ละดวง: เปลี่ยน URL ในแต่ละบรรทัดด้านล่าง
+                // รองรับ: Cloudinary, imgbb, imgur หรือ direct image URL อื่น ๆ
+                // ขนาดที่แสดงในการ์ด: 140 x 140 px (ต่อดวง)
+                // ============================================================
+                const stampImages = [
+                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 1 (s1)
+                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 2 (s2)
+                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 3 (s3)
+                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 4 (s4)
+                    'https://res.cloudinary.com/dehp6efwc/image/upload/v1772681217/stamp_lhm6zl.png', // ดวงที่ 5 (s5)
+                ];
                 
+                // ============================================================
+                // แก้ตำแหน่งแสตมป์ทั้ง 5 ดวง: (x, y) คือศูนย์กลางของแต่ละดวง
+                // canvas ขนาด 1024 x 572 px  |  แสตมป์วาดจาก (x-70, y-70) ขนาด 140x140
+                // หากไม่แน่ใจตำแหน่งที่จะแก้ไข ให้เปิดในโปรแกรมที่สามารถระบุพิกัด x, y ได้
+                //
+                //   ดวงที่ 1 (s1): { x: ..., y: ... }  ← ซ้ายสุด
+                //   ดวงที่ 2 (s2): { x: ..., y: ... }
+                //   ดวงที่ 3 (s3): { x: ..., y: ... }  ← กลาง
+                //   ดวงที่ 4 (s4): { x: ..., y: ... }
+                //   ดวงที่ 5 (s5): { x: ..., y: ... }  ← ขวาสุด
+                //
+                // หมายเหตุ: ค่า s1-s5 ในชีตต้องเป็น "1" ถึงจะแสดงแสตมป์ดวงนั้น
+                // ============================================================
                 const stampPositions = [
-                    { x: 170.9568, y: 367.1727 }, 
-                    { x: 340.8561, y: 430.8849 }, 
-                    { x: 512,      y: 367.1727 }, 
-                    { x: 683.1439, y: 430.8849 }, 
-                    { x: 854.2878, y: 367.1727 }  
+                    { x: 170.9568, y: 367.1727 },  // ดวงที่ 1 (s1)
+                    { x: 340.8561, y: 430.8849 },  // ดวงที่ 2 (s2)
+                    { x: 512,      y: 367.1727 },  // ดวงที่ 3 (s3)
+                    { x: 683.1439, y: 430.8849 },  // ดวงที่ 4 (s4)
+                    { x: 854.2878, y: 367.1727 }   // ดวงที่ 5 (s5)
                 ];
 
                 const members = ref([]);
@@ -315,13 +340,13 @@
                         const bgImg = await loadImage(selectedMember.value.card_url);
                         ctx.drawImage(bgImg, 0, 0, 1024, 572);
 
-                        // Draw stamps
-                        const stampImg = await loadImage(stampImageUrl);
-                        stampPositions.forEach((pos, index) => {
+                        // Draw stamps (แต่ละดวงโหลดจาก URL ของตัวเอง)
+                        await Promise.all(stampPositions.map(async (pos, index) => {
                             if (shouldShowStamp(index)) {
+                                const stampImg = await loadImage(stampImages[index]);
                                 ctx.drawImage(stampImg, pos.x - 70, pos.y - 70, 140, 140);
                             }
-                        });
+                        }));
 
                         const link = document.createElement('a');
                         link.download = `ElysianCard_${selectedMember.value.name}.png`;
@@ -350,7 +375,7 @@
                     showDropdown,
                     isExporting,
                     stampPositions,
-                    stampImageUrl,
+                    stampImages,
                     selectMember,
                     shouldShowStamp,
                     getAnimationDelay,
