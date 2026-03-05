@@ -355,44 +355,41 @@
                         ctx.drawImage(bgImg, 0, 0, 1024, 572);
 
                         // animate แสตมป์ทีละดวง พร้อม delay ระหว่างดวง
-                        const DURATION = 480;  // ms ต่อดวง
-                        const DELAY    = 320;  // ms รอก่อนดวงถัดไป
+                        const DURATION    = 480;   // ms ต่อดวง
+                        const DELAY       = 300;   // ms รอก่อนดวงถัดไป
                         const SCALE_START = 1.75;
 
-                        for (let si = 0; si < activeStamps.length; si++) {
-                            const stamp = activeStamps[si];
-                            const completed = activeStamps.slice(0, si);
+                        // คำนวณเวลาเริ่มของแต่ละดวงล่วงหน้า (relative ต่อ t0)
+                        const stampStartOffsets = activeStamps.map((_, i) => i * (DURATION + DELAY));
+                        const totalDuration = stampStartOffsets[activeStamps.length - 1] + DURATION;
 
-                            await new Promise(resolve => {
-                                const startTime = performance.now();
-                                const tick = (now) => {
-                                    const t = Math.min((now - startTime) / DURATION, 1);
-                                    // ease-out cubic
-                                    const eased = 1 - Math.pow(1 - t, 3);
-                                    const scale = SCALE_START - (SCALE_START - 1) * eased;
-                                    const alpha = eased;
+                        await new Promise(resolve => {
+                            let t0 = null; // จับ t0 จาก frame แรกที่วิ่งจริง
+                            const tick = (now) => {
+                                if (t0 === null) t0 = now;
+                                const elapsed = now - t0;
 
-                                    // วาดใหม่ทุก frame: bg + ดวงที่เสร็จแล้ว + ดวงที่กำลัง animate
-                                    ctx.clearRect(0, 0, 1024, 572);
-                                    ctx.drawImage(bgImg, 0, 0, 1024, 572);
-                                    for (const prev of completed) {
-                                        ctx.drawImage(prev.img, prev.pos.x - 70, prev.pos.y - 70, 140, 140);
-                                    }
+                                ctx.clearRect(0, 0, 1024, 572);
+                                ctx.drawImage(bgImg, 0, 0, 1024, 572);
+
+                                for (let i = 0; i < activeStamps.length; i++) {
+                                    const localElapsed = elapsed - stampStartOffsets[i];
+                                    if (localElapsed < 0) continue; // ยังไม่ถึงเวลา
+                                    const t     = Math.min(localElapsed / DURATION, 1);
+                                    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
                                     ctx.save();
-                                    ctx.globalAlpha = alpha;
-                                    ctx.translate(stamp.pos.x, stamp.pos.y);
-                                    ctx.scale(scale, scale);
-                                    ctx.drawImage(stamp.img, -70, -70, 140, 140);
+                                    ctx.globalAlpha = eased;
+                                    ctx.translate(activeStamps[i].pos.x, activeStamps[i].pos.y);
+                                    ctx.scale(SCALE_START - (SCALE_START - 1) * eased, SCALE_START - (SCALE_START - 1) * eased);
+                                    ctx.drawImage(activeStamps[i].img, -70, -70, 140, 140);
                                     ctx.restore();
+                                }
 
-                                    if (t < 1) requestAnimationFrame(tick);
-                                    else resolve();
-                                };
-                                // delay ก่อนดวงถัดไป (ยกเว้นดวงแรก)
-                                if (si === 0) requestAnimationFrame(tick);
-                                else setTimeout(() => requestAnimationFrame(tick), DELAY);
-                            });
-                        }
+                                if (elapsed < totalDuration) requestAnimationFrame(tick);
+                                else resolve();
+                            };
+                            requestAnimationFrame(tick);
+                        });
                     } catch (e) { console.error('Preview draw error:', e); }
                 };
 
