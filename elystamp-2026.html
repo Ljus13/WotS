@@ -217,9 +217,13 @@
     <script>
         const { createApp, ref, computed, onMounted } = Vue;
 
+        // URL แบบ CSV เท่านั้นจาก Google Sheets (ต้องตั้งเป็น "เผยแพร่ในเว็บ" และเลือก "CSV" ในตัวเลือกการเผยแพร่)
+        // คอลั่ม ให้ตั้งชื่อเป็น: name, card_url, s1, s2, s3, s4, s5 (s1-s5 คือสถานะแสตมป์แต่ละดวง: "1" = ได้รับแสตมป์, "0" = ไม่ได้รับ)
+        // หากต้องการเปลี่ยนชื่อคอลั่ม จะต้องเปลี่ยนตัวแปรใน Javascript ด้วย (เช่น member.name, member.card_url, member.s1 เป็นต้น)
+
         createApp({
             setup() {
-                const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv';
+                const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxgT8UJw7mwUlr72DpWghax5VIhbHTh4U77w6VD6jsjLK3pYt9db39Eie0owsaovByFouh8KVP7E6/pub?output=csv'; 
 
                 // ============================================================
                 // แก้รูปแสตมป์แต่ละดวง: เปลี่ยน URL ในแต่ละบรรทัดด้านล่าง
