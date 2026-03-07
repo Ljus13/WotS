@@ -75,10 +75,14 @@
 </head>
 <body class="p-4 md:p-8 text-slate-800">
 
-<div id="app" class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
+<div id="app"
+    :class="editorCollapsed && isLg ? 'max-w-none' : 'max-w-7xl'"
+    class="mx-auto w-full flex flex-col lg:flex-row gap-6 transition-all duration-300">
     
     <!-- ฝั่งซ้าย: ฟอร์มกรอกข้อมูล -->
-    <div class="w-full lg:w-5/12 bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col h-[90vh]">
+        <div v-if="!isLg || !editorCollapsed"
+            v-show="isLg || mobilePanel === 'editor'"
+            class="w-full lg:w-5/12 bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col h-[90vh] transition-all duration-300">
         
         <!-- Header ธีมสีฟ้าอ่อนละมุน + ปุ่มควบคุมประวัติ -->
         <div class="bg-[#5c86ad] p-5 text-white text-center shadow-inner relative shrink-0">
@@ -111,7 +115,8 @@
             </button>
         </div>
 
-        <div class="flex-1 overflow-y-auto p-6 space-y-8">
+        <!-- เนื้อหา Editor ซ่อนเมื่อ collapse บน desktop -->
+        <div v-show="!editorCollapsed || !isLg" class="flex-1 overflow-y-auto p-6 space-y-8">
             
             <!-- การตั้งค่าสี -->
             <section class="space-y-3">
@@ -342,7 +347,7 @@
         </div>
         
         <!-- Action Buttons -->
-        <div class="p-4 bg-slate-50 border-t border-slate-200 flex gap-3 shrink-0">
+        <div v-show="!editorCollapsed || !isLg" class="p-4 bg-slate-50 border-t border-slate-200 flex gap-3 shrink-0">
             <button @click="generateOutput" class="flex-1 bg-[#5c86ad] hover:bg-[#4a6d8d] text-white font-medium py-3 px-4 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-sm">
                 อัปเดตพรีวิว (กรณีเน็ตไม่ดี และไม่แสดงผลเรียลไทม์)
             </button>
@@ -350,7 +355,9 @@
     </div>
 
     <!-- ฝั่งขวา: พรีวิว และ โค้ดผลลัพธ์ -->
-    <div class="w-full lg:w-7/12 flex flex-col gap-6 h-[90vh]">
+        <div v-show="isLg || mobilePanel === 'preview'"
+            :class="editorCollapsed ? 'lg:w-full h-[calc(100vh-4rem)]' : 'lg:w-7/12 h-[90vh]'"
+            class="w-full flex flex-col gap-6 transition-all duration-300">
         
         <!-- Preview Panel -->
         <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col flex-1">
@@ -362,16 +369,37 @@
                     </svg>
                     Live Preview (บนตัว Generator จะแสดงผลต่างกันเล็กน้อย แต่เมื่อไปใช้งานบนเว็บบอร์ด จะแสดงผลถูกต้อง)
                 </h2>
+                <button @click="editorCollapsed = !editorCollapsed"
+                        class="hidden lg:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 transition"
+                        :title="editorCollapsed ? 'แสดง Editor' : 'ซ่อน Editor และโฟกัสพรีวิว'">
+                    <span v-if="editorCollapsed">↹ แสดง Editor</span>
+                    <span v-else>⤢ โฟกัสพรีวิว</span>
+                </button>
             </div>
             
-            <div class="flex-1 overflow-auto bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-slate-200 p-4 custom-scrollbar relative flex items-start justify-center">
-                <!-- พื้นที่แสดงผล HTML พรีวิว -->
-                <div v-html="previewHtml" class="w-full max-w-[1000px] transform scale-75 origin-top md:scale-100 md:origin-top transition-transform pb-10"></div>
+            <!-- iframe canvas: render ที่ 1024px native → transform:scale ย่อให้พอดีกล่อง ฟอนต์คมชัด -->
+            <div ref="previewContainerRef" class="flex-1 overflow-auto bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-slate-200 p-4">
+                <div class="flex justify-center">
+                    <div :style="{ width: Math.round(DESIGN_WIDTH * previewScale) + 'px', height: Math.round(iframeHeight * previewScale) + 'px', overflow: 'hidden', flexShrink: '0' }">
+                        <iframe
+                            :srcdoc="iframeSrcdoc"
+                            :style="{
+                                width: DESIGN_WIDTH + 'px',
+                                height: iframeHeight + 'px',
+                                border: 'none',
+                                transform: 'scale(' + previewScale + ')',
+                                transformOrigin: 'top left',
+                                display: 'block'
+                            }"
+                            scrolling="no"
+                        ></iframe>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Code Output Panel -->
-        <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col h-64 shrink-0">
+        <div v-show="!editorCollapsed || !isLg" class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col h-64 shrink-0">
             <div class="bg-slate-100 p-3 border-b border-slate-200 flex justify-between items-center">
                 <h2 class="font-medium text-slate-700 text-sm flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#5c86ad]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -388,8 +416,9 @@
             </div>
             <textarea v-model="generatedCode" readonly class="w-full h-full p-4 font-mono text-xs md:text-sm text-slate-600 bg-slate-50 focus:outline-none resize-none"></textarea>
         </div>
+    </div>
 
-        <!-- ===== Modal ยืนยันการล้างค่า ===== -->
+    <!-- ===== Modal ยืนยันการล้างค่า ===== -->
     <transition name="fade">
         <div v-if="showClearModal" class="fixed inset-0 z-50 flex items-center justify-center">
             <!-- Backdrop -->
@@ -420,7 +449,23 @@
             <span>{{ toastMessage }}</span>
         </div>
     </transition>
-</div>
+
+    <!-- Mobile Toggle FAB (ซ่อนบน desktop lg+) -->
+    <transition name="slide-up">
+        <div v-if="!isLg" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex bg-white rounded-full shadow-xl border border-slate-200 overflow-hidden">
+            <button @click="mobilePanel = 'editor'"
+                    :class="mobilePanel === 'editor' ? 'bg-[#5c86ad] text-white' : 'text-slate-500 hover:bg-slate-100'"
+                    class="px-6 py-2.5 text-sm font-medium transition-all flex items-center gap-1.5">
+                ✏️ Editor
+            </button>
+            <button @click="mobilePanel = 'preview'"
+                    :class="mobilePanel === 'preview' ? 'bg-[#5c86ad] text-white' : 'text-slate-500 hover:bg-slate-100'"
+                    class="px-6 py-2.5 text-sm font-medium transition-all flex items-center gap-1.5">
+                👁️ Preview
+            </button>
+        </div>
+    </transition>
+ </div>
 
 <style>
 .fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
@@ -475,6 +520,88 @@
             const generatedCode = ref('');
             const previewHtml = ref('');
             const copyStatus = ref('คัดลอกโค้ด');
+
+            // --- Mobile Panel Toggle ---
+            const mobilePanel = ref('editor');
+            const isLg = ref(window.innerWidth >= 1024);
+            const editorCollapsed = ref(false);
+
+            // --- iframe Canvas Viewport ---
+            // DESIGN_WIDTH = 230px (userif sidebar) + 900px (post_body) = 1130px total
+            const previewContainerRef = ref(null);
+            const DESIGN_WIDTH = 1130;
+            const containerRenderWidth = ref(0);
+            const iframeHeight = ref(700);
+            const previewScale = computed(() => {
+                if (containerRenderWidth.value === 0) return 1;
+                const available = Math.max(1, containerRenderWidth.value - 32);
+                return Math.min(1, available / DESIGN_WIDTH);
+            });
+            const iframeSrcdoc = computed(() => {
+                const skeletonCSS = `
+                    *{box-sizing:border-box;}
+                    :root{--font:'Inter',Helvetica,'Noto Sans Thai','Sarabun',sans-serif;}
+                    html,body{min-width:${DESIGN_WIDTH}px;background:#000;color:#fff;font-family:var(--font);font-size:13px;line-height:1.4;margin:0;padding:0;}
+                    #posts{padding:16px;}
+                    .post-container{background:#131313;border-radius:6px 6px 0 0;display:flex;}
+                    .userif{width:230px;flex-shrink:0;}
+                    .user{border-radius:6px;text-align:left;background:#131313;padding:15px;display:flex;flex-direction:column;gap:12px;}
+                    .mock-title{font-size:11px;color:#8f8f8f;letter-spacing:.06em;text-transform:uppercase;}
+                    .mock-box{background:#1d1d1d;border:1px solid #232323;border-radius:6px;}
+                    .mock-avatar{height:220px;position:relative;overflow:hidden;}
+                    .mock-avatar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transform:translateX(-100%);animation:shim 1.8s infinite;}
+                    @keyframes shim{100%{transform:translateX(100%);}}
+                    .mock-line{height:9px;background:#2b2b2b;border-radius:999px;}
+                    .post-stage{width:calc(100% - 230px);border-radius:6px;}
+                    .stposts{background:#131313;padding:15px 15px 0 0;text-align:left;min-height:586px;border-radius:6px 6px 0 0;min-width:500px;}
+                    .post{padding-top:15px;}
+                    .post_head{padding-bottom:4px;margin-bottom:4px;border-bottom:1px dashed #232323;font-size:12px;display:flex;justify-content:space-between;align-items:center;padding-left:12px;}
+                    .post_head .post_date{color:#ccc;}
+                    .post_body{padding:12px 0 24px 12px;line-height:1.8;overflow:hidden;font-size:17px;word-break:break-word;color:#fff;}
+                    .post_body a{color:rgb(43,120,255);}
+                    .post_controls{background:#131313;clear:both;padding:8px;height:35px;border-radius:0 0 6px 6px;min-width:514px;display:flex;justify-content:space-between;align-items:center;}
+                    .postbit_buttons2 a{display:inline-block;margin:2px;background:#202020;color:#fff;padding:7px 11px 5px;border-radius:16px;font-size:12px;text-decoration:none;}
+                `;
+                const skeletonHTML = `
+                    <div id="posts">
+                        <div class="post-container">
+                            <div class="userif">
+                                <div class="user">
+                                    <div class="mock-title">Sidebar (ตัวอย่างตำแหน่ง)</div>
+                                    <div class="mock-box mock-avatar"></div>
+                                    <div class="mock-box" style="padding:10px;display:flex;flex-direction:column;gap:8px;">
+                                        <div class="mock-line" style="width:72%;"></div>
+                                        <div class="mock-line" style="width:58%;"></div>
+                                        <div class="mock-line" style="width:66%;"></div>
+                                    </div>
+                                    <div class="mock-box" style="height:120px;"></div>
+                                </div>
+                            </div>
+
+                            <div class="post-stage">
+                                <div class="stposts">
+                                    <div class="post_head">
+                                        <span class="post_date">น้อยกว่า 1 นาที ที่ผ่านมา</span>
+                                        <span>#21</span>
+                                    </div>
+                                    <div class="post classic" id="post_">
+                                        <div class="post_body scaleimages" id="pid_">${previewHtml.value}<span class="post_edit" id="edited_by_"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="post_controls">
+                            <div class="postbit_buttons2 post_management_buttons float_left">
+                                <a href="#" class="postbit_find"><span>ค้นหาโพสต์</span></a>
+                            </div>
+                            <div class="postbit_buttons post_management_buttons float_right"></div>
+                        </div>
+                    </div>
+                `;
+                const postMsg = '(function(){function rh(){window.parent.postMessage({type:"iframeHeight",h:document.body.scrollHeight},"*");}window.addEventListener("load",rh);new ResizeObserver(rh).observe(document.body);})()';
+                return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=' + DESIGN_WIDTH + '"><link href="https://roleplayth.com/cache/themes/theme10/global.css" rel="stylesheet"><link href="https://roleplayth.com/cache/themes/theme10/new.css" rel="stylesheet"><link href="https://savant777.github.io/zoecode/marrymemary.css" rel="stylesheet"><style>' + skeletonCSS + '<\/style><\/head><body>' + skeletonHTML + '<scr' + 'ipt>' + postMsg + '<\/scr' + 'ipt><\/body><\/html>';
+            });
 
             // --- ระบบจัดการประวัติ (Undo/Redo) ---
             const historyState = reactive({
@@ -767,6 +894,28 @@ ${contentSection}
                 loadFromLocal();
                 generateOutput();
 
+                // isLg: อัปเดตเมื่อขนาดหน้าจอเปลี่ยน
+                window.addEventListener('resize', () => {
+                    isLg.value = window.innerWidth >= 1024;
+                });
+
+                // ติดตามความกว้างกล่อง Preview เพื่อคำนวณ scale
+                nextTick(() => {
+                    if (previewContainerRef.value) {
+                        new ResizeObserver(([entry]) => {
+                            containerRenderWidth.value = entry.contentRect.width;
+                        }).observe(previewContainerRef.value);
+                        containerRenderWidth.value = previewContainerRef.value.clientWidth;
+                    }
+                });
+
+                // รับความสูงจริงของเนื้อหาใน iframe
+                window.addEventListener('message', (e) => {
+                    if (e.data && e.data.type === 'iframeHeight' && typeof e.data.h === 'number' && e.data.h > 0) {
+                        iframeHeight.value = e.data.h;
+                    }
+                });
+
                 window.addEventListener('keydown', (e) => {
                     if (e.ctrlKey || e.metaKey) {
                         if (e.key.toLowerCase() === 'z') {
@@ -817,7 +966,15 @@ ${contentSection}
                 showToast,
                 toastMessage,
                 canUndo,
-                canRedo
+                canRedo,
+                mobilePanel,
+                isLg,
+                editorCollapsed,
+                previewContainerRef,
+                previewScale,
+                DESIGN_WIDTH,
+                iframeHeight,
+                iframeSrcdoc
             }
         }
     }).mount('#app');
