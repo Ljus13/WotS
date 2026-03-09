@@ -105,13 +105,18 @@
         <div class="bg-slate-100 p-2 flex justify-center gap-2 border-b border-slate-200 shrink-0 shadow-sm">
             <button @click="activeMode = 'character'" 
                     :class="activeMode === 'character' ? 'bg-[#5c86ad] text-white shadow-sm' : 'bg-transparent text-slate-500 hover:bg-slate-200'" 
-                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all w-1/2">
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all w-1/3">
                 📄 ข้อมูลตัวละคร
             </button>
             <button @click="activeMode = 'roleplay'" 
                     :class="activeMode === 'roleplay' ? 'bg-[#5c86ad] text-white shadow-sm' : 'bg-transparent text-slate-500 hover:bg-slate-200'" 
-                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all w-1/2">
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all w-1/3">
                 🎭 กล่องโรลเพลย์
+            </button>
+            <button @click="activeMode = 'quest'" 
+                    :class="activeMode === 'quest' ? 'bg-[#5c86ad] text-white shadow-sm' : 'bg-transparent text-slate-500 hover:bg-slate-200'" 
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all w-1/3">
+                📮 ส่งภารกิจ
             </button>
         </div>
 
@@ -121,7 +126,7 @@
             <!-- การตั้งค่าสี -->
             <section class="space-y-3">
                 <h3 class="font-semibold text-slate-700 border-b border-slate-100 pb-2">🎨 โทนสีหลัก</h3>
-                <div class="grid grid-cols-3 gap-4">
+                <div v-if="activeMode !== 'quest'" class="grid grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs text-slate-500 mb-1">สีพื้นหลังแสตมป์</label>
                         <input type="color" v-model="form.bg" class="w-full h-8 rounded cursor-pointer border border-slate-200">
@@ -135,12 +140,44 @@
                         <input type="color" v-model="form.primary" class="w-full h-8 rounded cursor-pointer border border-slate-200">
                     </div>
                 </div>
+                <div v-else class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">สีพื้นหลังแสตมป์</label>
+                        <input type="color" v-model="form.quest.bg" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">สีข้อความ</label>
+                        <input type="color" v-model="form.quest.txt" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">สีหลัก (ขอบ/ชื่อ)</label>
+                        <input type="color" v-model="form.quest.primary" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                </div>
+                <div v-if="activeMode === 'quest'" class="grid grid-cols-4 gap-3 pt-1">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">Palette 1</label>
+                        <input type="color" v-model="form.quest.clr1" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">Palette 2</label>
+                        <input type="color" v-model="form.quest.clr2" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">Palette 3</label>
+                        <input type="color" v-model="form.quest.clr3" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1">Palette 4</label>
+                        <input type="color" v-model="form.quest.clr4" class="w-full h-8 rounded cursor-pointer border border-slate-200">
+                    </div>
+                </div>
             </section>
 
             <!-- ข้อมูลตัวละคร (Header) -->
             <section class="space-y-3">
                 <h3 class="font-semibold text-slate-700 border-b border-slate-100 pb-2">📝 ข้อมูลส่วนหัว</h3>
-                <div class="space-y-4">
+                <div v-if="activeMode !== 'quest'" class="space-y-4">
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">Display Name</label>
                         <input type="text" v-model="form.displayName" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] focus:border-[#5c86ad] outline-none transition" placeholder="--Display Name--">
@@ -154,10 +191,24 @@
                         <input type="text" v-model="form.quote" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] focus:border-[#5c86ad] outline-none transition" placeholder="--Short quote in english--">
                     </div>
                 </div>
+                <div v-else class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Display Name 1</label>
+                        <input type="text" v-model="form.quest.displayName1" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] focus:border-[#5c86ad] outline-none transition" placeholder="--Display Name 1--">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Display Name 2</label>
+                        <input type="text" v-model="form.quest.displayName2" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] focus:border-[#5c86ad] outline-none transition" placeholder="--Display Name 2--">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Name1 & Name2</label>
+                        <input type="text" v-model="form.quest.coupleName" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] focus:border-[#5c86ad] outline-none transition" placeholder="--Name1 & Name2--">
+                    </div>
+                </div>
             </section>
 
             <!-- ภาพพื้นหลัง -->
-            <section class="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
+            <section v-if="activeMode !== 'quest'" class="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
                 <h3 class="font-semibold text-slate-700">🖼️ ภาพพื้นหลัง (Background)</h3>
                 <div>
                     <label class="block text-xs text-slate-500 mb-1">ลิงก์ภาพ (URL)</label>
@@ -189,12 +240,39 @@
                     <input type="range" v-model="form.bgImg.size" min="10" max="500">
                 </div>
             </section>
+            <section v-else class="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                <h3 class="font-semibold text-slate-700">🖼️ ภาพพื้นหลัง (Background)</h3>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1">ลิงก์ภาพ (URL)</label>
+                    <input type="text" v-model="form.quest.bgImg.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="URL รูป">
+                </div>
+                <div class="grid grid-cols-2 gap-6 pt-2">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <label class="text-xs text-slate-500">แกน X (ซ้าย-ขวา)</label>
+                            <span class="text-xs font-mono text-[#5c86ad]">{{ form.quest.bgImg.posX }}%</span>
+                        </div>
+                        <input type="range" v-model="form.quest.bgImg.posX" min="0" max="100">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <label class="text-xs text-slate-500">แกน Y (บน-ล่าง)</label>
+                            <span class="text-xs font-mono text-[#5c86ad]">{{ form.quest.bgImg.posY }}%</span>
+                        </div>
+                        <input type="range" v-model="form.quest.bgImg.posY" min="0" max="100">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <label class="text-xs text-slate-500 block mb-1">ขนาดภาพ `--mrm-bgsize` (เช่น cover, 120%)</label>
+                    <input type="text" v-model="form.quest.bgImg.size" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="cover">
+                </div>
+            </section>
 
             <!-- ภาพ Vibe -->
             <section class="space-y-4">
                 <h3 class="font-semibold text-slate-700 border-b border-slate-100 pb-2">✨ ภาพไวบ์ตัวละคร (Vibe Images)</h3>
                 
-                <div v-for="(vibe, index) in form.vibes" :key="index" class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-3">
+                <div v-for="(vibe, index) in (activeMode === 'quest' ? form.quest.vibes : form.vibes)" :key="index" class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-3">
                     <p class="font-medium text-xs text-[#5c86ad] uppercase tracking-wider">ภาพที่ {{ index + 1 }}</p>
                     <input type="text" v-model="vibe.url" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="URL รูป">
                     
@@ -216,11 +294,17 @@
                         </div>
                     </div>
                     <div class="pt-1">
-                        <div class="flex justify-between mb-1">
-                            <label class="text-[10px] text-slate-500">ขนาดภาพ (Size)</label>
-                            <span class="text-[10px] text-[#5c86ad]">{{ vibe.size }}%</span>
-                        </div>
-                        <input type="range" v-model="vibe.size" min="10" max="300">
+                        <template v-if="activeMode !== 'quest'">
+                            <div class="flex justify-between mb-1">
+                                <label class="text-[10px] text-slate-500">ขนาดภาพ (Size)</label>
+                                <span class="text-[10px] text-[#5c86ad]">{{ vibe.size }}%</span>
+                            </div>
+                            <input type="range" v-model="vibe.size" min="10" max="300">
+                        </template>
+                        <template v-else>
+                            <label class="text-[10px] text-slate-500 block mb-1">`--mrm-size` (cover หรือ %)</label>
+                            <input type="text" v-model="vibe.size" class="w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="cover หรือ 100%">
+                        </template>
                     </div>
                 </div>
             </section>
@@ -340,6 +424,69 @@
                         </div>
 
                         <textarea id="editor-rpNote" v-model="form.rpNote" rows="3" class="w-full border border-slate-300 rounded-md p-3 text-sm font-mono focus:ring-2 focus:ring-[#5c86ad] outline-none whitespace-pre"></textarea>
+                    </div>
+                </template>
+
+                <template v-else-if="activeMode === 'quest'">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-2">Wedding Concept (BBCode)</label>
+                        <div class="flex justify-between items-center mb-2 bg-slate-50 p-1.5 rounded border border-slate-200">
+                            <div class="flex gap-1">
+                                <button @click="insertTag('questWeddingConcept', '[b]', '[/b]')" class="bb-btn" title="ตัวหนา"><b>B</b></button>
+                                <button @click="insertTag('questWeddingConcept', '[i]', '[/i]')" class="bb-btn" title="ตัวเอียง"><i>I</i></button>
+                                <button @click="insertTag('questWeddingConcept', '[u]', '[/u]')" class="bb-btn" title="ขีดเส้นใต้"><u>U</u></button>
+                                <div class="w-px bg-slate-300 mx-1"></div>
+                                <button @click="insertTag('questWeddingConcept', '[size=16px]', '[/size]')" class="bb-btn text-xs w-auto px-2" title="ขนาดอักษร">Size</button>
+                                <input type="color" v-model="tempColor" @change="insertColor('questWeddingConcept')" class="bb-color-picker ml-1" title="เลือกสีข้อความ">
+                            </div>
+                        </div>
+                        <textarea id="editor-questWeddingConcept" v-model="form.quest.weddingConcept" rows="4" class="w-full border border-slate-300 rounded-md p-3 text-sm font-mono focus:ring-2 focus:ring-[#5c86ad] outline-none whitespace-pre"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-2">Heart to Heart (BBCode)</label>
+                        <div class="flex justify-between items-center mb-2 bg-slate-50 p-1.5 rounded border border-slate-200">
+                            <div class="flex gap-1">
+                                <button @click="insertTag('questHeartToHeart', '[b]', '[/b]')" class="bb-btn" title="ตัวหนา"><b>B</b></button>
+                                <button @click="insertTag('questHeartToHeart', '[i]', '[/i]')" class="bb-btn" title="ตัวเอียง"><i>I</i></button>
+                                <button @click="insertTag('questHeartToHeart', '[u]', '[/u]')" class="bb-btn" title="ขีดเส้นใต้"><u>U</u></button>
+                                <div class="w-px bg-slate-300 mx-1"></div>
+                                <button @click="insertTag('questHeartToHeart', '[size=16px]', '[/size]')" class="bb-btn text-xs w-auto px-2" title="ขนาดอักษร">Size</button>
+                                <input type="color" v-model="tempColor" @change="insertColor('questHeartToHeart')" class="bb-color-picker ml-1" title="เลือกสีข้อความ">
+                            </div>
+                        </div>
+                        <textarea id="editor-questHeartToHeart" v-model="form.quest.heartToHeart" rows="4" class="w-full border border-slate-300 rounded-md p-3 text-sm font-mono focus:ring-2 focus:ring-[#5c86ad] outline-none whitespace-pre"></textarea>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-600">Mission Links (2 คอลัมน์)</label>
+                        <div v-for="(mission, missionIndex) in form.quest.missions" :key="`mission-${missionIndex}`" class="bg-slate-50 border border-slate-200 rounded-lg p-3 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500 w-7">{{ missionIndex + 1 }}.</span>
+                                <input type="text" v-model="mission.title" class="flex-1 border border-slate-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="Mission Title">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="space-y-2">
+                                    <input type="text" v-model="mission.name1Label" class="w-full border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="ชื่อผู้ทำภารกิจฝั่งซ้าย">
+                                    <div v-for="(link, linkIndex) in mission.name1Links" :key="`m${missionIndex}-n1-${linkIndex}`" class="flex gap-2 items-center">
+                                        <input type="text" v-model="link.title" class="w-20 border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="Title">
+                                        <input type="text" v-model="link.url" class="flex-1 border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="https://...">
+                                        <button @click="removeQuestLink(missionIndex, 'name1Links', linkIndex)" :disabled="mission.name1Links.length <= 3" class="px-2 py-1 text-xs rounded border border-slate-300 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed">-</button>
+                                    </div>
+                                    <button @click="addQuestLink(missionIndex, 'name1Links')" class="px-2.5 py-1 text-xs rounded bg-[#5c86ad] text-white hover:bg-[#4a6d8d]">+ เพิ่มลิงก์</button>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <input type="text" v-model="mission.name2Label" class="w-full border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="ชื่อผู้ทำภารกิจฝั่งขวา">
+                                    <div v-for="(link, linkIndex) in mission.name2Links" :key="`m${missionIndex}-n2-${linkIndex}`" class="flex gap-2 items-center">
+                                        <input type="text" v-model="link.title" class="w-20 border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="Title">
+                                        <input type="text" v-model="link.url" class="flex-1 border border-slate-300 rounded-md p-1.5 text-xs focus:ring-2 focus:ring-[#5c86ad] outline-none" placeholder="https://...">
+                                        <button @click="removeQuestLink(missionIndex, 'name2Links', linkIndex)" :disabled="mission.name2Links.length <= 3" class="px-2 py-1 text-xs rounded border border-slate-300 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed">-</button>
+                                    </div>
+                                    <button @click="addQuestLink(missionIndex, 'name2Links')" class="px-2.5 py-1 text-xs rounded bg-[#5c86ad] text-white hover:bg-[#4a6d8d]">+ เพิ่มลิงก์</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </section>
@@ -496,7 +643,68 @@
         qa: `[list=1]\n[*][b]มีอะไรอยากบอกกับคู่ของคุณไหม ? :[/b] (สั้น ๆ ได้นะ)\n[*][b]โดยปกติแล้ว คนอื่นมองว่าคุณเป็นคนแบบไหน ? :[/b] (ไม่ต้องยาว)\n[*][b]คิดว่าการพบกันครั้งแรกจะเป็นแบบไหน ? :[/b] (เอาพอประมาณ)\n[/list]`,
         // ข้อมูลสำหรับโหมด 'roleplay'
         rpContent: `พิมพ์เนื้อหาโรลเพลย์ที่นี่...`,
-        rpNote: `หมายเหตุ`
+        rpNote: `หมายเหตุ`,
+        // ข้อมูลสำหรับโหมด 'quest'
+        quest: {
+            bg: '#ffffff',
+            txt: '#000000',
+            primary: '#ff0000',
+            clr1: '#cccccc',
+            clr2: '#999999',
+            clr3: '#666666',
+            clr4: '#333333',
+            bgImg: { url: '', posX: 50, posY: 50, size: 'cover' },
+            displayName1: '',
+            displayName2: '',
+            coupleName: '',
+            weddingConcept: 'หากการแต่งงานของทั้งคู่ได้เกิดขึ้นจริง ๆ คิดว่ามันจะออกมาในรูปแบบไหน ?',
+            heartToHeart: 'ฝากบอกอะไรสักหน่อยกับคู่ของคุณ',
+            missions: [
+                {
+                    title: 'First Move',
+                    name1Label: '',
+                    name2Label: '',
+                    name1Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }],
+                    name2Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }]
+                },
+                {
+                    title: 'First Meal',
+                    name1Label: '',
+                    name2Label: '',
+                    name1Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }],
+                    name2Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }]
+                },
+                {
+                    title: 'Outside Day',
+                    name1Label: '',
+                    name2Label: '',
+                    name1Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }],
+                    name2Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }]
+                },
+                {
+                    title: 'Home Refill',
+                    name1Label: '',
+                    name2Label: '',
+                    name1Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }],
+                    name2Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }]
+                },
+                {
+                    title: 'Date Night',
+                    name1Label: '',
+                    name2Label: '',
+                    name1Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }],
+                    name2Links: [{ title: '1', url: '#' }, { title: '2', url: '#' }, { title: '3', url: '#' }]
+                }
+            ],
+            vibes: [
+                { url: 'https://i.pinimg.com/736x/5a/44/c2/5a44c2b96e54ac8bc362a1bb393802ed.jpg', posX: 50, posY: 50, size: 'cover' },
+                { url: 'https://i.pinimg.com/736x/e9/a8/cd/e9a8cd046429386f919afe1577da7174.jpg', posX: 50, posY: 50, size: 'cover' },
+                { url: 'https://i.pinimg.com/1200x/e3/64/47/e364470c02e5d2a744e19c09178afdc0.jpg', posX: 50, posY: 50, size: 'cover' },
+                { url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80', posX: 50, posY: 50, size: 'cover' },
+                { url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80', posX: 50, posY: 50, size: 'cover' },
+                { url: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80', posX: 50, posY: 50, size: 'cover' }
+            ]
+        }
     };
 
     createApp({
@@ -511,6 +719,14 @@
                     'https://i.pinimg.com/736x/5a/44/c2/5a44c2b96e54ac8bc362a1bb393802ed.jpg',
                     'https://i.pinimg.com/736x/e9/a8/cd/e9a8cd046429386f919afe1577da7174.jpg',
                     'https://i.pinimg.com/1200x/e3/64/47/e364470c02e5d2a744e19c09178afdc0.jpg'
+                ],
+                questVibes: [
+                    'https://i.pinimg.com/736x/5a/44/c2/5a44c2b96e54ac8bc362a1bb393802ed.jpg',
+                    'https://i.pinimg.com/736x/e9/a8/cd/e9a8cd046429386f919afe1577da7174.jpg',
+                    'https://i.pinimg.com/1200x/e3/64/47/e364470c02e5d2a744e19c09178afdc0.jpg',
+                    'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80'
                 ]
             };
 
@@ -636,6 +852,7 @@
                             // โหลดค่าล่าสุดลงใน Form
                             isTracking = false;
                             Object.assign(form, JSON.parse(historyState.list[historyState.index]));
+                            normalizeQuestMissions();
                             nextTick(() => { isTracking = true; });
                             return;
                         }
@@ -644,6 +861,7 @@
                     console.error("Failed to load history", e);
                 }
                 // ถ้าไม่มีค่าใน local ให้เซฟสถานะเริ่มต้น
+                normalizeQuestMissions();
                 saveToHistory(true);
             };
 
@@ -726,14 +944,25 @@
                 const el = document.getElementById(elId);
                 if (!el) return;
 
+                const targetMap = {
+                    questWeddingConcept: ['quest', 'weddingConcept'],
+                    questHeartToHeart: ['quest', 'heartToHeart']
+                };
+                const targetPath = targetMap[field] || [field];
+                const currentValue = targetPath.length === 2 ? form[targetPath[0]][targetPath[1]] : form[targetPath[0]];
+
                 const start = el.selectionStart;
                 const end = el.selectionEnd;
-                const text = form[field];
+                const text = currentValue || '';
                 
                 const selectedText = text.substring(start, end);
                 const newText = text.substring(0, start) + openTag + selectedText + closeTag + text.substring(end);
-                
-                form[field] = newText;
+
+                if (targetPath.length === 2) {
+                    form[targetPath[0]][targetPath[1]] = newText;
+                } else {
+                    form[targetPath[0]] = newText;
+                }
 
                 // คืน focus หลังแทรก
                 nextTick(() => {
@@ -755,6 +984,8 @@
                     .replace(/\[u\](.*?)\[\/u\]/gis, "<u>$1</u>")
                     .replace(/\[color=(.+?)\](.*?)\[\/color\]/gis, "<span style=\"color:$1\">$2</span>")
                     .replace(/\[size=(.+?)\](.*?)\[\/size\]/gis, "<span style=\"font-size:$1\">$2</span>")
+                    .replace(/\[url=(.+?)\](.*?)\[\/url\]/gis, "<a href=\"$1\" target=\"_blank\" rel=\"noopener noreferrer\">$2</a>")
+                    .replace(/\[url\](.*?)\[\/url\]/gis, "<a href=\"$1\" target=\"_blank\" rel=\"noopener noreferrer\">$1</a>")
                     
                     // ระบบลิสต์ [list=1]
                     .replace(/\[list=1\](.*?)\[\/list\]/gis, (match, content) => {
@@ -766,6 +997,110 @@
                     // บรรทัดใหม่
                     .replace(/\n/g, "<br>");
                 return html;
+            };
+
+            const normalizeSizeValue = (value, fallback = 'cover') => {
+                if (value === undefined || value === null || value === '') return fallback;
+                if (typeof value === 'number') return `${value}%`;
+                const str = String(value).trim();
+                if (/^\d+(\.\d+)?$/.test(str)) return `${str}%`;
+                return str;
+            };
+
+            const createDefaultMissionLinks = () => ([
+                { title: '1', url: '#' },
+                { title: '2', url: '#' },
+                { title: '3', url: '#' }
+            ]);
+
+            const createDefaultMissions = () => ([
+                { title: 'First Move', name1Label: '', name2Label: '', name1Links: createDefaultMissionLinks(), name2Links: createDefaultMissionLinks() },
+                { title: 'First Meal', name1Label: '', name2Label: '', name1Links: createDefaultMissionLinks(), name2Links: createDefaultMissionLinks() },
+                { title: 'Outside Day', name1Label: '', name2Label: '', name1Links: createDefaultMissionLinks(), name2Links: createDefaultMissionLinks() },
+                { title: 'Home Refill', name1Label: '', name2Label: '', name1Links: createDefaultMissionLinks(), name2Links: createDefaultMissionLinks() },
+                { title: 'Date Night', name1Label: '', name2Label: '', name1Links: createDefaultMissionLinks(), name2Links: createDefaultMissionLinks() }
+            ]);
+
+            const normalizeQuestMissions = () => {
+                if (!Array.isArray(form.quest.missions) || form.quest.missions.length === 0) {
+                    form.quest.missions = createDefaultMissions();
+                    return;
+                }
+
+                form.quest.missions = form.quest.missions.map((mission, idx) => {
+                    const base = createDefaultMissions()[idx] || createDefaultMissions()[0];
+                    const safeMission = {
+                        title: mission && mission.title ? mission.title : base.title,
+                        name1Label: mission?.name1Label ? String(mission.name1Label) : '',
+                        name2Label: mission?.name2Label ? String(mission.name2Label) : '',
+                        name1Links: Array.isArray(mission?.name1Links) ? mission.name1Links.slice() : [],
+                        name2Links: Array.isArray(mission?.name2Links) ? mission.name2Links.slice() : []
+                    };
+
+                    while (safeMission.name1Links.length < 3) {
+                        safeMission.name1Links.push({ title: String(safeMission.name1Links.length + 1), url: '#' });
+                    }
+                    while (safeMission.name2Links.length < 3) {
+                        safeMission.name2Links.push({ title: String(safeMission.name2Links.length + 1), url: '#' });
+                    }
+
+                    safeMission.name1Links = safeMission.name1Links.map((l, i) => ({
+                        title: l?.title ? String(l.title) : String(i + 1),
+                        url: l?.url ? String(l.url) : '#'
+                    }));
+                    safeMission.name2Links = safeMission.name2Links.map((l, i) => ({
+                        title: l?.title ? String(l.title) : String(i + 1),
+                        url: l?.url ? String(l.url) : '#'
+                    }));
+
+                    return safeMission;
+                });
+            };
+
+            const addQuestLink = (missionIndex, linkKey) => {
+                const mission = form.quest.missions[missionIndex];
+                if (!mission || !Array.isArray(mission[linkKey])) return;
+                mission[linkKey].push({ title: String(mission[linkKey].length + 1), url: '#' });
+            };
+
+            const removeQuestLink = (missionIndex, linkKey, linkIndex) => {
+                const mission = form.quest.missions[missionIndex];
+                if (!mission || !Array.isArray(mission[linkKey])) return;
+                if (mission[linkKey].length <= 3) return;
+                mission[linkKey].splice(linkIndex, 1);
+            };
+
+            const escapeHtml = (text) => String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+            const buildQuestLinksMarkup = (links, isPreview) => {
+                return (links || []).map((link, idx) => {
+                    const label = (link?.title || `${idx + 1}`).trim();
+                    const url = (link?.url || '#').trim();
+                    if (isPreview) {
+                        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+                    }
+                    return `[url=${url}]${label}[/url]`;
+                }).join(' ');
+            };
+
+            const buildQuestMissionSection = (defaultName1, defaultName2, isPreview) => {
+                const blocks = (form.quest.missions || []).map((mission, idx) => {
+                    const title = mission?.title?.trim() ? mission.title.trim() : `Mission ${idx + 1}`;
+                    const name1 = mission?.name1Label?.trim() ? mission.name1Label.trim() : defaultName1;
+                    const name2 = mission?.name2Label?.trim() ? mission.name2Label.trim() : defaultName2;
+                    const links1 = buildQuestLinksMarkup(mission?.name1Links || [], isPreview);
+                    const links2 = buildQuestLinksMarkup(mission?.name2Links || [], isPreview);
+                    if (isPreview) {
+                        return `<div class="mrm-quest-item"><h3>${idx + 1}. ${escapeHtml(title)}</h3><div class="mrm-quest-send"><div><strong>${escapeHtml(name1)}:</strong> ${links1}</div><div><strong>${escapeHtml(name2)}:</strong> ${links2}</div></div></div>`;
+                    }
+                    return `<div class="mrm-quest-item"><h3>${idx + 1}. ${title}</h3><div class="mrm-quest-send"><div>[b]${name1}:[/b] ${links1}</div><div>[b]${name2}:[/b] ${links2}</div></div></div>`;
+                }).join('\n');
+                return `<div class="mrm-quest">${blocks}</div>`;
             };
 
             // --- สร้าง Inline CSS Style ---
@@ -789,6 +1124,26 @@
                 return styles.join(';');
             };
 
+            const buildQuestStyleString = (isPreview = false) => {
+                let styles = [];
+                styles.push(`--mrm-bg: ${form.quest.bg}`);
+                styles.push(`--mrm-txt: ${form.quest.txt}`);
+                styles.push(`--mrm-primary: ${form.quest.primary}`);
+                styles.push(`--mrm-clr1: ${form.quest.clr1}`);
+                styles.push(`--mrm-clr2: ${form.quest.clr2}`);
+                styles.push(`--mrm-clr3: ${form.quest.clr3}`);
+                styles.push(`--mrm-clr4: ${form.quest.clr4}`);
+
+                const finalBgUrl = form.quest.bgImg.url || (isPreview ? placeholders.bg : '--ลิงก์รูปพื้นหลัง--');
+                styles.push(`--mrm-bgpic: url(${finalBgUrl})`);
+
+                const pos = `${form.quest.bgImg.posX}% ${form.quest.bgImg.posY}%`;
+                styles.push(`--mrm-bgpos: ${pos}`);
+                styles.push(`--mrm-bgsize: ${normalizeSizeValue(form.quest.bgImg.size, 'cover')}`);
+
+                return styles.join(';');
+            };
+
             const buildVibeStyle = (vibe, index, isPreview = false) => {
                 let styles = [];
                 const finalVibeUrl = vibe.url || (isPreview ? placeholders.vibes[index] : '--ลิงก์รูป--');
@@ -799,15 +1154,64 @@
                 styles.push(`--mrm-pos: ${pos}`);
                 
                 // ค่า size ที่เป็น slider จะถูกแปลงเป็นเปอร์เซ็นต์
-                if (vibe.size) styles.push(`--mrm-size: ${vibe.size}%`);
+                styles.push(`--mrm-size: ${normalizeSizeValue(vibe.size, 'cover')}`);
                 
+                return styles.join(';');
+            };
+
+            const buildQuestVibeStyle = (vibe, index, isPreview = false) => {
+                let styles = [];
+                const finalVibeUrl = vibe.url || (isPreview ? placeholders.questVibes[index] : '--ลิงก์รูป--');
+
+                styles.push(`--mrm-pic: url(${finalVibeUrl})`);
+                styles.push(`--mrm-pos: ${vibe.posX}% ${vibe.posY}%`);
+                styles.push(`--mrm-size: ${normalizeSizeValue(vibe.size, 'cover')}`);
+
                 return styles.join(';');
             };
 
             // --- สร้าง HTML ผลลัพธ์ ---
             const generateHTML = (isPreview = false) => {
+                if (activeMode.value === 'quest') {
+                    const mainStyle = buildQuestStyleString(isPreview) + ';';
+                    const dName1 = form.quest.displayName1 || '--Display Name 1--';
+                    const dName2 = form.quest.displayName2 || '--Display Name 2--';
+                    const coupleName = form.quest.coupleName || '--Name1 & Name2--';
+
+                    const allVibes = form.quest.vibes.slice(0, 6).map((vibe, idx) => {
+                        return `<div class="mrm-pic" style="${buildQuestVibeStyle(vibe, idx, isPreview)};"></div>`;
+                    }).join('\n');
+
+                    const weddingConcept = isPreview ? parseBBCode(form.quest.weddingConcept) : form.quest.weddingConcept;
+                    const heartToHeart = isPreview ? parseBBCode(form.quest.heartToHeart) : form.quest.heartToHeart;
+                    const missionName1 = form.quest.displayName1 || 'Name 1';
+                    const missionName2 = form.quest.displayName2 || 'Name 2';
+
+                    const missionSection = buildQuestMissionSection(missionName1, missionName2, isPreview);
+
+                    return `<link href="https://savant777.github.io/zoecode/marrymemary.css" rel="stylesheet">
+<div id="MarryMeMary"><a href="https://discord.com/users/625292873914515456/"></a><div id="marryme-quest" class="mrm-box" style="${mainStyle}">
+<div class="mrm-stamp"><div class="mrm-content">
+<div class="mrm-header"><div>${dName1}</div><div>${dName2}</div></div>
+<div class="mrm-title"><h1>You and Me</h1>
+<div class="mrm-palette" style="--mrm-clr1: ${form.quest.clr1};--mrm-clr2: ${form.quest.clr2};--mrm-clr3: ${form.quest.clr3};--mrm-clr4: ${form.quest.clr4};">
+<c></c><c></c><c></c><c></c></div></div>
+<div class="mrm-vibe"><p>${coupleName}</p>
+${allVibes}</div>
+<div class="mrm-section">
+<h2>Wedding Concept:</h2>
+${weddingConcept}
+<hr>
+<h2>Heart to Heart:</h2>
+${heartToHeart}
+<hr>
+<h2>Mission:</h2>
+${missionSection}
+</div>
+</div></div></div></div>`;
+                }
+
                 const mainStyle = buildStyleString(isPreview) + ';';
-                
                 const dName = form.displayName || '--Display Name--';
                 const cName = form.charName || '--Character Name--';
                 const quoteText = form.quote || '--Short quote in english--';
@@ -817,19 +1221,17 @@
                 const vibe3 = buildVibeStyle(form.vibes[2], 2, isPreview) + ';';
 
                 let contentSection = '';
-
-                // เลือกว่าจะโชว์โครงสร้างแบบไหนตาม Mode
                 if (activeMode.value === 'character') {
                     const displayDetails = isPreview ? parseBBCode(form.details) : form.details;
                     const displayQa = isPreview ? parseBBCode(form.qa) : form.qa;
                     contentSection = `<div class="mrm-section">\n${displayDetails}\n</div>\n<hr>\n<div class="mrm-section"><h2>୨୧ Q&A ୨୧</h2>\n${displayQa}\n</div>`;
-                } else if (activeMode.value === 'roleplay') {
+                } else {
                     const displayRpContent = isPreview ? parseBBCode(form.rpContent) : form.rpContent;
                     const displayRpNote = isPreview ? parseBBCode(form.rpNote) : form.rpNote;
                     contentSection = `<div class="mrm-section">\n${displayRpContent}\n</div><hr>\n<div class="mrm-section">${displayRpNote}</div>`;
                 }
 
-                let code = `<link href="https://savant777.github.io/zoecode/marrymemary.css" rel="stylesheet">
+                return `<link href="https://savant777.github.io/zoecode/marrymemary.css" rel="stylesheet">
 <div id="MarryMeMary"><a href="https://discord.com/users/625292873914515456/"></a><div id="marryme-role" class="mrm-box" style="${mainStyle}">
 <div class="mrm-stamp"><div class="mrm-content">
 <div class="mrm-header"><div>Marry Me, Mary!</div><div>${dName}</div></div>
@@ -841,8 +1243,6 @@
 <div class="mrm-pic" style="${vibe3}"></div></div>
 ${contentSection}
 </div></div></div></div>`;
-
-                return code;
             };
 
             const generateOutput = () => {
@@ -974,7 +1374,9 @@ ${contentSection}
                 previewScale,
                 DESIGN_WIDTH,
                 iframeHeight,
-                iframeSrcdoc
+                iframeSrcdoc,
+                addQuestLink,
+                removeQuestLink
             }
         }
     }).mount('#app');
