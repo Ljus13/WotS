@@ -23,6 +23,7 @@
                     return;
                 }
 
+                // ประกาศตัวแปรให้ชัดเจนป้องกัน ReferenceError
                 var btn = document.getElementById('GATE_BTN');
                 var input = document.getElementById('GATE_PASS');
                 var msg = document.getElementById('GATE_MSG');
@@ -30,7 +31,7 @@
 
                 if (nodeID) { 
                     nodeID.innerText = 'TID : ' + C[ "tid" ]; 
-                    nodeID.style.display = 'inline-block';
+                    nodeID.style.display = 'inline-block'; // ให้แสดงผลขึ้นมา
                 }
                 gateEl.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
