@@ -1,6 +1,6 @@
 (function() {
     var C = new Object();
-    C[ "tid" ] = '6027';
+    C[ "tid" ] = gateEl ? gateEl.getAttribute('data-tid') : 'default';
     C[ "p1" ] = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlFnS05ISnBNRWtCVjJONFAxSkhfZnZ0Q1NkR0U1';
     C[ "p2" ] = 'a3gyMnlqeEQzWkxNS3o4cFBtOEd5ZjRYMEhFcmtPWUxWZUpIRGg2Y1F0RGJxTGI3ai9wdWI/b3V0cHV0PWNzdg==';
     C[ "sk" ] = 'thread_vault_';
