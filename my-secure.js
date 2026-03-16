@@ -12,8 +12,7 @@
         var gateEl = document.getElementById('SECURE_GATE');
         
         if (isPassed) {
-            var g = document.getElementById('SECURE_GATE');
-            if (g) g.remove();
+            if (gateEl) { gateEl.remove(); }
             document.body.style.overflow = 'auto';
             return;
         }
@@ -23,24 +22,25 @@
             return;
         }
 
+        // ประกาศตัวแปรให้ชัดเจนป้องกัน ReferenceError
+        var btn = document.getElementById('GATE_BTN');
+        var input = document.getElementById('GATE_PASS');
+        var msg = document.getElementById('GATE_MSG');
+        var nodeID = document.getElementById('NODE_ID');
+
+        if (nodeID) { nodeID.innerText = 'TID : ' + C[ "tid" ]; }
         gateEl.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        
-        var nodeEl = document.getElementById('NODE_ID');
-        if (nodeEl) nodeEl.innerText = 'TID : ' + C[ "tid" ];
 
         var setStatus = function(txt, icon, isErr) {
-            var msg = document.getElementById('GATE_MSG');
             if (!msg) return;
             msg.innerHTML = '<i class="fi ' + icon + '" style="margin-right : 5px;"></i> > ' + txt;
             msg.style.color = isErr ? '#ff4b5c' : '#4f6a85';
         };
 
         var authorizeNode = async function() {
-            var btn = document.getElementById('GATE_BTN');
-            var input = document.getElementById('GATE_PASS');
+            if (!btn || !input) return;
             var val = input.value.trim();
-
             if (!val) {
                 setStatus('ERROR : NULL_PAYLOAD', 'fi-rr-warning', true);
                 return;
@@ -64,9 +64,6 @@
 
                 var clean = raw.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
                 var rows = clean.split('\n').filter(function(l){ return l.trim() !== ""; });
-                
-                if (rows.length < 1) throw new Error("EMPTY");
-
                 var headers = rows[0].split(',').map(function(h){ return h.trim().toLowerCase(); });
                 var tidIdx = headers.indexOf('tid') !== -1 ? headers.indexOf('tid') : 0;
                 var passIdx = headers.indexOf('password') !== -1 ? headers.indexOf('password') : (headers.indexOf('pass') !== -1 ? headers.indexOf('pass') : 2);
@@ -76,21 +73,18 @@
                 for (var i = 1; i < rows.length; i++) {
                     var cols = rows[ i ].split(',').map(function(c){ return c.replace(/^"|"$/g, '').trim(); });
                     if (String(cols[ tidIdx ]) === String(C[ "tid" ])) {
-                        matched = new Object();
-                        matched[ "pass" ] = cols[ passIdx ] || "";
-                        matched[ "stat" ] = (cols[ statIdx ] || "active").toLowerCase();
+                        matched = { pass: cols[ passIdx ] || "", stat: (cols[ statIdx ] || "active").toLowerCase() };
                         break;
                     }
                 }
 
                 if (matched) {
-                    if (matched[ "stat" ] !== 'active') {
+                    if (matched.stat !== 'active') {
                         setStatus('ERROR : SUSPENDED', 'fi-rr-ban', true);
                         btn.innerHTML = 'DENIED';
                         return;
                     }
-
-                    if (matched[ "pass" ] === val) {
+                    if (matched.pass === val) {
                         localStorage.setItem(storagePath, 'unlocked');
                         setStatus('ACCESS GRANTED', 'fi-rr-check', false);
                         gateEl.style.opacity = '0';
@@ -116,10 +110,12 @@
             }
         };
 
-        btn.onclick = authorizeNode;
-        input.onkeypress = function(evt) {
-            if (evt.key === 'Enter') authorizeNode();
-        };
+        if (btn) btn.onclick = authorizeNode;
+        if (input) {
+            input.onkeypress = function(evt) {
+                if (evt.key === 'Enter') authorizeNode();
+            };
+        }
     };
 
     if (document.readyState === 'complete') {
