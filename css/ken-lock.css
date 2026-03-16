@@ -1,0 +1,243 @@
+:root {
+            --cyan: #00e5ff;
+            --bg: #050a14;
+            --card: #0a1221;
+            --input: #060e1a;
+            --border: #1b2d41;
+            --text: #4f6a85;
+            --white: #e5e7eb;
+        }
+
+        /* การเลือกข้อความ (Highlight) */
+        ::selection {
+            background-color: var(--cyan);
+            color: var(--bg);
+        }
+
+        .ken-code-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px 0 20px;
+        }
+
+        /* รูปภาพ Header */
+        .ken-code-header-image {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        /* หัวข้อหลัก */
+        .ken-code-main-title {
+            text-align: center;
+            color: var(--cyan);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            line-height: 1.3;
+        }
+
+        .ken-code-sub-title {
+            text-align: center;
+            color: var(--text);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 50px;
+        }
+
+        /* กล่องเนื้อหา (Card) */
+        .ken-code-card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .ken-code-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.6;
+        }
+
+        .ken-code-section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ken-code-section-title.ken-code-center {
+            justify-content: center;
+            color: var(--cyan);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .ken-code-step-number {
+            background-color: var(--cyan);
+            color: var(--bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            margin-right: 15px;
+        }
+
+        /* กล่องโค้ด */
+        pre {
+            background-color: var(--input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--cyan);
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .ken-code-code-small {
+            font-size: 12px;
+            color: #ccc;
+            white-space: pre;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        code.ken-code-inline {
+            background-color: var(--bg);
+            color: var(--cyan);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            font-family: 'Consolas', 'Monaco', monospace;
+            word-break: break-all;
+        }
+
+        /* Spoiler / Dropdown */
+        details {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        summary {
+            padding: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+            border-radius: 12px;
+        }
+
+        summary:hover {
+            background-color: var(--input);
+            color: var(--cyan);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ken-code-details-content {
+            padding: 16px;
+            border-top: none;
+        }
+
+        /* ลิสต์ข้อความ */
+        ul, ol {
+            color: var(--text);
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .ken-code-step-block {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        .ken-code-step-block:first-child {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .ken-code-step-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ken-code-icon-star {
+            color: var(--cyan);
+            margin-right: 10px;
+        }
+
+        /* สีตัวอักษรเฉพาะจุด */
+        .ken-code-text-cyan { color: var(--cyan); }
+        .ken-code-text-white { color: #fff; }
+        .ken-code-text-red { color: #ff4b5c; }
+        .ken-code-text-desc { color: var(--text); margin-bottom: 24px; }
+        
+        /* ลูกศร Spoiler */
+        .ken-code-arrow {
+            transition: transform 0.3s;
+            border: solid currentColor;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 4px;
+            transform: rotate(45deg);
+        }
+        details[open] .ken-code-arrow {
+            transform: rotate(-135deg);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .ken-code-card { padding: 20px; }
+            .ken-code-main-title { font-size: 24px; }
+        }
