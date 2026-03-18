@@ -150,7 +150,7 @@
             width: 280px;
             height: 280px;
             position: relative;
-            background-image: url('https://picsum.photos/seed/ken1/400/400');
+            background-image: url('https://i.pinimg.com/736x/2b/6a/5b/2b6a5beab44d48d55e082a6f152484dc.jpg');
             z-index: 2;
             animation-duration: 6s;
             box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
@@ -159,7 +159,7 @@
         .ken-pf-circle-sm-1 {
             width: 160px;
             height: 160px;
-            background-image: url('https://picsum.photos/seed/ken2/200/200');
+            background-image: url('https://i.pinimg.com/736x/aa/61/26/aa612675ea0fc72c6d0c32a024bd8cb5.jpg');
             top: 30px;
             right: 10%;
             z-index: 3;
@@ -170,7 +170,7 @@
         .ken-pf-circle-sm-2 {
             width: 140px;
             height: 140px;
-            background-image: url('https://picsum.photos/seed/ken3/200/200');
+            background-image: url('https://i.pinimg.com/736x/93/d2/9d/93d29db28c3489bb172d9a2e388d823c.jpg');
             bottom: 40px;
             right: 15%;
             z-index: 1;
@@ -181,7 +181,7 @@
         .ken-pf-circle-sm-3 {
             width: 150px;
             height: 150px;
-            background-image: url('https://picsum.photos/seed/ken4/200/200');
+            background-image: url('https://i.pinimg.com/736x/a0/d4/b7/a0d4b7ab69764b3f0d3ab7e76ea67383.jpg');
             top: 50%;
             left: 5%;
             z-index: 3;
