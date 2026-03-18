@@ -36,7 +36,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 4rem;
-            min-height: 80vh;
+            /*min-height: 80vh;*/
         }
 
         .ken-pf-content-left {
