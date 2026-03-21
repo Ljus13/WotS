@@ -1,0 +1,155 @@
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap');
+
+        .dora-box-wrapper {
+            position: relative;
+            font-family: 'Kanit', sans-serif;
+            width: 100%;
+            max-width: 650px;
+            margin: 100px auto 50px auto; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #dora-main-box {
+            position: relative; 
+            background: radial-gradient(circle at 50% 110%, #dcf0ff 0%, #ffffff 70%);
+            border-radius: 32px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            padding: 120px 30px 40px 30px; 
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 5; 
+            overflow: visible;
+        }
+
+        #dora-main-box::after {
+            content: "";
+            position: absolute;
+            top: 12px; 
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 2px dashed #4299e1; 
+            border-radius: 24px; 
+            pointer-events: none; 
+            z-index: 1;
+        }
+
+        #dora-main-box::before {
+            content: "";
+            position: absolute;
+            /* คำนวณจุดกึ่งกลาง: ระยะขอบบน + (ขนาดรูป / 2) */
+            top: calc(var(--img-top, -90px) + (var(--img-size, 180px) / 2)); 
+            left: var(--img-left, 50%);
+            transform: translate(-50%, -50%);
+            width: calc(var(--img-size, 180px) * 1.8); 
+            height: calc(var(--img-size, 180px) * 1.8);
+            background: radial-gradient(circle, rgba(66, 153, 225, 0.5) 0%, transparent 70%);
+            filter: blur(35px);
+            z-index: 20; 
+            pointer-events: none;
+        }
+
+        .dora-main-img {
+            position: absolute;
+            top: var(--img-top, -90px); 
+            left: var(--img-left, 50%);
+            width: var(--img-size, 180px);
+            height: var(--img-size, 180px);
+            transform: translateX(-50%); 
+            border-radius: 50%; 
+            border: 10px solid #ffffff; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+            object-fit: cover;
+            z-index: 25; 
+        }
+
+        .dora-corner-logo {
+            position: absolute;
+            top: var(--logo-top, 25px);
+            right: var(--logo-right, 25px);
+            width: var(--logo-size, 50px);
+            opacity: var(--logo-opacity, 0.6);
+            z-index: 10;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #dora-main-box:hover .dora-corner-logo { opacity: 1; }
+
+        .dora-icon-circle {
+            position: absolute;
+            z-index: 30;
+            background: #ffffff;
+            border: 4px solid #4299e1; 
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.3);
+            animation: dora-float-circle 5s ease-in-out infinite;
+            overflow: hidden;
+        }
+        .dora-icon-circle img { width: 70%; height: 70%; object-fit: contain; }
+
+        .dora-circle-1 { width: 80px; height: 80px; left: calc(50% - 240px); top: -70px; animation-delay: 0s; }
+        .dora-circle-2 { width: 60px; height: 60px; left: calc(50% - 200px); top: 30px; animation-delay: 1.2s; }
+        .dora-circle-3 { width: 90px; height: 90px; left: calc(50% - 130px); top: -130px; animation-delay: 2.4s; }
+        .dora-circle-4 { width: 85px; height: 85px; left: calc(50% + 155px); top: -70px; animation-delay: 0.6s; }
+        .dora-circle-5 { width: 65px; height: 65px; left: calc(50% + 135px); top: 30px; animation-delay: 1.8s; }
+        .dora-circle-6 { width: 75px; height: 75px; left: calc(50% + 55px); top: -145px; animation-delay: 3s; }
+
+        @keyframes dora-float-circle {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+
+        .dora-rp-header { text-align: center; margin-bottom: 25px; position: relative; z-index: 2; }
+        .dora-char-name { font-size: 2rem; color: #2d3748; margin: 0; font-weight: 500; }
+        .dora-char-title { color: #3182ce; font-size: 1rem; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .dora-rp-content-box {
+            background-color: rgba(240, 247, 255, 0.8); 
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px 0;
+            border: 4px solid #ffffff; 
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.1); 
+            text-align: left;
+            position: relative;
+            z-index: 2;
+        }
+        .dora-rp-label {
+            position: absolute; top: -12px; left: 15px; background: #4299e1; color: white;
+            padding: 3px 15px; border-radius: 10px; font-size: 0.8rem; font-weight: 500;
+        }
+        .dora-rp-text { color: #2c5282; font-size: 1.05rem; line-height: 1.7; }
+
+        .dora-story-section {
+            background-color: var(--note-bg, rgba(255, 250, 240, 0.8)); 
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 20px;
+            border: 4px solid #ffffff; 
+            box-shadow: 0 4px 12px rgba(236, 201, 75, 0.15); 
+            text-align: left;
+            position: relative;
+            z-index: 2;
+        }
+        .dora-story-title { color: #b7791f; font-size: 1.15rem; margin-bottom: 8px; font-weight: 500; }
+        .dora-story-text { color: #744210; line-height: 1.6; font-size: 1rem; }
+
+        .dora-credit-link {
+            display: block; margin-top: 20px; font-size: 0.75rem; color: #a0aec0;
+            text-decoration: none; opacity: 0; transition: all 0.5s ease;
+            font-family: sans-serif; letter-spacing: 2px;
+        }
+        .dora-box-wrapper:hover .dora-credit-link { opacity: 1; }
+        .dora-credit-link:hover { color: #4299e1; }
+
+        @media (max-width: 768px) {
+            .dora-box-wrapper { margin-top: 100px; }
+            #dora-main-box { padding: 110px 20px 40px 20px; }
+            .dora-char-name { font-size: 1.7rem; }
+            .dora-icon-circle { transform: scale(0.65); }
+        }
