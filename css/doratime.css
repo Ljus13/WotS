@@ -147,6 +147,31 @@
         .dora-box-wrapper:hover .dora-credit-link { opacity: 1; }
         .dora-credit-link:hover { color: #4299e1; }
 
+        .dora-credit-link {
+            display: block; 
+            margin-top: 20px; 
+            font-size: 0.75rem; 
+            color: #a0aec0;
+            text-decoration: none; 
+            opacity: 0; 
+            transition: all 0.5s ease;
+            font-family: sans-serif; 
+            letter-spacing: 2px;
+        }
+        
+        .dora-credit-link::after {
+            content: "KEN-CODE";
+        }
+
+        .dora-box-wrapper:hover .dora-credit-link { 
+            opacity: 1; 
+        }
+        
+        .dora-credit-link:hover { 
+            color: #4299e1; 
+            text-decoration: none;
+        }
+
         @media (max-width: 768px) {
             .dora-box-wrapper { margin-top: 100px; }
             #dora-main-box { padding: 110px 20px 40px 20px; }
