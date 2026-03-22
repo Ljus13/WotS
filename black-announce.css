@@ -23,19 +23,6 @@
             padding: 0;
         }
 
-        body {
-            background-color: var(--color-mystic-900);
-            font-family: var(--font-main);
-            color: var(--color-ink-light);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 1rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
         /* แสงออร่าพื้นหลัง */
         .ambient-glow {
             position: fixed;
@@ -74,6 +61,7 @@
             border-radius: 0.25rem;
             padding: 2rem;
             line-height: 1.625;
+                margin: 12px auto;
         }
         .black-paper::before {
             content: "";
