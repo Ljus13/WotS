@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Native Evolution - The Strategic Paradigm Shift</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Sans+Thai:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --magic-bg: #05070a;
+            --magic-gold: #d4af37;
+            --magic-accent: #740001; 
+            --magic-blue: #0e1a40; 
+            --text-main: #f5f5f7;
+        }
+
+        body {
+            background-color: var(--magic-bg);
+            color: var(--text-main);
+            font-family: 'IBM Plex Sans Thai', 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(20, 30, 60, 0.5) 0%, transparent 80%),
+                url('https://www.transparenttextures.com/patterns/stardust.png');
+        }
+
+        h1, h2, h3, .heading-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1.05) translateY(20px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        .magic-card {
+            background: rgba(14, 26, 64, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .nav-btn {
+            background: rgba(212, 175, 55, 0.05);
+            color: var(--magic-gold);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--magic-gold);
+            color: #000;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--magic-gold);
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            color: var(--magic-gold);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--magic-gold), transparent);
+            box-shadow: 0 0 10px var(--magic-gold);
+            transition: width 0.6s ease;
+            z-index: 100;
+        }
+
+        .page-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.7rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--magic-gold);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--magic-gold);
+            box-shadow: 0 0 10px var(--magic-gold);
+            width: 25px;
+            border-radius: 4px;
+        }
+
+        .big-number {
+            font-size: 7rem;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            color: var(--magic-gold);
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .cost-bar { height: 10px; border-radius: 5px; background: rgba(255,255,255,0.05); overflow: hidden; margin-top: 8px;}
+        .cost-fill { height: 100%; transition: width 2s cubic-bezier(0.19, 1, 0.22, 1); }
+
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fly 4s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            30% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; border-bottom: 1px solid var(--magic-gold); color: var(--magic-gold); font-family: 'Cinzel', serif; font-size: 0.8rem; }
+        td { padding: 15px; border-bottom: 1px solid rgba(212,175,55,0.1); vertical-align: top; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div id="progressBar" class="progress-bar"></div>
+
+    <div class="fixed bottom-8 right-8 flex gap-4 z-50">
+        <button onclick="prevSlide()" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="nextSlide()" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Slide 1: Intro -->
+    <section class="slide active" id="slide-1">
+        <div class="max-w-4xl text-center">
+            <div class="mb-6"><i class="fas fa-wand-magic-sparkles text-5xl gold-glow"></i></div>
+            <span class="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Strategic Pivot 2026</span>
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 gold-glow">AI-Native Evolution</h1>
+            <p class="text-xl md:text-2xl text-gray-400 italic leading-relaxed">
+                เปลี่ยนผ่านสู่โครงสร้างพื้นฐานที่ขับเคลื่อนด้วย AI 100%<br>
+                ก้าวข้ามขีดจำกัดเดิม สู่โลกเสมือนที่ยืดหยุ่นและปลอดภัย
+            </p>
+        </div>
+    </section>
+
+    <!-- Slide 2: Crisis - Billing -->
+    <section class="slide" id="slide-2">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-3xl font-bold mb-10 gold-glow">Crisis 01: GitHub Copilot Billing</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="magic-card p-10 border-l-4 border-magic-accent">
+                    <h3 class="text-xl font-bold mb-4 text-gold uppercase">Pay-as-you-go Transition</h3>
+                    <p class="text-gray-400 mb-6">มิถุนายน 2026: ยกเลิกการเก็บเงินแบบ Unlimited</p>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-exclamation-triangle text-red-500 mt-1"></i>
+                            <span>ไม่มีราคาเหมาจ่าย $19/เดือน ทุก Token คือต้นทุนผันแปร</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-chart-line text-red-500 mt-1"></i>
+                            <span>การใช้ Agent ทำงานซับซ้อนอาจส่งผลให้ต้นทุนพุ่งสูงถึง **$900+/เดือน**</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="magic-card p-10 flex flex-col justify-center text-center">
+                    <div class="text-gray-500 text-xs uppercase mb-2">Operational Risk</div>
+                    <div class="big-number text-red-600">900%</div>
+                    <p class="text-gray-400 text-sm">เราต้องการโมเดลต้นทุนที่คาดเดาได้ (Predictable Cost Model)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Crisis - Security -->
+    <section class="slide" id="slide-3">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-3xl font-bold mb-10 gold-glow text-center">Crisis 02: Security Vulnerabilities</h2>
+            <div class="magic-card overflow-hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CVE Reference</th>
+                            <th>Severity</th>
+                            <th>Critical Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold text-white">CVE-2026-29783</td>
+                            <td><span class="text-red-500 font-bold">7.5 High</span></td>
+                            <td class="text-gray-400 italic">Remote Code Execution ผ่าน bash parameter ในคอมเมนต์</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-white">CVE-2026-21523</td>
+                            <td><span class="text-red-500 font-bold">8.0 High</span></td>
+                            <td class="text-gray-400 italic">TOCTOU Vulnerability เปิดช่องทางเข้าถึงเครื่องผ่าน Network</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-10 text-center text-gray-500 italic">ความเสี่ยงด้านความปลอดภัยคือเหตุผลหลักในการเปลี่ยนผ่านระบบ</p>
+        </div>
+    </section>
+
+    <!-- Slide 4: Solution Stack -->
+    <section class="slide" id="slide-4">
+        <div class="max-w-6xl w-full text-center">
+            <h2 class="text-4xl font-bold mb-12 gold-glow uppercase">The AI-Native Infrastructure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="magic-card p-8 border-gold/30">
+                    <div class="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mx-auto mb-6 border border-gold/30">
+                        <i class="fas fa-terminal text-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">Cursor IDE</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">AI-Native IDE พร้อม Composer 2 สำหรับการจัดการ Codebase ทั้งโปรเจกต์</p>
+                </div>
+                <div class="magic-card p-8 border-gold/30">
+                    <div class="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mx-auto mb-6 border border-gold/30">
+                        <i class="fas fa-robot text-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">Aider Agent</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Autonomous CLI Agent สำหรับงานสถาปัตยกรรมและ Git Workflow</p>
+                </div>
+                <div class="magic-card p-8 border-gold/30">
+                    <div class="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mx-auto mb-6 border border-gold/30">
+                        <i class="fas fa-shuffle text-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3">OpenRouter</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Unified API Gateway สำหรับการสลับใช้โมเดลที่ดีที่สุดในโลกทันที</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Financials -->
+    <section class="slide" id="slide-5">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-3xl font-bold mb-10 text-center gold-glow uppercase">Predictable Financials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="magic-card p-8 border-l-4 border-magic-accent">
+                    <h4 class="text-xs font-bold mb-6 text-red-500 uppercase">Uncontrolled Ecosystem</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between"><span>Mid Usage (+ Infra)</span> <span class="font-bold">$75 - $125</span></li>
+                        <li class="flex justify-between border-t border-white/10 pt-4"><span>High Usage (Agentic)</span> <span class="font-bold text-red-500">$415 - $925+</span></li>
+                    </ul>
+                </div>
+                <div class="magic-card p-8 border-l-4 border-green-600 bg-white/5">
+                    <h4 class="text-xs font-bold mb-6 text-green-500 uppercase">Capped AI-Native Stack</h4>
+                    <ul class="space-y-4 text-sm text-gold">
+                        <li class="flex justify-between"><span>Cursor Pro Subscription</span> <span>$20</span></li>
+                        <li class="flex justify-between"><span>Supabase Infrastructure</span> <span>$25</span></li>
+                        <li class="flex justify-between"><span>OpenRouter (Capped)</span> <span>$60</span></li>
+                        <li class="flex justify-between font-bold text-2xl mt-4 border-t border-gold pt-4"><span>Total Fixed Cost</span> <span>$105</span></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-8 text-center text-gray-500 italic text-sm">"เปลี่ยนตัวแปรต้นทุนที่ควบคุมไม่ได้ ให้เป็นงบประมาณคงที่ 100%"</p>
+        </div>
+    </section>
+
+    <!-- Slide 6: Paradigm Shift -->
+    <section class="slide" id="slide-6">
+        <div class="max-w-4xl text-center">
+            <h2 class="text-6xl font-bold mb-8 gold-glow">The Paradigm Shift</h2>
+            <p class="text-2xl text-gray-400 font-light leading-relaxed">
+                จาก "การเขียนซอฟต์แวร์แบบขั้นตอน" (Imperative)<br>
+                สู่ "การประมวลผลตรรกะแบบผลลัพธ์" (Declarative & Logic-First)
+            </p>
+        </div>
+    </section>
+
+    <!-- Slide 7: Pillar 1 -->
+    <section class="slide" id="slide-7">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-left">
+            <div>
+                <span class="text-gold font-bold uppercase text-xs mb-2 block">Pillar 01</span>
+                <h2 class="text-4xl font-bold mb-6 gold-glow uppercase">Logic Orchestration</h2>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                    เปลี่ยนจากการ Hard-code ฟังก์ชันซับซ้อน เป็นการใช้ AI ประมวลผลจาก <strong>Logic Manifest</strong> โดยตรง
+                </p>
+                <div class="magic-card p-6 border-gold/20 italic text-sm">
+                    "โค้ดเดิมจะถูกลดบทบาทเป็นเพียง Data Pipelines และ Schema Validation เท่านั้น"
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="big-number">10X</div>
+                <div class="text-xl font-bold text-gold uppercase">Efficiency Gain</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Pillar 2 -->
+    <section class="slide" id="slide-8">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="text-center order-2 md:order-1">
+                <div class="big-number">90%</div>
+                <div class="text-xl font-bold text-gold uppercase">Token Reduction</div>
+            </div>
+            <div class="order-1 md:order-2 text-left">
+                <span class="text-gold font-bold uppercase text-xs mb-2 block">Pillar 02</span>
+                <h2 class="text-4xl font-bold mb-6 gold-glow uppercase">Efficiency Strategy</h2>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                    การเรียก API เพื่อ "สรุปผลลัพธ์" ใช้ Token น้อยกว่าการให้ Agent "เขียนโค้ดใหม่" อย่างมหาศาล
+                </p>
+                <div class="magic-card p-6 border-gold/20 italic text-sm">
+                    "การจูน Prompt มีต้นทุนต่ำกว่าการจ้าง Senior Developer มาแก้ Logic ที่ซับซ้อนในระยะยาว"
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: Pillar 3 -->
+    <section class="slide" id="slide-9">
+        <div class="max-w-5xl w-full text-center">
+            <span class="text-gold font-bold uppercase text-xs mb-2 block">Pillar 03</span>
+            <h2 class="text-4xl font-bold mb-8 gold-glow uppercase">The Validation Layer</h2>
+            <p class="text-lg text-gray-400 mb-12">ระบบตรวจสอบความถูกต้องเพื่อป้องกันการเกิด Hallucination</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <div class="magic-card p-8 border-t-2 border-gold/40">
+                    <h4 class="font-bold text-gold mb-3 uppercase text-sm">Strict Output Control</h4>
+                    <p class="text-xs text-gray-400">ใช้ Pydantic/Zod บังคับการตอบกลับเป็น JSON Schema ที่แน่นอน 100%</p>
+                </div>
+                <div class="magic-card p-8 border-t-2 border-gold/40">
+                    <h4 class="font-bold text-gold mb-3 uppercase text-sm">Hybrid Logic System</h4>
+                    <p class="text-xs text-gray-400">แยกส่วนคำนวณคงที่ (Math) ให้โค้ดทำ และส่วนการตัดสินใจ (Judgment) ให้ AI ทำ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: Pillar 4 -->
+    <section class="slide" id="slide-10">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="text-left">
+                <span class="text-gold font-bold uppercase text-xs mb-2 block">Pillar 04</span>
+                <h2 class="text-4xl font-bold mb-6 gold-glow uppercase">Scalability & Speed</h2>
+                <p class="text-gray-400 leading-relaxed mb-8">
+                    Build at the Speed of Thought: แก้ไขกฎเกณฑ์ผ่านการอัปเดต Prompt โดยไม่ต้องมี Deployment Cycle
+                </p>
+                <div class="magic-card p-6 bg-white/5 border-gold/20">
+                    <h4 class="font-bold text-gold mb-2 uppercase text-xs">Future-Proof Architecture</h4>
+                    <p class="text-xs text-gray-400 italic">สลับ Endpoint สู่โมเดลใหม่ที่ฉลาดและถูกกว่าได้ทันทีโดยไม่ต้องแก้โค้ด</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="big-number">ZERO</div>
+                <div class="text-xl font-bold text-gold uppercase">Deploy Cycles</div>
+                <p class="text-gray-500 text-xs italic">For Core Business Logic</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Token Economy -->
+    <section class="slide" id="slide-12">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-3xl font-bold mb-12 text-center gold-glow uppercase">Token Economy: Coding vs. Judging</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="magic-card p-8 border-l-4 border-magic-accent flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 text-red-500 uppercase">Scenario A: Agentic Coding</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-6">การบำรุงรักษา Codebase ผ่าน Agent เพื่อเพิ่มฟีเจอร์หรือแก้ไขบั๊ก</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1 text-gray-400"><span>Cache Read (3M Tokens)</span> <span>~$0.45</span></div>
+                            <div class="cost-bar"><div class="cost-fill bg-red-600 w-full shadow-[0_0_10px_rgba(255,0,0,0.5)]"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="magic-card p-8 border-l-4 border-emerald-600 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 text-emerald-500 uppercase">Scenario B: AI Judge</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-6">การเรียกประมวลผลตรรกะโดยตรง (Direct Inference) ผ่าน Prompt ที่จูนไว้แล้ว</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1 text-gray-400"><span>Intent Context (5K Tokens)</span> <span>~$0.0007</span></div>
+                            <div class="cost-bar"><div class="cost-fill bg-emerald-500 w-[2%] shadow-[0_0_10px_rgba(0,255,0,0.5)]"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 text-center magic-card p-6 border-gold/30">
+                <p class="text-xl font-bold text-gold">Efficiency Ratio: 1,500 : 1</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12: Maintenance -->
+    <section class="slide" id="slide-13">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-3xl font-bold mb-10 text-center gold-glow uppercase">The Maintenance Paradox</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="text-center">
+                    <div class="magic-card p-10 border-2 border-red-500/20">
+                        <h4 class="text-xs uppercase text-gray-500 mb-2">Traditional Maintenance</h4>
+                        <div class="text-6xl font-bold text-red-600 mb-2">$0.50+</div>
+                        <p class="text-xs text-gray-500 italic">Per Minor Logic Change</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="magic-card p-10 border-2 border-gold/50 bg-white/5">
+                        <h4 class="text-xs uppercase text-gray-500 mb-2">Prompt-First Tuning</h4>
+                        <div class="text-6xl font-bold text-gold mb-2">$0.001</div>
+                        <p class="text-xs text-gray-500 italic">Per Business Rule Update</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <div class="inline-block px-12 py-5 magic-card border-gold">
+                    <span class="text-3xl font-bold text-gold">99.9% Maintenance Cost Saving</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 13: Real-World Case -->
+    <section class="slide" id="slide-14">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-3xl font-bold mb-10 text-center gold-glow uppercase">Real-World Analysis: AI NPC Roleplay</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="magic-card p-10 border-l-4 border-gold text-left">
+                    <h3 class="text-xl font-bold mb-4 text-gold italic">Actual Production Data</h3>
+                    <p class="text-gray-400 text-sm mb-8">ข้อมูลจริงจาก OpenRouter Dashboard: การโต้ตอบแบบ Roleplay 33 ครั้ง ใช้ต้นทุนเพียง $0.011</p>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 magic-card bg-white/5">
+                            <span class="text-xs uppercase text-gray-500">100 Interactions (Scaled)</span>
+                            <span class="text-2xl font-bold text-gold">$0.033</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="big-number" style="font-size: 5.5rem;">1.20 บาท</div>
+                    <div class="text-xl font-bold text-gold">For 100 Accounts</div>
+                    <p class="text-gray-500 mt-6 text-sm italic">มอบประสบการณ์ "Dynamic NPC" ในราคาไม่ถึง 2 สตางค์ต่อคน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 14: Scalability -->
+    <section class="slide" id="slide-15">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-3xl font-bold mb-10 text-center gold-glow uppercase">Scalability & Infrastructure Cost</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="magic-card p-10 bg-gold/5 border-gold/20 text-left">
+                    <h3 class="text-xl font-bold mb-6 text-gold">Dynamic Resource Allocation</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">
+                        ระบบ AI-Driven ของเราจ่ายตามการใช้งานจริง (Pay-per-value) ไม่แบกรับภาระค่ารักษาเซิร์ฟเวอร์แบบคงที่
+                    </p>
+                    <div class="flex justify-between items-center p-5 magic-card border-gold/30">
+                        <span class="text-xs font-bold">Inference Cost (100 Users)</span>
+                        <span class="text-3xl font-bold text-gold">$0.10</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="big-number text-gold">$0.10</div>
+                    <div class="text-xl font-bold uppercase text-gold">Operational Token Cost</div>
+                    <p class="text-gray-500 text-xs italic mt-4">Scalability with Zero DevOps overhead</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 15: Closing -->
+    <section class="slide" id="slide-16">
+        <div class="max-w-4xl text-center">
+            <div class="mb-10"><i class="fas fa-bolt-lightning text-7xl gold-glow"></i></div>
+            <h2 class="text-7xl font-bold mb-10 gold-glow">พร้อมเป็นหัวแถว</h2>
+            <p class="text-2xl text-gray-400 mb-14 leading-relaxed px-12 italic">
+                "ในยุคที่ใคร ๆ ก็จับ Agent มาทำเว็บได้หมด เราจะเป็นหัวแถวโดยการเปลี่ยนเครื่องยนต์ทั่วไปมาขับด้วย AI"
+            </p>
+            <div class="magic-card p-8 border-gold/50 inline-block">
+                <p class="text-lg text-white font-semibold">Transforming from Tool User to Engine Architect</p>
+            </div>
+            <div class="mt-16">
+                <button onclick="goToSlide(1)" class="px-12 py-4 magic-card text-gold font-bold hover:bg-gold hover:text-black transition-all text-xs tracking-[0.4em] uppercase">
+                    Restart Presentation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-indicator" id="pageIndicator"></div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 16;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            const activeSlide = document.getElementById(`slide-${currentSlide}`);
+            if(activeSlide) activeSlide.classList.add('active');
+
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            updateDots();
+        }
+
+        function createDots() {
+            const indicator = document.getElementById('pageIndicator');
+            indicator.innerHTML = '';
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = `dot ${i === 1 ? 'active' : ''}`;
+                dot.id = `dot-${i}`;
+                dot.onclick = () => goToSlide(i);
+                indicator.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentSlide);
+            });
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateSlide(); } }
+        function prevSlide() { if (currentSlide > 1) { currentSlide--; updateSlide(); } }
+        function goToSlide(n) { currentSlide = n; updateSlide(); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Background sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = '100vh';
+            sparkle.style.width = Math.random() * 2 + 1 + 'px';
+            sparkle.style.height = sparkle.style.width;
+            sparkle.style.backgroundColor = Math.random() > 0.5 ? 'var(--magic-gold)' : 'white';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 4000);
+        }
+
+        setInterval(createSparkle, 150);
+
+            createDots();
+            updateSlide();
+    </script>
+</body>
+</html>
