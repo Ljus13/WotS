@@ -1,4 +1,4 @@
- /* ============================================================
+/* ============================================================
            VARIABLES
         ============================================================ */
         :root {
@@ -536,6 +536,7 @@
             margin: 0 30px 20px 0;
         }
 
+        /* Added cursor pointer and hover effect for the image frame */
         .herb-image-frame {
             width: 215px;         /* fixed = same as wrapper */
             height: 270px;        /* 4:5 ratio of 215 = 268.75 ≈ 270 */
@@ -547,7 +548,14 @@
                 3px 4px 18px rgba(28,14,6,0.14),
                 inset 0 0 18px rgba(28,14,6,0.03);
             flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        .herb-image-frame:hover {
+            transform: scale(1.02) rotate(-1deg);
+            box-shadow: 5px 8px 24px rgba(28,14,6,0.2), inset 0 0 18px rgba(28,14,6,0.03);
+        }
+
         /* Gold corner marks */
         .herb-image-frame::before, .herb-image-frame::after {
             content: '';
@@ -707,6 +715,107 @@
         }
 
         /* ============================================================
+           IMAGE MODAL OVERLAY
+        ============================================================ */
+        .herb-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 14, 6, 0.85); /* Dark parchment overlay */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .herb-modal.herb-show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .herb-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .herb-modal.herb-show .herb-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .herb-modal-frame {
+            background: var(--herb-parchment-light);
+            border: 2px solid var(--herb-border-light);
+            padding: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            position: relative;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Decorative Corners for Modal Frame */
+        .herb-modal-frame::before, .herb-modal-frame::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--herb-gold-light);
+            pointer-events: none;
+            z-index: 2;
+        }
+        .herb-modal-frame::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+        .herb-modal-frame::after  { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+        .herb-modal-img {
+            max-width: 100%;
+            max-height: calc(85vh - 70px);
+            object-fit: contain;
+            filter: sepia(0.18) contrast(1.08) brightness(0.97);
+            border: 1px solid rgba(154,120,80,0.22);
+        }
+
+        .herb-modal-caption {
+            font-family: var(--herb-font-en);
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--herb-ink-mid);
+            text-align: center;
+            margin-top: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .herb-modal-close {
+            position: absolute;
+            top: -45px;
+            right: -15px;
+            color: var(--herb-parchment-dark);
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+            font-family: sans-serif;
+            line-height: 1;
+            padding: 5px;
+        }
+        
+        .herb-modal-close:hover {
+            color: var(--herb-gold-light);
+            transform: scale(1.1);
+        }
+
+        /* ============================================================
            RESPONSIVE
         ============================================================ */
         @media (max-width: 640px) {
@@ -721,6 +830,10 @@
             .herb-image-frame {
                 width: 190px;
                 height: 238px;
+            }
+            .herb-modal-close {
+                top: -50px;
+                right: 0px;
             }
         }
 
