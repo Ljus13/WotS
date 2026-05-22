@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Universe | แหล่งรวมคนรักอนิเมะ</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        anime: {
+                            red: '#e63946',
+                            dark: '#0f172a',
+                            darker: '#020617',
+                            accent: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth Scrolling utility classes */
+        html.lenis {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e63946;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+
+        /* Text Utilities */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            color: transparent;
+        }
+        .text-stroke-strong {
+            -webkit-text-stroke: 2px #e63946;
+            color: transparent;
+        }
+        
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #020617;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-anime-red selection:text-white">
+
+    <div id="loader">
+        <div class="flex flex-col items-center">
+            <div class="w-16 h-16 border-4 border-anime-red border-t-transparent rounded-full animate-spin mb-4"></div>
+            <h2 class="font-display text-2xl tracking-widest text-white">LOADING UNIVERSE...</h2>
+        </div>
+    </div>
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-panel rounded-full px-6 py-3">
+            <div class="flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-fire-flame-curved text-anime-red text-2xl"></i>
+                <span class="font-display font-bold text-xl tracking-wider">ANIME <span class="text-anime-red">UNIVERSE</span></span>
+            </div>
+            
+            <div class="hidden md:flex gap-8 items-center font-medium">
+                <a href="#home" class="hover:text-anime-red transition-colors">หน้าแรก</a>
+                <a href="#about" class="hover:text-anime-red transition-colors">เกี่ยวกับเรา</a>
+                <a href="#trending" class="hover:text-anime-red transition-colors">กำลังมาแรง</a>
+                <a href="#community" class="hover:text-anime-red transition-colors">คอมมูนิตี้</a>
+            </div>
+
+            <button class="bg-anime-red hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(230,57,70,0.5)] hidden md:block">
+                เข้าร่วมเลย
+            </button>
+
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-2xl text-white">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header id="home" class="relative w-full h-screen overflow-hidden flex items-center justify-center">
+        <!-- Video Background -->
+        <div class="absolute inset-0 z-0 bg-anime-darker">
+            <video 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                class="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+            >
+                <source src="https://res.cloudinary.com/dehp6efwc/video/upload/v1779415778/tanjiro-in-akazas-eye.1920x1080_mwpjxr.mp4" type="video/mp4">
+            </video>
+            <!-- Overlay Gradient -->
+            <div class="absolute inset-0 bg-gradient-to-b from-anime-darker/40 via-transparent to-anime-darker"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 w-full max-w-5xl" id="hero-content">
+            <!-- Background Parallax Text -->
+            <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-display text-[15vw] md:text-[12vw] text-stroke opacity-20 whitespace-nowrap pointer-events-none parallax-layer" data-speed="-2">
+                KIMETSU NO YAIBA
+            </h1>
+            
+            <!-- Foreground Parallax Content -->
+            <div class="parallax-layer" data-speed="1.5">
+                <span class="inline-block py-1 px-3 border border-anime-red text-anime-red rounded-full text-sm font-semibold tracking-widest mb-6 backdrop-blur-sm bg-anime-red/10">
+                    ยินดีต้อนรับสู่โลกแห่งจินตนาการ
+                </span>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight drop-shadow-2xl">
+                    ANIME <span class="text-anime-red text-stroke-strong font-display">UNIVERSE</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-300 font-light max-w-3xl mx-auto mb-10 drop-shadow-lg">
+                    แหล่งรวมคนรักอนิเมะที่ใหญ่ที่สุด! อัปเดตข่าวสาร, รีวิว, พูดคุยทฤษฎีสุดล้ำ และแชร์ความหลงใหลในโลกแอนิเมชันญี่ปุ่นไปพร้อมกับพวกเรา
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#about" class="bg-anime-red hover:bg-red-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(230,57,70,0.4)] w-full sm:w-auto">
+                        เริ่มสำรวจจักรวาล
+                    </a>
+                    <a href="#trailer" class="glass-panel hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <i class="fa-solid fa-play"></i> ชมตัวอย่างซีซั่นล่าสุด
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 animate-bounce">
+            <span class="text-xs tracking-widest uppercase">Scroll Down</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <section id="about" class="py-24 md:py-32 relative bg-anime-darker overflow-hidden">
+        <!-- Decor -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-anime-red/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Left Image Box with Scroll Parallax -->
+                <div class="relative w-full aspect-square md:aspect-[4/3] lg:aspect-[3/4] rounded-3xl overflow-hidden group gs-reveal">
+                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Anime Setup" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 scroll-img-parallax">
+                    <div class="absolute inset-0 bg-gradient-to-t from-anime-darker via-transparent to-transparent opacity-80"></div>
+                    
+                    <!-- Floating stats card -->
+                    <div class="absolute bottom-8 left-8 glass-panel p-6 rounded-2xl max-w-[200px] transform translate-y-10 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100">
+                        <h4 class="text-anime-accent text-3xl font-display font-bold">100K+</h4>
+                        <p class="text-sm text-gray-300">โอตาคุที่เข้าร่วมกับเรา</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center gs-reveal-right">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="h-[2px] w-12 bg-anime-red"></div>
+                        <span class="text-anime-red font-semibold tracking-wider uppercase text-sm">Our Mission</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        สัมผัสประสบการณ์ที่ <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-anime-red to-orange-500">เหนือระดับกว่าที่เคย</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        ไม่ว่าคุณจะเป็นสายโชเน็น (Shonen) ที่รักในการต่อสู้สุดมันส์, โชโจ (Shojo) สายโรแมนติกหวานแหวว, หรืออิเซไค (Isekai) ที่ชอบหลุดไปต่างโลก ที่นี่คือบ้านของคุณ เราคัดสรรเนื้อหา บทความ และกิจกรรมเด็ดๆ มาเสิร์ฟให้คุณถึงหน้าจอ
+                    </p>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                        เปิดมิติใหม่แห่งการเสพอนิเมะ ร่วมสร้างคอมมูนิตี้ที่เข้าใจ "ความเบียว" ในตัวคุณไปด้วยกัน!
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-anime-dark flex items-center justify-center text-anime-red text-xl flex-shrink-0">
+                                <i class="fa-solid fa-newspaper"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">ข่าวสารฉับไว</h4>
+                                <p class="text-gray-500 text-sm">อัปเดตตรงจากญี่ปุ่น</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-anime-dark flex items-center justify-center text-anime-accent text-xl flex-shrink-0">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">คอมมูนิตี้สุดอบอุ่น</h4>
+                                <p class="text-gray-500 text-sm">พูดคุยแลกเปลี่ยนได้ 24 ชม.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="trending" class="py-24 relative bg-anime-dark">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            
+            <div class="text-center mb-16 gs-reveal">
+                <span class="text-anime-accent font-semibold tracking-wider uppercase text-sm block mb-2">Must Watch</span>
+                <h2 class="text-4xl md:text-5xl font-bold">อนิเมะ <span class="text-anime-red">กำลังมาแรง</span> ซีซั่นนี้</h2>
+            </div>
+
+            <!-- Anime Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="group cursor-pointer gs-reveal-up rounded-2xl overflow-hidden relative">
+                    <div class="aspect-[3/4] w-full overflow-hidden">
+                        <!-- Using placeholder for Anime poster, styled gracefully -->
+                        <img src="https://images.unsplash.com/photo-1613376023733-7a974305a74b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Action Anime" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1">
+                    </div>
+                    <!-- Hover Info -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="bg-anime-red text-white text-xs font-bold px-2 py-1 rounded w-max mb-3">ACTION / FANTASY</span>
+                        <h3 class="text-2xl font-bold mb-2">ดาบพิฆาตอสูร ภาคปราสาทไร้ขีดจำกัด</h3>
+                        <p class="text-gray-300 text-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            การต่อสู้ครั้งสุดท้ายระหว่างเหล่านักล่าอสูรและคิบุซึจิ มุซัน ได้เปิดฉากขึ้นแล้วในปราสาทที่โครงสร้างสลับซับซ้อน...
+                        </p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                            <span class="text-yellow-400 text-sm"><i class="fa-solid fa-star"></i> 9.8</span>
+                            <span class="text-gray-400 text-sm">| Fall 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group cursor-pointer gs-reveal-up rounded-2xl overflow-hidden relative">
+                    <div class="aspect-[3/4] w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1541562232579-51fca3bb4b4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="SciFi Anime" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1 filter sepia-[.3] hue-rotate-[180deg]">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded w-max mb-3">SCI-FI / MECHA</span>
+                        <h3 class="text-2xl font-bold mb-2">Neon Genesis: Rebuild</h3>
+                        <p class="text-gray-300 text-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            มหากาพย์การต่อสู้ของหุ่นยนต์ยักษ์เพื่อปกป้องมนุษยชาติจากเทวทูตกลับมาอีกครั้งในรูปแบบความคมชัดสูงสุด
+                        </p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                            <span class="text-yellow-400 text-sm"><i class="fa-solid fa-star"></i> 9.5</span>
+                            <span class="text-gray-400 text-sm">| Movie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group cursor-pointer gs-reveal-up rounded-2xl overflow-hidden relative">
+                    <div class="aspect-[3/4] w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560972550-aba3456b5564?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Slice of life anime" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1 filter hue-rotate-90">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded w-max mb-3">SLICE OF LIFE</span>
+                        <h3 class="text-2xl font-bold mb-2">วันว่างๆ ของขุนพลปีศาจ</h3>
+                        <p class="text-gray-300 text-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            เมื่อจอมมารต้องเกษียณตัวเองมาเปิดร้านคาเฟ่แมวในโลกมนุษย์ เรื่องราวป่วนๆ สุดฮาจึงบังเกิด
+                        </p>
+                        <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                            <span class="text-yellow-400 text-sm"><i class="fa-solid fa-star"></i> 8.9</span>
+                            <span class="text-gray-400 text-sm">| Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="border border-white/30 hover:border-anime-red hover:bg-anime-red text-white px-8 py-3 rounded-full font-medium transition-all duration-300">
+                    ดูอนิเมะทั้งหมด <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="community" class="py-32 relative overflow-hidden flex items-center justify-center">
+        <!-- Parallax Background Image -->
+        <div class="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center bg-no-repeat scroll-bg-parallax" style="background-position: 50% 0%;"></div>
+        <div class="absolute inset-0 z-0 bg-anime-darker/80 backdrop-blur-sm"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center gs-reveal">
+            <h2 class="text-5xl md:text-7xl font-display font-bold mb-6 text-stroke-strong text-white uppercase tracking-wider">
+                Join The Guild
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                ร่วมเป็นส่วนหนึ่งของกิลด์เรา สมัครรับข่าวสารและพูดคุยกับเพื่อนๆ ชาวโอตาคุผ่าน Discord แลกเปลี่ยนทฤษฎี และห้ามพลาดตั๋วรอบปฐมทัศน์สุด Exclusive!
+            </p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto" onsubmit="event.preventDefault(); document.getElementById('success-msg').classList.remove('hidden');">
+                <input type="email" placeholder="กรอกอีเมลของคุณ..." required class="bg-white/10 border border-white/20 text-white px-6 py-4 rounded-full w-full focus:outline-none focus:border-anime-red transition-colors backdrop-blur-md">
+                <button type="submit" class="bg-anime-red hover:bg-red-600 text-white px-8 py-4 rounded-full font-bold whitespace-nowrap transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-discord text-xl"></i> สมัครเลย
+                </button>
+            </form>
+            <p id="success-msg" class="text-green-400 mt-4 hidden animate-pulse">
+                <i class="fa-solid fa-check-circle"></i> ยินดีต้อนรับสู่กิลด์! เราส่งลิงก์ Discord ไปที่อีเมลของคุณแล้ว
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-anime-darker border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-fire-flame-curved text-anime-red text-3xl"></i>
+                        <span class="font-display font-bold text-2xl tracking-wider">ANIME <span class="text-anime-red">UNIVERSE</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        ชุมชนสำหรับคนรักอนิเมะ มังงะ และไลท์โนเวล ที่นี่เราสร้างพื้นที่เพื่อการแบ่งปันความชอบอย่างไร้ขีดจำกัด
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-anime-red hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-blue-400 hover:text-white transition-all"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition-all"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">เมนูลัด</h4>
+                    <ul class="flex flex-col gap-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-anime-red transition-colors">หน้าแรก</a></li>
+                        <li><a href="#about" class="hover:text-anime-red transition-colors">เกี่ยวกับเรา</a></li>
+                        <li><a href="#trending" class="hover:text-anime-red transition-colors">อนิเมะมาแรง</a></li>
+                        <li><a href="#" class="hover:text-anime-red transition-colors">รีวิว & บทความ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">ความช่วยเหลือ</h4>
+                    <ul class="flex flex-col gap-3 text-gray-400">
+                        <li><a href="#" class="hover:text-anime-red transition-colors">คำถามที่พบบ่อย (FAQ)</a></li>
+                        <li><a href="#" class="hover:text-anime-red transition-colors">กฎของคอมมูนิตี้</a></li>
+                        <li><a href="#" class="hover:text-anime-red transition-colors">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#" class="hover:text-anime-red transition-colors">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Anime Universe. All rights reserved.</p>
+                <p>Made with <i class="fa-solid fa-heart text-anime-red"></i> by Otaku for Otaku.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Smooth Scroll Engine -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+    <script>
+        // Wait for DOM and window to fully load
+        window.onload = () => {
+            
+            // Remove Loader
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            }, 1000);
+
+            // Register GSAP Plugin
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Initialize Lenis (Smooth Scrolling)
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+            });
+
+            // Integrate Lenis with GSAP ScrollTrigger
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+
+            // 2. Navbar Effect (Change bg on scroll)
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-anime-darker/80', 'backdrop-blur-md', 'shadow-lg');
+                } else {
+                    navbar.classList.remove('bg-anime-darker/80', 'backdrop-blur-md', 'shadow-lg');
+                }
+            });
+
+            // 3. Mouse Move Parallax Logic (Hero Section)
+            const heroSection = document.getElementById('home');
+            const parallaxLayers = document.querySelectorAll('.parallax-layer');
+
+            // Listen to mouse movement
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                // Calculate distance from center
+                const percentX = (x - centerX) / centerX;
+                const percentY = (y - centerY) / centerY;
+
+                parallaxLayers.forEach(layer => {
+                    const speed = parseFloat(layer.getAttribute('data-speed'));
+                    // Move in opposite direction based on speed
+                    const xOffset = percentX * speed * 30; // Max 30px move
+                    const yOffset = percentY * speed * 30;
+
+                    gsap.to(layer, {
+                        x: xOffset,
+                        y: yOffset,
+                        duration: 0.5,
+                        ease: "power2.out",
+                        overwrite: "auto"
+                    });
+                });
+            });
+
+            // Reset parallax on mouse leave
+            heroSection.addEventListener('mouseleave', () => {
+                parallaxLayers.forEach(layer => {
+                    gsap.to(layer, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+
+            // For Mobile/Touch devices: use device orientation or simple touch move
+            heroSection.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const percentX = (touch.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+                const percentY = (touch.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+
+                parallaxLayers.forEach(layer => {
+                    const speed = parseFloat(layer.getAttribute('data-speed'));
+                    gsap.to(layer, {
+                        x: percentX * speed * 15,
+                        y: percentY * speed * 15,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            // 4. Impactful Scroll Animations (Scroll Scrubbing & Scale Parallax)
+            
+            // Hero Section Exit: เมื่อเลื่อนลง ฮีโร่แบนเนอร์จะค่อยๆ ซูมออกและจมลงไปในพื้นหลัง (สร้างความลึก)
+            gsap.to("#hero-content", {
+                scale: 0.6,
+                y: 200,
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#home",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true // ผูกแอนิเมชันกับ Scroll ล้อไปกับนิ้ว/เมาส์
+                }
+            });
+
+            // About Section Image: ภาพซูมเข้าจากขนาดใหญ่ และค่อยๆ เลื่อนเข้ามาหาหน้าจอ
+            gsap.fromTo(".gs-reveal", 
+                { scale: 1.4, autoAlpha: 0, x: -100 }, 
+                { 
+                    scale: 1, 
+                    autoAlpha: 1, 
+                    x: 0, 
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#about",
+                        start: "top 95%", 
+                        end: "center center",
+                        scrub: 1 // ใช้ค่าตัวเลข (เช่น 1) เพื่อให้มันตาม scroll แบบหน่วงๆ สมูทๆ
+                    }
+                }
+            );
+
+            // About Section Text: ข้อความค่อยๆ ซูมขยายและสไลด์กระแทกเข้ามาจากทางขวา
+            const revealRightElements = document.querySelectorAll('.gs-reveal-right');
+            revealRightElements.forEach((elem) => {
+                gsap.fromTo(elem, 
+                    { autoAlpha: 0, x: 150, scale: 0.8 }, 
+                    { 
+                        autoAlpha: 1, 
+                        x: 0, 
+                        scale: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            end: "center center",
+                            scrub: 1
+                        }
+                    }
+                );
+            });
+
+            // Setup 3D Perspective ให้กับคอนเทนเนอร์ของการ์ด เพื่อให้หมุนแกน 3 มิติได้สวยงาม
+            gsap.set("#trending .grid", { perspective: 1500 });
+
+            // Trending Cards: รวบ Trigger ไว้ที่ Grid และใช้ stagger เพื่อให้การ์ดขยับไล่เลี่ยกันอย่างสมูท (แก้ปัญหาเฟรมเรตตก)
+            gsap.fromTo(".gs-reveal-up", 
+                { autoAlpha: 0, y: 150, scale: 0.8, rotationY: 15, rotationX: 10 },
+                {
+                    autoAlpha: 1, 
+                    y: 0, 
+                    scale: 1,
+                    rotationY: 0,
+                    rotationX: 0,
+                    ease: "power2.out",
+                    stagger: 0.1, // ทำให้การ์ดไล่กันเปิดตัว 0.1 วินาที
+                    scrollTrigger: {
+                        trigger: "#trending .grid", // ใช้ Container เป็นตัวกระตุ้นตัวเดียว
+                        start: "top 90%",
+                        end: "center 60%",
+                        scrub: 1
+                    }
+                }
+            );
+
+            // Community Section: ซูมข้อความแบบกระแทกเข้ามาหาผู้ใช้ (Massive Zoom-in)
+            gsap.fromTo("#community .gs-reveal",
+                { scale: 0.3, autoAlpha: 0, y: 100 },
+                {
+                    scale: 1,
+                    autoAlpha: 1,
+                    y: 0,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#community",
+                        start: "top 90%",
+                        end: "center center",
+                        scrub: 1.5
+                    }
+                }
+            );
+
+            // 5. Scroll Parallax for Images and Backgrounds
+            
+            // ทำให้รูปภาพข้างในกรอบมีการเลื่อนและซูมที่ลึกขึ้นไปอีก
+            const imgParallax = document.querySelectorAll('.scroll-img-parallax');
+            imgParallax.forEach(img => {
+                gsap.to(img, {
+                    scale: 1.15,
+                    yPercent: 30, 
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: img.parentElement,
+                        start: "top bottom", 
+                        end: "bottom top", 
+                        scrub: true
+                    }
+                });
+            });
+
+            // Background Parallax for Community Section (ดึงภาพฉากหลังให้เคลื่อนและซูมเข้ามา)
+            gsap.to(".scroll-bg-parallax", {
+                backgroundPosition: "50% 100%",
+                scale: 1.1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#community",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+        };
+    </script>
+</body>
+</html>
