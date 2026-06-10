@@ -1,172 +1,168 @@
-.pax-font-bebas { 
-            font-family: 'Bebas Neue', sans-serif; 
-        }
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Sarabun:wght@300;400;500;600;700&display=swap');
 
-        .pax-airmail-border {
-            height: 12px;
-            background: repeating-linear-gradient(
-                -45deg, 
-                #d32f2f, 
-                #d32f2f 20px, 
-                #ffffff 20px, 
-                #ffffff 40px, 
-                #1976d2 40px, 
-                #1976d2 60px, 
-                #ffffff 60px, 
-                #ffffff 80px
-            );
-        }
+/* ตั้งค่าพื้นฐานไม่ให้ตีกับเว็บบอร์ด */
+.pax-container {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #faf8f5;
+    max-width: 56rem;
+    margin: 0 auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
+    color: #1c1917;
+    line-height: 1.5;
+}
+.pax-container * { box-sizing: border-box; }
 
-        .pax-stamp-card {
-            background-color: #ffffff;
-            border: 2px dashed #cbd5e1;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-        }
+.pax-font-bebas { font-family: 'Bebas Neue', sans-serif; }
 
-        .pax-stamp-card:hover {
-            transform: scale(1.01) rotate(-1deg);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            z-index: 10;
-        }
+.pax-airmail-border {
+    height: 12px; width: 100%;
+    background: repeating-linear-gradient(-45deg, #d32f2f, #d32f2f 20px, #ffffff 20px, #ffffff 40px, #1976d2 40px, #1976d2 60px, #ffffff 60px, #ffffff 80px);
+}
 
-        .pax-stamp-inner {
-            background-color: #fdfbf7;
-            padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+/* ส่วนหัว Header */
+.pax-header {
+    position: relative; height: 24rem; width: 100%;
+    background-color: #292524; display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.pax-header-bg-img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0.5; mix-blend-mode: overlay;
+}
+.pax-header-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(28, 25, 23, 0.3);
+}
+.pax-header-content { position: relative; z-index: 10; text-align: center; padding: 0 1rem; }
 
-        .pax-mission-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 1.25rem;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+.pax-badge {
+    display: inline-block; padding: 0.25rem 1rem; margin-bottom: 1rem; font-size: 1.25rem;
+    letter-spacing: 0.1em; color: #292524; background-color: #f4ece1; border-radius: 0.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #d6d3d1; transform: rotate(-2deg);
+}
+.pax-title {
+    font-size: 4.5rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;
+    letter-spacing: 0.05em; text-shadow: 0 10px 15px rgba(0,0,0,0.5); line-height: 1;
+}
+.pax-subtitle {
+    font-size: 2.25rem; color: #f5f5f4; letter-spacing: 0.1em; text-shadow: 0 4px 6px rgba(0,0,0,0.3); margin: 0;
+}
+.pax-header-deco {
+    position: absolute; bottom: -2.5rem; right: -2.5rem; width: 12rem; height: 12rem;
+    border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transform: rotate(-12deg); pointer-events: none;
+}
+.pax-header-deco-inner {
+    width: 10rem; height: 10rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+    color: rgba(255,255,255,0.2); font-size: 1.875rem; display: flex; align-items: center; justify-content: center;
+    text-align: center; letter-spacing: 0.1em; line-height: 1.1;
+}
 
-        .pax-mission-img-large {
-            height: 240px;
-        }
+/* ส่วนแนะนำ */
+.pax-intro { padding: 3rem; text-align: center; border-bottom: 1px dashed #d1d5db; }
+.pax-intro p { font-size: 1.3rem; color: #44403c; line-height: 1.6; margin: 0; }
+.pax-text-red { color: #b91c1c; }
 
-        .pax-postmark {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            font-family: 'Special Elite', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            font-size: 0.9rem;
-            text-align: center;
-            line-height: 1.1;
-            z-index: 20;
-            background-color: rgba(253, 251, 247, 0.85);
-            backdrop-filter: blur(2px);
-        }
+/* ส่วนกริดตารางภารกิจ */
+.pax-grid-section { padding: 2.5rem; background-color: rgba(245, 245, 244, 0.5); }
+.pax-section-title {
+    font-size: 1.875rem; font-weight: 700; color: #292524; margin: 0 0 2rem 0;
+    display: flex; align-items: center; gap: 0.75rem; border-left: 4px solid #dc2626; padding-left: 1rem;
+}
+.pax-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 
-        .pax-postmark::after {
-            content: '';
-            position: absolute;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-        }
+@media (min-width: 768px) {
+    .pax-grid { grid-template-columns: repeat(2, 1fr); }
+    .pax-col-span-2 { grid-column: 1 / -1; }
+}
 
-        .pax-theme-red {
-            border: 3px solid rgba(211, 47, 47, 0.5);
-            color: rgba(211, 47, 47, 0.8);
-            transform: rotate(25deg);
-        }
-        .pax-theme-red::after { border: 1px solid rgba(211, 47, 47, 0.5); }
-        .pax-text-red { color: #b91c1c; }
-        .pax-border-red { border-color: #fca5a5; }
+/* การ์ดแสตมป์ */
+.pax-stamp-card {
+    background-color: #ffffff; border: 2px dashed #cbd5e1; padding: 10px; position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;
+}
+.pax-stamp-card:hover { transform: scale(1.01) rotate(-1deg); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); z-index: 10; }
+.pax-stamp-inner {
+    background-color: #fdfbf7; padding: 1.5rem; border: 1px solid #e2e8f0; height: 100%;
+    display: flex; flex-direction: column;
+}
+.pax-mission-img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; margin-bottom: 1.25rem; border: 1px solid #cbd5e1; }
+.pax-mission-img-large { height: 240px; }
 
-        .pax-theme-blue {
-            border: 3px solid rgba(25, 118, 210, 0.5);
-            color: rgba(25, 118, 210, 0.8);
-            transform: rotate(-15deg);
-        }
-        .pax-theme-blue::after { border: 1px solid rgba(25, 118, 210, 0.5); }
-        .pax-text-blue { color: #1d4ed8; }
-        .pax-border-blue { border-color: #bfdbfe; }
+/* ตรายางประทับ */
+.pax-postmark {
+    position: absolute; top: 25px; right: 25px; width: 80px; height: 80px; border-radius: 50%;
+    font-family: 'Special Elite', monospace; font-weight: 700; text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; pointer-events: none;
+    font-size: 0.9rem; text-align: center; line-height: 1.1; z-index: 20;
+    background-color: rgba(253, 251, 247, 0.85); backdrop-filter: blur(2px);
+}
+.pax-postmark::after { content: ''; position: absolute; width: 65px; height: 65px; border-radius: 50%; }
 
-        .pax-theme-green {
-            border: 3px solid rgba(46, 125, 50, 0.5);
-            color: rgba(46, 125, 50, 0.8);
-            transform: rotate(15deg);
-        }
-        .pax-theme-green::after { border: 1px solid rgba(46, 125, 50, 0.5); }
-        .pax-text-green { color: #15803d; }
-        .pax-border-green { border-color: #bbf7d0; }
+/* สีธีมต่างๆ */
+.pax-theme-red { border: 3px solid rgba(211, 47, 47, 0.5); color: rgba(211, 47, 47, 0.8); transform: rotate(25deg); }
+.pax-theme-red::after { border: 1px solid rgba(211, 47, 47, 0.5); }
+.pax-border-red { border-color: #fca5a5; }
 
-        .pax-theme-purple {
-            border: 3px solid rgba(106, 27, 154, 0.5);
-            color: rgba(106, 27, 154, 0.8);
-            transform: rotate(-20deg);
-        }
-        .pax-theme-purple::after { border: 1px solid rgba(106, 27, 154, 0.5); }
-        .pax-text-purple { color: #7e22ce; }
-        .pax-border-purple { border-color: #e9d5ff; }
+.pax-theme-blue { border: 3px solid rgba(25, 118, 210, 0.5); color: rgba(25, 118, 210, 0.8); transform: rotate(-15deg); }
+.pax-theme-blue::after { border: 1px solid rgba(25, 118, 210, 0.5); }
+.pax-text-blue { color: #1d4ed8; }
+.pax-border-blue { border-color: #bfdbfe; }
 
-        .pax-theme-orange {
-            border: 3px solid rgba(239, 108, 0, 0.5);
-            color: rgba(239, 108, 0, 0.8);
-            transform: rotate(10deg);
-        }
-        .pax-theme-orange::after { border: 1px solid rgba(239, 108, 0, 0.5); }
-        .pax-text-orange { color: #c2410c; }
-        .pax-border-orange { border-color: #fed7aa; }
+.pax-theme-green { border: 3px solid rgba(46, 125, 50, 0.5); color: rgba(46, 125, 50, 0.8); transform: rotate(15deg); }
+.pax-theme-green::after { border: 1px solid rgba(46, 125, 50, 0.5); }
+.pax-text-green { color: #15803d; }
+.pax-border-green { border-color: #bbf7d0; }
 
-        .pax-theme-teal {
-            border: 3px solid rgba(0, 137, 123, 0.5);
-            color: rgba(0, 137, 123, 0.8);
-            transform: rotate(-10deg);
-        }
-        .pax-theme-teal::after { border: 1px solid rgba(0, 137, 123, 0.5); }
-        .pax-text-teal { color: #0f766e; }
-        .pax-border-teal { border-color: #99f6e4; }
+.pax-theme-purple { border: 3px solid rgba(106, 27, 154, 0.5); color: rgba(106, 27, 154, 0.8); transform: rotate(-20deg); }
+.pax-theme-purple::after { border: 1px solid rgba(106, 27, 154, 0.5); }
+.pax-text-purple { color: #7e22ce; }
+.pax-border-purple { border-color: #e9d5ff; }
 
-        .pax-theme-gold {
-            border: 3px solid rgba(217, 119, 6, 0.5);
-            color: rgba(217, 119, 6, 0.8);
-            transform: rotate(5deg);
-        }
-        .pax-theme-gold::after { border: 1px solid rgba(217, 119, 6, 0.5); }
-        .pax-text-gold { color: #b45309; }
-        .pax-border-gold { border-color: #fde68a; }
+.pax-theme-orange { border: 3px solid rgba(239, 108, 0, 0.5); color: rgba(239, 108, 0, 0.8); transform: rotate(10deg); }
+.pax-theme-orange::after { border: 1px solid rgba(239, 108, 0, 0.5); }
+.pax-text-orange { color: #c2410c; }
+.pax-border-orange { border-color: #fed7aa; }
 
-        .pax-highlight-box {
-            background-color: #ffffff;
-            padding: 1.25rem;
-            border-radius: 0.25rem;
-            border: 1px solid;
-            margin-top: auto;
-        }
+.pax-theme-teal { border: 3px solid rgba(0, 137, 123, 0.5); color: rgba(0, 137, 123, 0.8); transform: rotate(-10deg); }
+.pax-theme-teal::after { border: 1px solid rgba(0, 137, 123, 0.5); }
+.pax-text-teal { color: #0f766e; }
+.pax-border-teal { border-color: #99f6e4; }
 
-        .pax-warning-box {
-            margin-top: 1rem;
-            background-color: #fef2f2;
-            padding: 0.75rem 1rem;
-            border-left: 4px solid #ef4444;
-            font-weight: 700;
-            color: #b91c1c;
-            font-size: 1.125rem;
-        }
-        
-        .pax-bg-paper { background-color: #faf8f5; }
-        .pax-text-primary { color: #1c1917; }
-        .pax-text-secondary { color: #44403c; }
-        .pax-header-bg { background-color: #292524; }
+.pax-theme-gold { border: 3px solid rgba(217, 119, 6, 0.5); color: rgba(217, 119, 6, 0.8); transform: rotate(5deg); }
+.pax-theme-gold::after { border: 1px solid rgba(217, 119, 6, 0.5); }
+.pax-text-gold { color: #b45309; }
+.pax-border-gold { border-color: #fde68a; }
+
+/* เนื้อหาในส่วนการ์ด */
+.pax-card-title { font-size: 1.5rem; font-weight: 700; color: #292524; margin: 0 0 0.5rem 0; }
+.pax-card-title-lg { font-size: 1.875rem; }
+.pax-card-desc { font-size: 1.125rem; color: #44403c; font-style: italic; margin: 0 0 1rem 0; }
+
+.pax-highlight-box {
+    background-color: #ffffff; padding: 1.25rem; border-radius: 0.25rem; border: 1px solid;
+    margin-top: auto; font-size: 1.125rem; line-height: 1.6;
+}
+.pax-underline-wavy { text-decoration: underline wavy; }
+
+.pax-warning-box {
+    margin-top: 1rem; background-color: #fef2f2; padding: 0.75rem 1rem;
+    border-left: 4px solid #ef4444; font-weight: 700; color: #b91c1c; font-size: 1.125rem;
+}
+
+/* ส่วนกฎกติกา */
+.pax-rules-section { background-color: rgba(231, 229, 228, 0.7); border-top: 2px dashed #d6d3d1; padding: 2.5rem; }
+.pax-rules-box {
+    background-color: #ffffff; padding: 2rem; border-radius: 0.25rem; border: 1px solid #d6d3d1;
+    position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 48rem; margin: 0 auto;
+}
+.pax-pin {
+    position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%);
+    width: 1.5rem; height: 1.5rem; background-color: #dc2626; border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #ffffff;
+}
+.pax-rules-title { font-size: 1.75rem; font-weight: 700; color: #292524; text-align: center; margin: 0 0 1.5rem 0; }
+.pax-rules-list { list-style: none; padding: 0; margin: 0; }
+.pax-rules-list li { font-size: 1.125rem; color: #44403c; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+.pax-rules-bullet { color: #dc2626; font-weight: 700; margin-top: 0.1rem; }
