@@ -166,3 +166,390 @@
 .pax-rules-list { list-style: none; padding: 0; margin: 0; }
 .pax-rules-list li { font-size: 1.125rem; color: #44403c; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; }
 .pax-rules-bullet { color: #dc2626; font-weight: 700; margin-top: 0.1rem; }
+axf-container {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #faf8f5;
+    max-width: 56rem;
+    margin: 0 auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    color: #1c1917;
+    line-height: 1.6;
+}
+.paxf-container * { box-sizing: border-box; }
+.paxf-font-bebas { font-family: 'Bebas Neue', sans-serif; }
+ 
+/* แถบ Airmail แดง-ขาว-น้ำเงิน — ชุดเดียวกับโพสต์กิจกรรม */
+.paxf-airmail-border {
+    height: 12px;
+    width: 100%;
+    background: repeating-linear-gradient(
+        -45deg,
+        #d32f2f, #d32f2f 20px,
+        #ffffff 20px, #ffffff 40px,
+        #1976d2 40px, #1976d2 60px,
+        #ffffff 60px, #ffffff 80px
+    );
+}
+ 
+/* ---------- หน้าพาสปอร์ต (ข้อมูลผู้เล่น) ---------- */
+.paxf-passport-page {
+    background-color: #292524;
+    color: #faf8f5;
+    padding: 2.5rem;
+}
+.paxf-passport-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: #d6d3d1;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.paxf-passport-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.25rem 0;
+    color: #faf8f5;
+}
+.paxf-passport-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    color: #fbbf24;
+    margin: 0 0 2rem 0;
+}
+.paxf-passport-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: stretch;
+}
+ 
+/* กรอบรูปตัวละคร */
+.paxf-id-photo {
+    width: 160px;
+    min-height: 200px;
+    flex-shrink: 0;
+    background-color: #44403c;
+    border: 2px dashed #78716c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #a8a29e;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    overflow: hidden;
+}
+.paxf-id-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+ 
+/* ตารางข้อมูลผู้เล่น */
+.paxf-id-fields {
+    flex: 1;
+    min-width: 260px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    align-content: start;
+}
+.paxf-field {
+    background-color: rgba(250, 248, 245, 0.06);
+    border: 1px solid #57534e;
+    border-radius: 0.25rem;
+    padding: 0.85rem 1.1rem;
+}
+.paxf-field-label {
+    display: block;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #a8a29e;
+    margin-bottom: 0.3rem;
+}
+.paxf-field-value {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #fbbf24;
+}
+.paxf-field-wide { grid-column: 1 / -1; }
+ 
+/* ---------- โซนแสตมป์ภารกิจ ---------- */
+/* หมายเหตุ: พื้นหลังต้องเป็นสีทึบ เพราะรอยปรุของแสตมป์
+   ใช้สีนี้ "เจาะ" ขอบการ์ด — ถ้าแก้สีนี้ ต้องแก้สีรูใน
+   .paxf-stamp-card ให้ตรงกันด้วย */
+.paxf-stamps-section {
+    padding: 2.5rem;
+    background-color: #f2efe9;
+}
+.paxf-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #292524;
+    border-bottom: 2px dashed #d6d3d1;
+    padding-bottom: 0.75rem;
+    margin: 0 0 2rem 0;
+}
+.paxf-section-title .paxf-en {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #78716c;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    margin-left: 0.5rem;
+}
+ 
+.paxf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.25rem;
+}
+.paxf-col-span-2 { grid-column: 1 / -1; }
+ 
+/* ---------- การ์ดแสตมป์ + รอยปรุครึ่งวงกลม ----------
+   เทคนิค: วาดครึ่งวงกลมสีเดียวกับพื้นหลังเซคชัน (#f2efe9)
+   เรียงตามขอบการ์ดทั้ง 4 ด้าน ทำให้ดูเหมือนรอยปรุแสตมป์จริง */
+.paxf-stamp-card {
+    position: relative;
+    padding: 14px;
+    background-color: #ffffff;
+    background-image:
+        radial-gradient(circle at 0 50%,   #f2efe9 6px, rgba(0,0,0,0) 6.8px),
+        radial-gradient(circle at 100% 50%, #f2efe9 6px, rgba(0,0,0,0) 6.8px),
+        radial-gradient(circle at 50% 0,   #f2efe9 6px, rgba(0,0,0,0) 6.8px),
+        radial-gradient(circle at 50% 100%, #f2efe9 6px, rgba(0,0,0,0) 6.8px);
+    background-position: left top, right top, left top, left bottom;
+    background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
+    background-size: 14px 26px, 14px 26px, 26px 14px, 26px 14px;
+    filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.08));
+    transition: all 0.3s ease;
+}
+.paxf-stamp-card:hover {
+    transform: scale(1.01) rotate(-1deg);
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.12));
+    z-index: 10;
+}
+@media (prefers-reduced-motion: reduce) {
+    .paxf-stamp-card, .paxf-stamp-card:hover { transition: none; transform: none; }
+}
+.paxf-stamp-inner {
+    background-color: #fdfbf7;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+ 
+/* การ์ดกะทัดรัด — สำหรับภารกิจที่ส่งเฉพาะลิงก์ (ไม่มีรูปกินพื้นที่) */
+.paxf-stamp-compact .paxf-stamp-inner {
+    padding: 1.1rem 1.4rem;
+}
+.paxf-stamp-compact .paxf-day-title {
+    margin-bottom: 0.75rem;
+    padding-right: 64px;
+}
+ 
+/* ป้ายวัน + ชื่อภารกิจ */
+.paxf-day-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #78716c;
+    margin-bottom: 0.25rem;
+}
+.paxf-day-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #292524;
+    margin: 0 0 1rem 0;
+    padding-right: 80px; /* กันชนกับตราประทับ */
+}
+ 
+/* ---------- ช่องวางรูปหลักฐาน + ระบบคลิกขยายรูป ----------
+   วิธีใช้ฝั่งผู้เล่น: ภายใน .paxf-photo-slot ต้องมี
+   <input type="checkbox" class="paxf-zoom-toggle"> อยู่ก่อน <img>
+   - คลิกรูป → ขยายเต็มจอพร้อมฉากหลังมืด
+   - คลิกอีกครั้งที่ใดก็ได้ → ปิด
+   (ระบบจะทำงานเฉพาะเมื่อมีรูปอยู่ในช่องแล้วเท่านั้น) */
+.paxf-photo-slot {
+    position: relative;
+    width: 100%;
+    min-height: 180px;
+    background-color: #f1f5f9;
+    border: 2px dashed #94a3b8;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.paxf-photo-slot img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+}
+.paxf-photo-tall { min-height: 260px; }
+ 
+/* เช็คบ็อกซ์ซ่อน — ตัวสลับสถานะขยายรูป */
+.paxf-zoom-toggle {
+    display: none;
+}
+/* เปิดใช้เฉพาะช่องที่มีรูปแล้ว */
+.paxf-photo-slot:has(img) { cursor: zoom-in; }
+.paxf-photo-slot:has(img) .paxf-zoom-toggle {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: zoom-in;
+    z-index: 2;
+}
+/* สถานะขยาย: เช็คบ็อกซ์กลายเป็นฉากรับคลิกเต็มจอ (คลิกที่ไหนก็ปิดได้) */
+.paxf-photo-slot .paxf-zoom-toggle:checked {
+    display: block;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    cursor: zoom-out;
+}
+/* รูปลอยขึ้นกลางจอ + ฉากหลังมืดด้วย box-shadow */
+.paxf-photo-slot .paxf-zoom-toggle:checked ~ img {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 92vw;
+    max-height: 92vh;
+    z-index: 1000;
+    border-radius: 4px;
+    box-shadow: 0 0 0 200vmax rgba(28, 25, 23, 0.88);
+}
+ 
+/* ช่องวางลิงก์ */
+.paxf-link-slot {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    color: #1e40af;
+    font-size: 0.9rem;
+    font-weight: 600;
+    word-break: break-all;
+    margin-top: auto;
+}
+.paxf-link-slot + .paxf-link-slot { margin-top: 0.6rem; }
+.paxf-link-slot a { color: #1d4ed8; }
+ 
+/* ---------- ตราประทับ (Postmark) — ขนาดและองศาเดียวกับโพสต์กิจกรรม ---------- */
+.paxf-postmark {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-family: 'Special Elite', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.1;
+    z-index: 20;
+    background-color: rgba(253, 251, 247, 0.85);
+}
+.paxf-postmark::after {
+    content: '';
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+}
+/* ตราขนาดเล็ก สำหรับการ์ดกะทัดรัด */
+.paxf-postmark-sm {
+    width: 58px;
+    height: 58px;
+    font-size: 0.7rem;
+    top: 18px;
+    right: 18px;
+}
+.paxf-postmark-sm::after {
+    width: 46px;
+    height: 46px;
+}
+ 
+.paxf-theme-red    { border: 3px solid rgba(211, 47, 47, 0.5);  color: rgba(211, 47, 47, 0.8);  transform: rotate(25deg); }
+.paxf-theme-red::after    { border: 1px solid rgba(211, 47, 47, 0.5); }
+.paxf-theme-blue   { border: 3px solid rgba(25, 118, 210, 0.5); color: rgba(25, 118, 210, 0.8); transform: rotate(-15deg); }
+.paxf-theme-blue::after   { border: 1px solid rgba(25, 118, 210, 0.5); }
+.paxf-theme-green  { border: 3px solid rgba(46, 125, 50, 0.5);  color: rgba(46, 125, 50, 0.8);  transform: rotate(15deg); }
+.paxf-theme-green::after  { border: 1px solid rgba(46, 125, 50, 0.5); }
+.paxf-theme-purple { border: 3px solid rgba(106, 27, 154, 0.5); color: rgba(106, 27, 154, 0.8); transform: rotate(-20deg); }
+.paxf-theme-purple::after { border: 1px solid rgba(106, 27, 154, 0.5); }
+.paxf-theme-orange { border: 3px solid rgba(239, 108, 0, 0.5);  color: rgba(239, 108, 0, 0.8);  transform: rotate(10deg); }
+.paxf-theme-orange::after { border: 1px solid rgba(239, 108, 0, 0.5); }
+.paxf-theme-teal   { border: 3px solid rgba(0, 137, 123, 0.5);  color: rgba(0, 137, 123, 0.8);  transform: rotate(-10deg); }
+.paxf-theme-teal::after   { border: 1px solid rgba(0, 137, 123, 0.5); }
+.paxf-theme-gold   { border: 3px solid rgba(217, 119, 6, 0.5);  color: rgba(217, 119, 6, 0.8);  transform: rotate(5deg); }
+.paxf-theme-gold::after   { border: 1px solid rgba(217, 119, 6, 0.5); }
+ 
+/* ---------- กล่องท้ายฟอร์ม (วิธีส่ง) ---------- */
+.paxf-footer-note {
+    margin: 0 2.5rem 2.5rem 2.5rem;
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 6px solid #d97706;
+    border-radius: 0.25rem;
+    padding: 1.25rem 1.5rem;
+}
+.paxf-footer-note h4 {
+    margin: 0 0 0.5rem 0;
+    color: #b45309;
+    font-size: 1.05rem;
+}
+.paxf-footer-note ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: #57534e;
+    font-size: 0.95rem;
+}
+.paxf-footer-note li { margin-bottom: 0.3rem; }
+ 
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .paxf-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .paxf-stamps-section { padding: 1.25rem; }
+    .paxf-passport-page { padding: 1.5rem; }
+    .paxf-passport-body { flex-direction: column; align-items: center; }
+    .paxf-id-fields { grid-template-columns: 1fr; width: 100%; }
+    .paxf-footer-note { margin: 0 1.25rem 1.25rem 1.25rem; }
+    .paxf-postmark { width: 64px; height: 64px; font-size: 0.75rem; top: 18px; right: 18px; }
+    .paxf-postmark::after { width: 52px; height: 52px; }
+}
+ 
