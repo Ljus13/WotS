@@ -177,6 +177,17 @@ axf-container {
     color: #1c1917;
     line-height: 1.6;
 }
+.paxf-container {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #faf8f5;
+    max-width: 56rem;
+    margin: 0 auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    color: #1c1917;
+    line-height: 1.6;
+}
 .paxf-container * { box-sizing: border-box; }
 .paxf-font-bebas { font-family: 'Bebas Neue', sans-serif; }
  
@@ -375,15 +386,15 @@ axf-container {
 }
  
 /* ---------- ช่องวางรูปหลักฐาน + ระบบคลิกขยายรูป ----------
-   วิธีใช้ฝั่งผู้เล่น: ภายใน .paxf-photo-slot ต้องมี
-   <input type="checkbox" class="paxf-zoom-toggle"> อยู่ก่อน <img>
+   ฝั่งผู้เล่น: แท็ก <img> ถูกฝังไว้ในโค้ดแจกแล้ว
+   ผู้เล่นแก้เฉพาะ URL ใน src="..." เท่านั้น
    - คลิกรูป → ขยายเต็มจอพร้อมฉากหลังมืด
    - คลิกอีกครั้งที่ใดก็ได้ → ปิด
-   (ระบบจะทำงานเฉพาะเมื่อมีรูปอยู่ในช่องแล้วเท่านั้น) */
+   (ช่องที่ยังเป็นรูป placeholder ระบบซูมจะไม่ทำงาน) */
 .paxf-photo-slot {
     position: relative;
     width: 100%;
-    min-height: 180px;
+    height: 200px;   /* ล็อกความสูงตายตัว — ทุกการ์ดเท่ากันเสมอ */
     background-color: #f1f5f9;
     border: 2px dashed #94a3b8;
     border-radius: 4px;
@@ -393,17 +404,23 @@ axf-container {
     text-align: center;
     color: #64748b;
     font-size: 0.9rem;
-    padding: 1rem;
+    padding: 6px;
     margin-bottom: 1rem;
     overflow: hidden;
 }
 .paxf-photo-slot img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;     /* ครอปรูปให้พอดีกรอบ ไม่บิด ไม่ดันการ์ด */
+    object-position: center;
     display: block;
     border-radius: 2px;
 }
-.paxf-photo-tall { min-height: 260px; }
+.paxf-photo-tall { height: 320px; }   /* ช่องใหญ่ของ Day 7 */
+ 
+/* ช่องที่ยังเป็นรูป placeholder (ยังไม่วาง URL จริง) — ปิดระบบซูม */
+.paxf-photo-slot:has(img[src*="passport-placeholder"]) { cursor: default; }
+.paxf-photo-slot:has(img[src*="passport-placeholder"]) .paxf-zoom-toggle { display: none !important; }
  
 /* เช็คบ็อกซ์ซ่อน — ตัวสลับสถานะขยายรูป */
 .paxf-zoom-toggle {
@@ -440,6 +457,7 @@ axf-container {
     transform: translate(-50%, -50%);
     width: auto;
     height: auto;
+    object-fit: contain;   /* ตอนซูมเห็นรูปเต็มใบ ไม่ถูกครอป */
     max-width: 92vw;
     max-height: 92vh;
     z-index: 1000;
@@ -551,5 +569,6 @@ axf-container {
     .paxf-footer-note { margin: 0 1.25rem 1.25rem 1.25rem; }
     .paxf-postmark { width: 64px; height: 64px; font-size: 0.75rem; top: 18px; right: 18px; }
     .paxf-postmark::after { width: 52px; height: 52px; }
+    .paxf-photo-slot { height: 180px; }
+    .paxf-photo-tall { height: 240px; }
 }
- 
