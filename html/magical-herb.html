@@ -188,6 +188,9 @@
             
             // Re-initialize icons for newly added DOM elements
             lucide.createIcons();
+            
+            // Notify iframe height change after render
+            if(window.sendHeight) window.sendHeight();
         }
 
         // HTML Generators
@@ -301,56 +304,56 @@
                 `;
             }
 
-            // Grid Items
+            // Grid Items - 2 Columns Always and Responsive Adjustments
             let gridHtml = '';
             if (plant.appearance) {
                 gridHtml += `
-                    <div class="bg-[#e6d7c3] p-2.5 rounded-sm shadow-lg h-full">
-                        <div class="border-2 border-[#c2a680] h-full p-6 sm:p-8 flex flex-col">
-                            <h3 class="flex items-center gap-3 text-2xl font-bold text-[#4a3a2a] mb-4 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
-                                <div class="bg-[#6b5842] p-2 rounded-full shadow-inner"><i data-lucide="leaf" class="w-6 h-6 text-[#e6d7c3]"></i></div>
+                    <div class="bg-[#e6d7c3] p-1.5 md:p-2.5 rounded-sm shadow-lg h-full">
+                        <div class="border-2 border-[#c2a680] h-full p-4 md:p-6 lg:p-8 flex flex-col">
+                            <h3 class="flex items-center gap-2 md:gap-3 text-lg md:text-2xl font-bold text-[#4a3a2a] mb-3 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
+                                <div class="bg-[#6b5842] p-1.5 md:p-2 rounded-full shadow-inner"><i data-lucide="leaf" class="w-4 h-4 md:w-6 md:h-6 text-[#e6d7c3]"></i></div>
                                 ลักษณะทางพฤกษศาสตร์
                             </h3>
-                            <p class="text-[#5a4a3a] text-xl leading-relaxed">${escapeHTML(plant.appearance)}</p>
+                            <p class="text-[#5a4a3a] text-base md:text-xl leading-relaxed">${escapeHTML(plant.appearance)}</p>
                         </div>
                     </div>
                 `;
             }
             if (plant.harvest) {
                 gridHtml += `
-                    <div class="bg-[#e6d7c3] p-2.5 rounded-sm shadow-lg h-full">
-                        <div class="border-2 border-[#c2a680] h-full p-6 sm:p-8 flex flex-col">
-                            <h3 class="flex items-center gap-3 text-2xl font-bold text-[#4a3a2a] mb-4 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
-                                <div class="bg-[#8b7355] p-2 rounded-full shadow-inner"><i data-lucide="scissors" class="w-6 h-6 text-[#e6d7c3]"></i></div>
+                    <div class="bg-[#e6d7c3] p-1.5 md:p-2.5 rounded-sm shadow-lg h-full">
+                        <div class="border-2 border-[#c2a680] h-full p-4 md:p-6 lg:p-8 flex flex-col">
+                            <h3 class="flex items-center gap-2 md:gap-3 text-lg md:text-2xl font-bold text-[#4a3a2a] mb-3 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
+                                <div class="bg-[#8b7355] p-1.5 md:p-2 rounded-full shadow-inner"><i data-lucide="scissors" class="w-4 h-4 md:w-6 md:h-6 text-[#e6d7c3]"></i></div>
                                 การเก็บเกี่ยว
                             </h3>
-                            <p class="text-[#5a4a3a] text-xl leading-relaxed">${escapeHTML(plant.harvest)}</p>
+                            <p class="text-[#5a4a3a] text-base md:text-xl leading-relaxed">${escapeHTML(plant.harvest)}</p>
                         </div>
                     </div>
                 `;
             }
             if (plant.legend) {
                 gridHtml += `
-                    <div class="bg-[#e6d7c3] p-2.5 rounded-sm shadow-lg h-full">
-                        <div class="border-2 border-[#c2a680] h-full p-6 sm:p-8 flex flex-col">
-                            <h3 class="flex items-center gap-3 text-2xl font-bold text-[#4a3a2a] mb-4 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
-                                <div class="bg-[#3b2d4a] p-2 rounded-full shadow-inner"><i data-lucide="moon" class="w-6 h-6 text-[#e6d7c3]"></i></div>
+                    <div class="bg-[#e6d7c3] p-1.5 md:p-2.5 rounded-sm shadow-lg h-full">
+                        <div class="border-2 border-[#c2a680] h-full p-4 md:p-6 lg:p-8 flex flex-col">
+                            <h3 class="flex items-center gap-2 md:gap-3 text-lg md:text-2xl font-bold text-[#4a3a2a] mb-3 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
+                                <div class="bg-[#3b2d4a] p-1.5 md:p-2 rounded-full shadow-inner"><i data-lucide="moon" class="w-4 h-4 md:w-6 md:h-6 text-[#e6d7c3]"></i></div>
                                 ตำนานและความเป็นมา
                             </h3>
-                            <p class="text-[#5a4a3a] text-xl leading-relaxed">${escapeHTML(plant.legend)}</p>
+                            <p class="text-[#5a4a3a] text-base md:text-xl leading-relaxed">${escapeHTML(plant.legend)}</p>
                         </div>
                     </div>
                 `;
             }
             if (plant.fact) {
                 gridHtml += `
-                    <div class="bg-[#e6d7c3] p-2.5 rounded-sm shadow-lg h-full">
-                        <div class="border-2 border-[#c2a680] h-full p-6 sm:p-8 flex flex-col">
-                            <h3 class="flex items-center gap-3 text-2xl font-bold text-[#4a3a2a] mb-4 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
-                                <div class="bg-[#4b5a63] p-2 rounded-full shadow-inner"><i data-lucide="info" class="w-6 h-6 text-[#e6d7c3]"></i></div>
+                    <div class="bg-[#e6d7c3] p-1.5 md:p-2.5 rounded-sm shadow-lg h-full">
+                        <div class="border-2 border-[#c2a680] h-full p-4 md:p-6 lg:p-8 flex flex-col">
+                            <h3 class="flex items-center gap-2 md:gap-3 text-lg md:text-2xl font-bold text-[#4a3a2a] mb-3 border-b-2 border-[#c2a680]/60 pb-3 shrink-0">
+                                <div class="bg-[#4b5a63] p-1.5 md:p-2 rounded-full shadow-inner"><i data-lucide="info" class="w-4 h-4 md:w-6 md:h-6 text-[#e6d7c3]"></i></div>
                                 ข้อควรรู้เพิ่มเติม
                             </h3>
-                            <p class="text-[#5a4a3a] text-xl leading-relaxed">${escapeHTML(plant.fact)}</p>
+                            <p class="text-[#5a4a3a] text-base md:text-xl leading-relaxed">${escapeHTML(plant.fact)}</p>
                         </div>
                     </div>
                 `;
@@ -429,7 +432,7 @@
                     ${bewareHtml}
 
                     <!-- 2x2 Details Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="grid grid-cols-2 gap-3 md:gap-6 mt-6">
                         ${gridHtml}
                     </div>
 
@@ -483,20 +486,25 @@
         // Boot
         window.addEventListener('DOMContentLoaded', initApp);
 
-  (function () {
-    function send() {
-      var h = Math.max(
-        document.documentElement.scrollHeight,
-        document.body ? document.body.scrollHeight : 0
-      );
-      parent.postMessage({ type: 'post-embed:height', height: h }, '*');
-    }
-    window.addEventListener('load', send);
-    window.addEventListener('resize', send);
-    if (window.ResizeObserver) new ResizeObserver(send).observe(document.documentElement);
-    document.addEventListener('DOMContentLoaded', send);
-    setTimeout(send, 300);
-  })();
+    </script>
+
+    <!-- Iframe Resizer Script -->
+    <script>
+      (function () {
+        function send() {
+          var h = Math.max(
+            document.documentElement.scrollHeight,
+            document.body ? document.body.scrollHeight : 0
+          );
+          parent.postMessage({ type: 'post-embed:height', height: h }, '*');
+        }
+        window.sendHeight = send; // Expose globally to trigger on render
+        window.addEventListener('load', send);
+        window.addEventListener('resize', send);
+        if (window.ResizeObserver) new ResizeObserver(send).observe(document.documentElement);
+        document.addEventListener('DOMContentLoaded', send);
+        setTimeout(send, 300);
+      })();
     </script>
 </body>
 </html>
