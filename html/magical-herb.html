@@ -483,6 +483,20 @@
         // Boot
         window.addEventListener('DOMContentLoaded', initApp);
 
+  (function () {
+    function send() {
+      var h = Math.max(
+        document.documentElement.scrollHeight,
+        document.body ? document.body.scrollHeight : 0
+      );
+      parent.postMessage({ type: 'post-embed:height', height: h }, '*');
+    }
+    window.addEventListener('load', send);
+    window.addEventListener('resize', send);
+    if (window.ResizeObserver) new ResizeObserver(send).observe(document.documentElement);
+    document.addEventListener('DOMContentLoaded', send);
+    setTimeout(send, 300);
+  })();
     </script>
 </body>
 </html>
