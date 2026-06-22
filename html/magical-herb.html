@@ -91,7 +91,9 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="w-full p-4 md:p-8 lg:p-12 relative min-h-[60vh]">
+    <!-- ห้ามใช้ min-h แบบ vh ที่นี่: iframe auto-height ทำให้ vh อ้างอิงความสูง iframe เอง
+         เกิดลูปป้อนกลับ → ความสูงค้างที่ ~2.5×header แทนที่จะพอดีเนื้อหา -->
+    <div class="w-full p-4 md:p-8 lg:p-12 relative">
         
         <!-- Loader -->
         <div id="loader" class="flex flex-col items-center justify-center text-[#c2a36d] pulse-anim py-20">
